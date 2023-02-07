@@ -2,4 +2,8 @@
   <ItemGroup>
     <PackageReference Include="Mediator" Version="1.0.2123" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Handlers" />
+    <Folder Include="Queries" />
+  </ItemGroup>
 </Project>
