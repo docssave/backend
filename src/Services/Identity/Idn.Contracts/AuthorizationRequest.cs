@@ -1,6 +1,5 @@
-﻿namespace Idn.Contracts;
+﻿using MediatR;
 
-public sealed class AuthorizationRequest
-{
-    
-}
+namespace Idn.Contracts;
+
+public sealed record AuthorizationRequest(string Token, Source Source) : IRequest<AuthorizationResponse>;

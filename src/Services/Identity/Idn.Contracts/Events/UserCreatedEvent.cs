@@ -4,10 +4,10 @@ namespace Idn.Contracts.Events;
 
 public sealed class UserCreatedEvent : INotification
 {
-    public UserCreatedEvent(long id)
+    public UserCreatedEvent(UserId id)
     {
         Id = id;
     }
     
-    public long Id { get; }
+    public UserId Id { get; }
 }
