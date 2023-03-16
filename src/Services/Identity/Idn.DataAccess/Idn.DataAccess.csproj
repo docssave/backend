@@ -1,6 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Libraries\Sql\PostgreSql.Abstraction\PostgreSql.Abstraction.csproj" />
-    <ProjectReference Include="..\Idn.Contracts\Idn.Contracts.csproj" />
-  </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\Libraries\Sql\PostgreSql.Abstraction\PostgreSql.Abstraction.csproj"/>
+        <ProjectReference Include="..\Idn.Contracts\Idn.Contracts.csproj"/>
+    </ItemGroup>
+  
 </Project>

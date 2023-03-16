@@ -1,11 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
-        <PackageReference Include="MediatR" Version="10.0.1" />
+      <ProjectReference Include="..\Idn.Contracts\Idn.Contracts.csproj" />
+      <ProjectReference Include="..\Idn.DataAccess\Idn.DataAccess.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Idn.Contracts\Idn.Contracts.csproj" />
+        <PackageReference Include="MediatR" Version="10.0.1" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0-preview.2.23128.3" />
     </ItemGroup>
 
 </Project>

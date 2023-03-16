@@ -9,6 +9,8 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddIdentityService(this IServiceCollection services)
     {
         services.AddMediatR(typeof(MediatorEntryPoint).Assembly);
+
+        services.AddIdentity();
         
         return services;
     }
