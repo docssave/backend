@@ -1,5 +1,5 @@
 ﻿namespace Idn.Domain;
 
-public class MediatorEntryPoint
+public sealed class MediatorEntryPoint
 {
 }
