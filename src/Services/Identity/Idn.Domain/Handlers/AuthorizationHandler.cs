@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Idn.Domain;
 
-public sealed class AuthorizationHandler : IRequestHandler<AuthorizationRequest, AuthorizationResponse>
+internal sealed class AuthorizationHandler : IRequestHandler<AuthorizationRequest, AuthorizationResponse>
 {
     private readonly IIdentityRepository _repository;
 
@@ -13,6 +13,13 @@ public sealed class AuthorizationHandler : IRequestHandler<AuthorizationRequest,
 
     public Task<AuthorizationResponse> Handle(AuthorizationRequest request, CancellationToken cancellationToken)
     {
+        /*
+         * [] - extract source user id
+         * [] - check if user exists
+         *  [] - yes: generate token
+         *  [] - no: add user into database, raise UserCreatedEvent, generate token
+         */
+        
         return Task.FromResult(new AuthorizationResponse(Guid.NewGuid().ToString()));
     }
 }

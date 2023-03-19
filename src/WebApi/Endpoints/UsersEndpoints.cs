@@ -10,12 +10,12 @@ public static class UsersEndpoints
     
     public static void MapUserEndpoints(this WebApplication application)
     {
-        application.MapPut($"{BaseRoute}/authorization", AuthorizationAsync);
+        application.MapPut($"{BaseRoute}/authorization", AuthorizationAsync).AllowAnonymous();
     }
 
-    private static async Task<IResult> AuthorizationAsync(string token, Source source, [FromServices] IMediator mediator)
+    private static async Task<IResult> AuthorizationAsync(AuthorizationRequest request, [FromServices] IMediator mediator)
     {
-        var response = await mediator.Send(new AuthorizationRequest(token, source));
+        var response = await mediator.Send(request);
         
         return Results.Ok(response.Token);
     }

@@ -1,3 +1,5 @@
-﻿namespace Idn.Contracts;
+﻿using Common;
 
-public record AuthorizationResponse(string Token);
+namespace Idn.Contracts;
+
+public record AuthorizationResponse(string Token) : ResponseBase<string>;

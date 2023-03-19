@@ -3,5 +3,6 @@
     Name VARCHAR(500) IS NOT NULL,
     EncryptedEmail VARCHAR(320) IS NOT NULL,
     Source VARCHAR(12) IS NOT NULL,
+    SourceUserId VARCHAR(36) IS NOT NULL,
     PRIMARY KEY (Id),
     INDEX(EncryptedEmail));
