@@ -14,6 +14,6 @@ builder.Services.AddIdentityService();
 
 var app = builder.Build();
 
-app.MapUserEndpoints();
+app.MapUsersEndpoints();
 
 app.Run();

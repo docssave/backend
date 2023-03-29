@@ -8,7 +8,7 @@ public static class UsersEndpoints
 {
     private const string BaseRoute = "api/v1/users";
     
-    public static void MapUserEndpoints(this WebApplication application)
+    public static void MapUsersEndpoints(this WebApplication application)
     {
         application.MapPut($"{BaseRoute}/authorization", AuthorizationAsync).AllowAnonymous();
     }
