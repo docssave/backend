@@ -2,6 +2,8 @@
 
 public sealed class IdentityRepository : IIdentityRepository
 {
+    
+    
     public Task<Result<User?>> GetUserAsync(string encryptedEmail)
     {
         throw new NotImplementedException();
