@@ -7,4 +7,17 @@
         <ProjectReference Include="..\Services\Identity\Idn.Extensions\Idn.Extensions.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Update="Properties\launchSettings.json">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+      </Content>
+    </ItemGroup>
+    <ItemGroup>
+      <None Remove="Services\" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Services\" />
+    </ItemGroup>
 </Project>
