@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using FluentMigrator.Runner;
-using Idn.DataAccess;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Data.SqlClient;
 
@@ -13,7 +12,7 @@ new ServiceCollection()
         migrationRunner
             .AddSqlServer2016()
             .WithGlobalConnectionString("Data Source=localhost\\SQL2016;Initial Catalog=DocsSave;Integrated Security=True")
-            .ScanIn(GetDataAccessAssemblies().ToArray()).For.Migrations();
+            .ScanIn(GetDataAccessAssemblies()).For.Migrations();
     })
     .AddLogging(builder => builder.AddFluentMigratorConsole())
     .BuildServiceProvider(validateScopes: false)
@@ -22,9 +21,39 @@ new ServiceCollection()
     .GetRequiredService<IMigrationRunner>()
     .MigrateUp();
 
-static IEnumerable<Assembly> GetDataAccessAssemblies()
+static Assembly[] GetDataAccessAssemblies()
 {
-    yield return typeof(IIdentityRepository).Assembly;
+    var gamingAssemblyNames = Directory
+        .GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.DataAccess.dll")
+        .Select(filePath =>
+        {
+            try
+            {
+                return AssemblyName.GetAssemblyName(filePath);
+            }
+            catch
+            {
+                return null;
+            }
+        })
+        .Where(assembly => assembly != null)
+        .ToArray();
+
+    var assemblies = new List<Assembly>();
+
+    foreach (var assemblyName in gamingAssemblyNames)
+    {
+        try
+        {
+            assemblies.Add(Assembly.Load(assemblyName));
+        }
+        catch (Exception e)
+        {
+            throw new Exception($"An exception occurred during loading {assemblyName.Name!}.", e);
+        }
+    }
+
+    return assemblies.ToArray();
 }
 
 static async Task CreateDatabaseAsync()
