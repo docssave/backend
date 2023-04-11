@@ -11,7 +11,7 @@ new ServiceCollection()
     {
         migrationRunner
             .AddSqlServer2016()
-            .WithGlobalConnectionString("Data Source=localhost\\SQL2016;Initial Catalog=DocsSave;Integrated Security=True")
+            .WithGlobalConnectionString("Data Source=localhost,1433;Initial Catalog=DocsSave;Integrated Security=false; User ID=SA; Password=yourStrong(!)Password")
             .ScanIn(GetDataAccessAssemblies()).For.Migrations();
     })
     .AddLogging(builder => builder.AddFluentMigratorConsole())
@@ -58,7 +58,7 @@ static Assembly[] GetDataAccessAssemblies()
 
 static async Task CreateDatabaseAsync()
 {
-    await using var connection = new SqlConnection("Data Source=localhost\\SQL2016;Integrated Security=True");
+    await using var connection = new SqlConnection("Data Source=localhost,1433; Integrated Security=False; User ID=SA; Password=yourStrong(!)Password");
     await using var command = connection.CreateCommand();
 
     await connection.OpenAsync();
