@@ -1,5 +1,4 @@
 using Encryption.Extensions;
-using Idn.Contracts;
 using Idn.Plugin;
 using Microsoft.IdentityModel.Tokens;
 using SqlServer;
@@ -23,7 +22,6 @@ builder.Services.AddAuthentication("Bearer")
 builder.Services.AddDbConnectionFactory(builder.Configuration.GetConnectionString("HoneyBadgerDb"));
 builder.Services.AddEncryptor();
 builder.Services.AddIdentityService();
-builder.Services.AddScoped<IUserIdAccessor, UserIdAccessor>();
 
 var app = builder.Build();
 
