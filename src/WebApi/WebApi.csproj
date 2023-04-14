@@ -2,9 +2,9 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Libraries\Encryption\Encryption.csproj" />
-        <ProjectReference Include="..\Libraries\Sql\PostgreSql\PostgreSql.csproj" />
+        <ProjectReference Include="..\Libraries\Sql\SqlServer\SqlServer.csproj" />
         <ProjectReference Include="..\Services\Identity\Idn.Contracts\Idn.Contracts.csproj" />
-        <ProjectReference Include="..\Services\Identity\Idn.Extensions\Idn.Extensions.csproj" />
+        <ProjectReference Include="..\Services\Identity\Idn.Plugin\Idn.Plugin.csproj" />
     </ItemGroup>
 
 </Project>

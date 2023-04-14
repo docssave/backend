@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Idn.DataAccess", "Services\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Idn.Domain", "Services\Identity\Idn.Domain\Idn.Domain.csproj", "{4DE1F54A-8DC0-4984-AC38-A0AFE10D5C35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Idn.Extensions", "Services\Identity\Idn.Extensions\Idn.Extensions.csproj", "{74707CCB-DC66-4036-AD7D-75A231C13B68}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Idn.Plugin", "Services\Identity\Idn.Plugin\Idn.Plugin.csproj", "{74707CCB-DC66-4036-AD7D-75A231C13B68}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{5EF80484-B2DE-4ADB-8B96-0877E99BB48C}"
 	ProjectSection(SolutionItems) = preProject
@@ -28,9 +28,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Encryption", "Libraries\Enc
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sql", "Sql", "{CB5901F0-ACE1-4914-B947-9A9917E6BFA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostgreSql.Abstraction", "Libraries\Sql\PostgreSql.Abstraction\PostgreSql.Abstraction.csproj", "{33E57DA4-9BFF-4A82-B5B8-F2B5B693AF20}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer.Abstraction", "Libraries\Sql\SqlServer.Abstraction\SqlServer.Abstraction.csproj", "{33E57DA4-9BFF-4A82-B5B8-F2B5B693AF20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostgreSql", "Libraries\Sql\PostgreSql\PostgreSql.csproj", "{87CAC4FF-3C0D-4463-BC66-0BF12BA04880}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer", "Libraries\Sql\SqlServer\SqlServer.csproj", "{87CAC4FF-3C0D-4463-BC66-0BF12BA04880}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{6CD86EE8-3E2C-4095-8D30-773036F39B14}"
 EndProject

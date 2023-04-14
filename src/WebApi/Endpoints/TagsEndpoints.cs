@@ -12,7 +12,7 @@ public static class TagsEndpoints
         application.MapPut($"{BaseRoute}", CreateAsync);
     }
 
-    private static async Task<IResult> CreateAsync([FromServices] IUserAccessor userAccessor)
+    private static async Task<IResult> CreateAsync([FromServices] IUserIdAccessor userIdAccessor)
     {
         return Results.Ok();
     }

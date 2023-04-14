@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace PostgreSql;
+namespace SqlServer.Abstraction;
 
 public interface IDbConnectionFactory
 {

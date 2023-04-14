@@ -1,8 +1,8 @@
 ﻿using System.Data;
 
-namespace PostgreSql.Extensions;
+namespace SqlServer.Abstraction.Extensions;
 
-public static class DbConnectionExtensions
+public static class DbConnectionFactoryExtensions
 {
     public static async Task<T> TryAsync<T>(this IDbConnectionFactory dbConnectionFactory, Func<IDbConnection, Task<T>> func, Action<Exception> errorAction)
     {
