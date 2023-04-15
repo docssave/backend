@@ -4,19 +4,17 @@ namespace SqlServer.Abstraction.Extensions;
 
 public static class DbConnectionFactoryExtensions
 {
-    public static async Task<T> TryAsync<T>(this IDbConnectionFactory dbConnectionFactory, Func<IDbConnection, Task<T>> func, Action<Exception> errorAction)
+    public static async Task<T> TryAsync<T>(this IDbConnectionFactory dbConnectionFactory, Func<IDbConnection, Task<T>> sqlFunc, Func<Exception, T> exceptionFunc)
     {
         try
         {
             using var connection = await dbConnectionFactory.CreateAsync();
 
-            return await func(connection);
+            return await sqlFunc(connection);
         }
         catch (Exception e)
         {
-            errorAction(e);
+            return exceptionFunc(e);
         }
-
-        return default;
     }
 }

@@ -2,4 +2,4 @@
 
 namespace Idn.Contracts;
 
-public sealed record AuthorizationRequest(string Token, Source Source) : IRequest<AuthorizationResponse>;
+public sealed record AuthorizationRequest(string Token, Source? Source) : IRequest<AuthorizationResponse>;

@@ -2,12 +2,8 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\..\Libraries\Sql\SqlServer.Abstraction\SqlServer.Abstraction.csproj" />
+        <ProjectReference Include="..\..\..\Libraries\Sql\SqlServer\SqlServer.csproj" />
         <ProjectReference Include="..\Idn.Contracts\Idn.Contracts.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="FluentMigrator" Version="3.3.2" />
-      <PackageReference Include="FluentMigrator.Extensions.SqlServer" Version="3.3.2" />
     </ItemGroup>
   
 </Project>

@@ -14,6 +14,6 @@ public static class TagsEndpoints
 
     private static async Task<IResult> CreateAsync([FromServices] IUserIdAccessor userIdAccessor)
     {
-        return Results.Ok();
+        return Results.Ok(userIdAccessor.UserId);
     }
 }

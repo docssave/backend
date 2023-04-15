@@ -1,8 +1,8 @@
-﻿namespace Idn.DataAccess;
+﻿namespace SqlServer;
 
-public sealed class Result<T>
+public sealed class RepositoryResult<T>
 {
-    public Result(T value, Exception? exception)
+    public RepositoryResult(T value, Exception? exception)
     {
         Value = value;
         Exception = exception;
