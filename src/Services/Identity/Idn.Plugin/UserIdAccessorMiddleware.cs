@@ -17,7 +17,7 @@ public sealed class UserIdAccessorMiddleware
     {
         if (context.User.Identity is ClaimsIdentity { IsAuthenticated: true } identity)
         {
-            var idClaim = identity.FindFirst("sub");
+            var idClaim = identity.FindFirst("id");
             userIdAccessor.UserId = UserId.TryParse(idClaim?.Value);
         }
         

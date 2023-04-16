@@ -1,8 +1,11 @@
-﻿namespace Idn.DataAccess;
+﻿using SqlServer;
+using SqlServer.Abstraction;
+
+namespace Idn.DataAccess;
 
 public interface IIdentityRepository
 {
-    Task<Result<User?>> GetUserAsync(string encryptedEmail);
+    Task<RepositoryResult<User?>> GetUserAsync(string sourceUserId);
 
-    Task<Result<User>> CreateUserAsync(CreateUser user);
+    Task<RepositoryResult<User>> CreateUserAsync(CreateUser createUser);
 }

@@ -16,7 +16,7 @@ public static class UsersEndpoints
     private static async Task<IResult> AuthorizationAsync(AuthorizationRequest request, [FromServices] IMediator mediator)
     {
         var response = await mediator.Send(request);
-        
-        return Results.Ok(response.Token);
+
+        return response.IsSuccess ? Results.Ok(response.Token) : Results.BadRequest(response.Error!.Message);
     }
 }

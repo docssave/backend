@@ -12,7 +12,8 @@ public sealed class AddUsersTable : Migration
             .WithColumn("Name").AsAnsiString(500).NotNullable()
             .WithColumn("EncryptedEmail").AsAnsiString(320).NotNullable()
             .WithColumn("Source").AsAnsiString(12).NotNullable()
-            .WithColumn("SourceUserId").AsAnsiString(36).NotNullable();
+            .WithColumn("SourceUserId").AsAnsiString(36).NotNullable()
+            .WithColumn("RegisteredAt").AsInt64().NotNullable();
 
         Create.Index("Users_SourceUserId_Index")
             .OnTable("Users")

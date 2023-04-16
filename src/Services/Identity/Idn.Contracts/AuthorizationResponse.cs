@@ -2,4 +2,4 @@
 
 namespace Idn.Contracts;
 
-public record AuthorizationResponse(string Token) : ResponseBase<string>;
+public record AuthorizationResponse(string? Token, Error? Error) : ResponseBase(Error);

@@ -1,25 +1,47 @@
-﻿using Idn.Contracts;
+﻿using Common;
+using Idn.Contracts;
 using Idn.DataAccess;
 using MediatR;
 
-namespace Idn.Domain;
+namespace Idn.Domain.Handlers;
 
 internal sealed class AuthorizationHandler : IRequestHandler<AuthorizationRequest, AuthorizationResponse>
 {
     private readonly IIdentityRepository _repository;
+    private readonly ISourceService _sourceService;
+    private readonly ITokenService _tokenService;
+    private readonly IEncryptor _encryptor;
 
-    public AuthorizationHandler(IIdentityRepository repository) =>
-        _repository = repository;
-
-    public Task<AuthorizationResponse> Handle(AuthorizationRequest request, CancellationToken cancellationToken)
+    public AuthorizationHandler(IIdentityRepository repository, ISourceService sourceService, ITokenService tokenService, IEncryptor encryptor)
     {
-        /*
-         * [] - extract source user id
-         * [] - check if user exists
-         *  [] - yes: generate token
-         *  [] - no: add user into database, raise UserCreatedEvent, generate token
-         */
-        
-        return Task.FromResult(new AuthorizationResponse(Guid.NewGuid().ToString()));
+        _repository = repository;
+        _sourceService = sourceService;
+        _tokenService = tokenService;
+        _encryptor = encryptor;
+    }
+
+    public async Task<AuthorizationResponse> Handle(AuthorizationRequest request, CancellationToken cancellationToken)
+    {
+        var userInfo = await _sourceService.ExtractUserInfoAsync(request.Token);
+
+        var result = await _repository.GetUserAsync(userInfo.Id);
+
+        if (!result.IsSuccess)
+        {
+            return new AuthorizationResponse(null, new Error(ErrorType.ServerError, result.Exception!.ToString()));
+        }
+
+        if (result.Value == null)
+        {
+            var encryptedEmail = await _encryptor.EncryptAsync(userInfo.Email);
+            result = await _repository.CreateUserAsync(new CreateUser(userInfo.Name, encryptedEmail, AuthorizationSource.Google, userInfo.Id));
+        }
+
+        if (!result.IsSuccess)
+        {
+            return new AuthorizationResponse(null, new Error(ErrorType.ServerError, result.Exception!.ToString()));
+        }
+
+        return new AuthorizationResponse(_tokenService.Create(result.Value!), null);
     }
 }

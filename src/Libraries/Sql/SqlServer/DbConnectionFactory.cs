@@ -16,7 +16,10 @@ internal sealed class DbConnectionFactory : IDbConnectionFactory
     
     public Task<IDbConnection> CreateAsync()
     {
-        _dbConnection ??= new SqlConnection(_connectionString);
+        if (_dbConnection is not { State: ConnectionState.Open })
+        {
+            _dbConnection = new SqlConnection(_connectionString);
+        }
 
         return Task.FromResult(_dbConnection);
     }

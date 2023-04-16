@@ -9,10 +9,9 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddIdentityService(this IServiceCollection services)
     {
-        services.AddMediatR(typeof(MediatorEntryPoint).Assembly)
-            .AddIdentity()
-            .AddScoped<IUserIdAccessor, UserIdAccessor>();
-
-        return services;
+        return services
+            .AddMediatR(typeof(MediatorEntryPoint).Assembly)
+            .AddScoped<IUserIdAccessor, UserIdAccessor>()
+            .AddIdentity();
     }
 }
