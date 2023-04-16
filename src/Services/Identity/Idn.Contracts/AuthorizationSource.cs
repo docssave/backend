@@ -1,6 +1,6 @@
 ﻿namespace Idn.Contracts;
 
-public enum AuthorizationSource
+public enum AuthorizationSource : byte
 {
     Google,
     Apple,

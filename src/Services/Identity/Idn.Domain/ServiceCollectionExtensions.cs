@@ -8,7 +8,10 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddIdentity(this IServiceCollection services)
     {
-        services.AddTransient<IIdentityRepository, IdentityRepository>();
+        services.AddScoped<IIdentityRepository, IdentityRepository>();
+        services.AddScoped<ISourceService, DummySourceService>();
+        services.AddScoped<IEncryptor, DummyEncryptor>();
+        services.AddScoped<ITokenService, TokenService>();
         services.AddSingleton<JwtSecurityTokenHandler>();
         
         return services;

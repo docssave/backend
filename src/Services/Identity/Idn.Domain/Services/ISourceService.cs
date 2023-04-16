@@ -2,5 +2,5 @@
 
 internal interface ISourceService
 {
-    Task<string?> ExtractIdAsync(string token);
+    Task<SourceUserInfo> ExtractUserInfoAsync(string token);
 }

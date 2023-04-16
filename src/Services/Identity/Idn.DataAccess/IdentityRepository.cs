@@ -1,43 +1,43 @@
 ﻿using Dapper;
 using Idn.Contracts;
-using SqlKata;
-using SqlKata.Compilers;
-using SqlServer;
 using SqlServer.Abstraction;
 using SqlServer.Abstraction.Extensions;
 
 namespace Idn.DataAccess;
 
-public sealed class IdentityRepository : IIdentityRepository
+public sealed class IdentityRepository : RepositoryBase, IIdentityRepository
 {
     private readonly IDbConnectionFactory _connectionFactory;
-    private readonly SqlServerCompiler _queryCompiler;
-        
-    public IdentityRepository(IDbConnectionFactory connectionFactory)
-    {
+
+    public IdentityRepository(IDbConnectionFactory connectionFactory) =>
         _connectionFactory = connectionFactory;
-        _queryCompiler = new SqlServerCompiler();
-    }
 
     public Task<RepositoryResult<User>> GetUserAsync(string sourceUserId) =>
         _connectionFactory.TryAsync(async connection =>
         {
-            var query = new Query("Users").Where("SourceUserId", sourceUserId);
-            var result = _queryCompiler.Compile(query);
+            var sqlQuery = QueryCompiler.ToSqlQueryString(SqlQueries.GetUserQuery(sourceUserId));
 
-            var entity = await connection.QuerySingleOrDefaultAsync<UserEntity>(result.Sql);
+            var entity = await connection.QuerySingleOrDefaultAsync<UserEntity>(sqlQuery);
 
             var user = entity == null
                 ? null
-                : new User(new UserId(entity.Id), entity.Name, entity.EncryptedEmail, Enum.Parse<AuthorizationSource>(entity.Source));
+                : new User(new UserId(entity.Id), entity.Name, entity.EncryptedEmail, Enum.Parse<AuthorizationSource>(entity.Source), DateTimeOffset.FromUnixTimeMilliseconds(entity.RegisteredAt));
 
-            return new RepositoryResult<User?>(user, null);
-        }, exception => new RepositoryResult<User>(null, exception));
+            return RepositoryResult<User?>.Success(user);
+        }, RepositoryResult<User>.Failed);
 
-    public Task<RepositoryResult<User>> CreateUserAsync(CreateUser user)
-    {
-        throw new NotImplementedException();
-    }
+    public Task<RepositoryResult<User>> CreateUserAsync(CreateUser createUser) =>
+        _connectionFactory.TryAsync(async connection =>
+        {
+            var now = DateTimeOffset.UtcNow;
+            
+            var sqlQuery = QueryCompiler.ToSqlQueryString(SqlQueries.CreateUserQuery(createUser, now));
 
-    private sealed record UserEntity(long Id, string Name, string EncryptedEmail, string Source, string SourceUserId);
+            var userId = await connection.QuerySingleAsync<long>(sqlQuery);
+            var user = new User(new UserId(userId), createUser.Name, createUser.EncryptedEmail, createUser.Source, now);
+
+            return RepositoryResult<User>.Success(user);
+        }, RepositoryResult<User>.Failed);
+
+    private sealed record UserEntity(long Id, string Name, string EncryptedEmail, string Source, string SourceUserId, long RegisteredAt);
 }
