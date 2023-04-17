@@ -1,4 +1,6 @@
-﻿using Idn.Contracts;
+﻿using FluentValidation;
+using Idn.Contracts;
+using Idn.Contracts.Validators;
 using Idn.Domain;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +14,7 @@ public static class ServiceCollectionExtensions
         return services
             .AddMediatR(typeof(MediatorEntryPoint).Assembly)
             .AddScoped<IUserIdAccessor, UserIdAccessor>()
+            .AddSingleton<IValidator<AuthorizationRequest>, AuthorizationRequestValidator>()
             .AddIdentity();
     }
 }

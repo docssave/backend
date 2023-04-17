@@ -1,6 +1,7 @@
 ﻿using Idn.Contracts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Filters;
 
 namespace WebApi.Endpoints;
 
@@ -10,7 +11,7 @@ public static class UsersEndpoints
     
     public static void MapUsersEndpoints(this WebApplication application)
     {
-        application.MapPut($"{BaseRoute}/authorization", AuthorizationAsync).AllowAnonymous();
+        application.MapPut($"{BaseRoute}/authorization", AuthorizationAsync).AllowAnonymous().AddEndpointFilter<ValidatorFilter<AuthorizationRequest>>();
     }
 
     private static async Task<IResult> AuthorizationAsync(AuthorizationRequest request, [FromServices] IMediator mediator)

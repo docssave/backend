@@ -1,5 +1,6 @@
 ﻿using Common;
 using Idn.Contracts;
+using Idn.Contracts.Events;
 using Idn.DataAccess;
 using MediatR;
 
@@ -7,13 +8,15 @@ namespace Idn.Domain.Handlers;
 
 internal sealed class AuthorizationHandler : IRequestHandler<AuthorizationRequest, AuthorizationResponse>
 {
+    private readonly IMediator _mediator;
     private readonly IIdentityRepository _repository;
     private readonly ISourceService _sourceService;
     private readonly ITokenService _tokenService;
     private readonly IEncryptor _encryptor;
 
-    public AuthorizationHandler(IIdentityRepository repository, ISourceService sourceService, ITokenService tokenService, IEncryptor encryptor)
+    public AuthorizationHandler(IMediator mediator, IIdentityRepository repository, ISourceService sourceService, ITokenService tokenService, IEncryptor encryptor)
     {
+        _mediator = mediator;
         _repository = repository;
         _sourceService = sourceService;
         _tokenService = tokenService;
@@ -35,6 +38,11 @@ internal sealed class AuthorizationHandler : IRequestHandler<AuthorizationReques
         {
             var encryptedEmail = await _encryptor.EncryptAsync(userInfo.Email);
             result = await _repository.CreateUserAsync(new CreateUser(userInfo.Name, encryptedEmail, AuthorizationSource.Google, userInfo.Id));
+
+            if (result.IsSuccess)
+            {
+                await _mediator.Publish(new UserCreatedEvent(result.Value.Id, result.Value.RegisteredAt), cancellationToken);
+            }
         }
 
         if (!result.IsSuccess)
