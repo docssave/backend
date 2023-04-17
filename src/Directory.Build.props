@@ -25,6 +25,7 @@
     <ItemGroup Condition="$(MSBuildProjectName.EndsWith('.DataAccess'))">
         <PackageReference Include="FluentMigrator" Version="3.3.2" />
         <PackageReference Include="Dapper" Version="2.0.123" />
+        <ProjectReference Include="..\..\..\Libraries\Sql\SqlServer.Abstraction\SqlServer.Abstraction.csproj" />
     </ItemGroup>
 
 </Project>
