@@ -1,7 +1,6 @@
 ﻿using Idn.Contracts;
-using Idn.DataAccess;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Services;
 
 namespace WebApi.Endpoints
 {
@@ -11,17 +10,14 @@ namespace WebApi.Endpoints
 
         public static void MapTagsEndpoints(this WebApplication application)
         {
-            application.MapGet($"{BaseRoute}", GetAsync);
+            application.MapPost($"{BaseRoute}", CreateAsync);
         }
 
-        private static Task<IActionResult> GetAsync([FromServices] IUserAccessor userAccessor)
+        private static async Task<IActionResult> CreateAsync(TagRequest request, [FromServices] IUserAccessor userAccessor, [FromServices] IMediator mediator)
         {
-            string[] tags = TagService.GetTag(userAccessor);
-            return Task.FromResult<IActionResult>(Ok(tags)); //tried to write it as return TagService.GetTag(userAccessor) but it doesn't work
-        }
+            var response = await mediator.Send(request);
 
-    private static async Task<IResult> CreateAsync([FromServices] IUserAccessor userAccessor)
-    {
-        return Results.Ok();
+            return Results.Ok(response.Tag);
+        }
     }
-}
+}                                     
