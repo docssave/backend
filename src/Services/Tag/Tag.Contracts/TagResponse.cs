@@ -1,2 +1,2 @@
 namespace TagContracts;
-public record TagResponse() : ResponseBase<string>;
+public record TagResponse(?) : ResponseBase<string>;
