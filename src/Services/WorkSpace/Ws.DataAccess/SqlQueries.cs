@@ -21,8 +21,8 @@ internal static class SqlQueries
             });
 
     public static Query GetWorkspaceQuery(UserId userId) =>
-        new Query("Workspaces w")
-            .Select("w.Id", "w.Name")
-            .Join("UserWorkspaces uw", "uw.WorkspaceId", "w.Id")
-            .Where("uw.UserId", userId);
+        new Query("Workspaces")
+            .Select("Id", "Name")
+            .Join("UserWorkspaces", "UserWorkspaces.WorkspaceId", "Workspaces.Id")
+            .Where("UserWorkspaces.UserId", userId);
 }
