@@ -1,6 +1,7 @@
 ﻿using Idn.Contracts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TagContracts;
 
 namespace WebApi.Endpoints
 {
@@ -13,11 +14,11 @@ namespace WebApi.Endpoints
             application.MapPost($"{BaseRoute}", CreateAsync);
         }
 
-        private static async Task<IActionResult> CreateAsync(TagRequest request, [FromServices] IUserAccessor userAccessor, [FromServices] IMediator mediator)
+        private static async Task<IActionResult> CreateAsync(TagRequest request, [FromServices] IUserIdAccessor userAccessor, [FromServices] IMediator mediator, Tag.DataAccess.Tag tag)
         {
             var response = await mediator.Send(request);
 
-            return Results.Ok(response.Tag);
+            return new OkObjectResult(response);
         }
     }
 }                                     

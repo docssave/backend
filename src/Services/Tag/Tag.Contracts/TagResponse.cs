@@ -1,2 +1,4 @@
+using Common;
+
 namespace TagContracts;
-public record TagResponse(?) : ResponseBase<string>;
+public record TagResponse(string Name, Error? Error) : ResponseBase(Error);
