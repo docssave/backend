@@ -10,20 +10,12 @@
     </ItemGroup>
 
     <ItemGroup>
-<<<<<<< HEAD
       <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.2" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.5" />
     </ItemGroup>
 
+
     <ItemGroup>
-=======
->>>>>>> origin/feature/DC-12/tags_without_db
-      <Content Update="Properties\launchSettings.json">
-        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        <CopyToPublishDirectory>Never</CopyToPublishDirectory>
-      </Content>
-    </ItemGroup>
         <ProjectReference Include="..\Libraries\Sql\SqlServer\SqlServer.csproj" />
         <ProjectReference Include="..\Services\Identity\Idn.Plugin\Idn.Plugin.csproj" />
         <ProjectReference Include="..\Services\Tag\Tag.Contracts\Tag.Contracts.csproj" />
@@ -32,14 +24,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.2" />
-      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.5" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Content Update="Properties\launchSettings.json">
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         <CopyToPublishDirectory>Never</CopyToPublishDirectory>
       </Content>
+      </ItemGroup>
 </Project>

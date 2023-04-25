@@ -14,11 +14,14 @@ namespace WebApi.Endpoints
             application.MapPost($"{BaseRoute}", CreateAsync);
         }
 
-        private static async Task<IActionResult> CreateAsync(TagRequest request, [FromServices] IUserIdAccessor userAccessor, [FromServices] IMediator mediator, Tag.DataAccess.Tag tag)
+        private static async Task<IResult> CreateAsync(
+            TagRequest request,
+            [FromServices] IUserIdAccessor userAccessor,
+            [FromServices] IMediator mediator)
         {
             var response = await mediator.Send(request);
 
-            return new OkObjectResult(response);
+            return Results.Ok(response);
         }
     }
 }                                     
