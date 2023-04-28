@@ -4,6 +4,7 @@ using Idn.Plugin;
 using Microsoft.IdentityModel.Tokens;
 using SqlServer;
 using WebApi.Endpoints;
+using Ws.Plugin;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +32,7 @@ builder.Services.Configure<TokenOptions>(builder.Configuration.GetSection(TokenO
 
 builder.Services.AddDbConnectionFactory(builder.Configuration.GetConnectionString("HoneyBadgerDb"));
 builder.Services.AddIdentityService();
+builder.Services.AddWorkspaceService();
 
 var app = builder.Build();
 
