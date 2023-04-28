@@ -4,6 +4,10 @@
         <ProjectReference Include="..\Libraries\Sql\SqlServer\SqlServer.csproj" />
         <ProjectReference Include="..\Services\Identity\Idn.Contracts\Idn.Contracts.csproj" />
         <ProjectReference Include="..\Services\Identity\Idn.Plugin\Idn.Plugin.csproj" />
+        <ProjectReference Include="..\Services\WorkSpace\Ws.Plugin\Ws.Plugin.csproj" />
+        <ProjectReference Include="..\Services\Tag\Tag.Contracts\Tag.Contracts.csproj" />
+        <ProjectReference Include="..\Services\Tag\Tag.DataAccess\Tag.DataAccess.csproj" />
+        <ProjectReference Include="..\Services\Tag\Tag.Domain\Tag.Domain.csproj" />
         <ProjectReference Include="..\Services\Tag\Tag.Contracts\Tag.Contracts.csproj" />
         <ProjectReference Include="..\Services\Tag\Tag.DataAccess\Tag.DataAccess.csproj" />
         <ProjectReference Include="..\Services\Tag\Tag.Domain\Tag.Domain.csproj" />
@@ -14,6 +18,22 @@
       <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.5" />
     </ItemGroup>
 
+
+    <ItemGroup>
+        <ProjectReference Include="..\Libraries\Sql\SqlServer\SqlServer.csproj" />
+        <ProjectReference Include="..\Services\Identity\Idn.Plugin\Idn.Plugin.csproj" />
+        <ProjectReference Include="..\Services\Tag\Tag.Contracts\Tag.Contracts.csproj" />
+        <ProjectReference Include="..\Services\Tag\Tag.DataAccess\Tag.DataAccess.csproj" />
+        <ProjectReference Include="..\Services\Tag\Tag.Domain\Tag.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Update="Properties\launchSettings.json">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+      </Content>
+      </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Libraries\Sql\SqlServer\SqlServer.csproj" />

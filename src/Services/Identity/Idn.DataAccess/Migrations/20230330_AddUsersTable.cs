@@ -22,7 +22,6 @@ public sealed class AddUsersTable : Migration
 
     public override void Down()
     {
-        Delete.Index("Users_SourceUserId_Index");
         Delete.Table("Users");
     }
 }
