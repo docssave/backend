@@ -19,7 +19,7 @@ internal sealed class UserCreatedEventConsumer : INotificationHandler<UserCreate
         {
             const string defaultName = "workspace1";
 
-           var result1 = await _repository.CreateWorkspaceAsync(notification.Id, defaultName);
+           var _ = await _repository.CreateWorkspaceAsync(notification.Id, defaultName);
         }
     }
 }
