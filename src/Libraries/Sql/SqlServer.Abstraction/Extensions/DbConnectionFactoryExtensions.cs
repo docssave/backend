@@ -24,14 +24,16 @@ public static class DbConnectionFactoryExtensions
         Func<Exception, T> exceptionFunc) =>
         await dbConnectionFactory.TryAsync(async connection =>
         {
+            connection.Open();
+            
             var transaction = connection.BeginTransaction();
 
             try
             {
                 var result = await sqlFunc(connection, transaction);
-                
+
                 transaction.Commit();
- 
+
                 return result;
             }
             catch (Exception e)
@@ -39,6 +41,10 @@ public static class DbConnectionFactoryExtensions
                 transaction.Rollback();
 
                 throw e;
+            }
+            finally
+            {
+                connection.Close();
             }
         }, exceptionFunc);
 }
