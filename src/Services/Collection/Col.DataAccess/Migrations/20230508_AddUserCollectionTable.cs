@@ -1,3 +1,4 @@
+using System.Data;
 using FluentMigrator;
 
 namespace Col.DataAccess.Migrations;
@@ -9,7 +10,7 @@ public class AddUserCollectionTable : Migration
     {
         Create.Table("UserCollections")
             .WithColumn("UserId").AsInt64()
-            .WithColumn("CollectionId").AsGuid();
+            .WithColumn("CollectionId").AsGuid().ForeignKey("Collections", "Id").OnDeleteOrUpdate(Rule.Cascade);
 
         Create.PrimaryKey("UserCollections_PrimaryKey")
             .OnTable("UserCollections")
