@@ -3,6 +3,7 @@
 services:
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2019-latest
+    restart: always
     environment:
       MSSQL_SA_PASSWORD: "yourStrong(!)Password"
       ACCEPT_EULA: "Y"
