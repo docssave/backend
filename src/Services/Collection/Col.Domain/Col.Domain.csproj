@@ -1,3 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+  <ItemGroup>
+    <ProjectReference Include="..\..\Identity\Idn.Contracts\Idn.Contracts.csproj" />
+    <ProjectReference Include="..\Col.DataAccess\Col.DataAccess.csproj" />
+  </ItemGroup>
 </Project>
