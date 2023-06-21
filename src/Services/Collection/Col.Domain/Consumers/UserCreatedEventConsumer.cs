@@ -1,4 +1,5 @@
-﻿using Col.DataAccess;
+﻿using Col.Contracts;
+using Col.DataAccess;
 using Idn.Contracts.Events;
 using MediatR;
 
@@ -11,8 +12,16 @@ internal sealed class UserCreatedEventConsumer : INotificationHandler<UserCreate
     public UserCreatedEventConsumer(ICollectionRepository repository) => 
         _repository = repository;
     
-    public Task Handle(UserCreatedEvent notification, CancellationToken cancellationToken)
+    public async Task Handle(UserCreatedEvent notification, CancellationToken cancellationToken)
     {
-        var result = await _repository.ListCollectionsAsync(notification.Id);
+        var collections = await _repository.ListCollectionsAsync(notification.Id);
+
+        if (!collections.Any())
+        {
+            const string defaultName = "My collection";
+            const string defaultIcon = "#";
+
+            await _repository.RegisterCollectionAsync(CollectionId.New(), defaultName, defaultIcon, EncryptSide.Client, version: 1);
+        }
     }
 }
