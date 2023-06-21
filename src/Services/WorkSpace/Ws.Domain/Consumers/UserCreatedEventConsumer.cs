@@ -15,7 +15,7 @@ internal sealed class UserCreatedEventConsumer : INotificationHandler<UserCreate
     {
         var result = await _repository.GetWorkspaceAsync(notification.Id);
 
-        if (result.Value is not Workspace)
+        if (result.Value == null)
         {
             const string defaultName = "workspace1";
 
