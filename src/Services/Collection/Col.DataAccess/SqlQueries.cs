@@ -17,7 +17,7 @@ public sealed class SqlQueries
         CollectionId id,
         string name,
         string icon,
-        EncryptSide encryptSide,
+        EncryptionSide encryptionSide,
         int version)
     {
         var query = new Query("Collections")
@@ -26,7 +26,7 @@ public sealed class SqlQueries
                 Id = id.Value,
                 Name = name,
                 Icon = icon,
-                EncryptSide = encryptSide,
+                EncryptSide = encryptionSide,
                 Version = version
             });
 
@@ -48,7 +48,7 @@ public sealed class SqlQueries
     public string GetCollectionsQuery(UserId userId)
     {
         var query = new Query("Collections")
-            .Select("Id", "Name", "Icon", "EncryptSide", "Version")
+            .Select("Id", "Name", "Icon", "EncryptSide", "Version", "AddedAtTimespan")
             .Join("UserCollections", "UserCollections.CollectionId", "Collections.Id")
             .Where("UserCollections.UserId", userId)
             .OrderBy("AddedAtTimespan");

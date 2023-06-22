@@ -2,13 +2,14 @@
 
 public sealed class Collection
 {
-    public Collection(CollectionId id, string name, string icon, EncryptSide encryptSide, int version)
+    public Collection(CollectionId id, string name, string icon, EncryptionSide encryptionSide, int version, DateTimeOffset addedAt)
     {
         Id = id;
         Name = name;
         Icon = icon;
-        EncryptSide = encryptSide;
+        EncryptionSide = encryptionSide;
         Version = version;
+        AddedAt = addedAt;
     }
 
     public CollectionId Id { get; }
@@ -17,7 +18,9 @@ public sealed class Collection
     
     public string Icon { get; }
     
-    public EncryptSide EncryptSide { get; }
+    public EncryptionSide EncryptionSide { get; }
     
     public int Version { get; }
+    
+    public DateTimeOffset AddedAt { get; }
 }

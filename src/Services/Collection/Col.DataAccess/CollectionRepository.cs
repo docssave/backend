@@ -32,8 +32,10 @@ public sealed class CollectionRepository : ICollectionRepository
                     new CollectionId(entity.Id),
                     entity.Name,
                     entity.Icon,
-                    Enum.Parse<EncryptSide>(entity.EncryptSide),
-                    entity.Version))
+                    Enum.Parse<EncryptionSide>(entity.EncryptSide),
+                    entity.Version,
+                    DateTimeOffset.FromUnixTimeMilliseconds(entity.AddedAtTimespan)
+                    ))
                 .ToReadonlyList();
         }, ToUnreachableError);
 
@@ -42,11 +44,11 @@ public sealed class CollectionRepository : ICollectionRepository
         CollectionId id,
         string name,
         string icon,
-        EncryptSide encryptSide,
+        EncryptionSide encryptionSide,
         DateTimeOffset addedAt,
         int version) => _connectionFactory.TryAsync(async (connection, transaction) =>
     {
-        var createCollectionQuery = _queries.RegisterCollectionQuery(id, name, icon, encryptSide, version);
+        var createCollectionQuery = _queries.RegisterCollectionQuery(id, name, icon, encryptionSide, version);
 
         await connection.ExecuteAsync(createCollectionQuery, transaction: transaction);
 
@@ -59,5 +61,5 @@ public sealed class CollectionRepository : ICollectionRepository
     
     private static UnreachableError ToUnreachableError(Exception exception) => new UnreachableError(exception.Message);
 
-    private sealed record CollectionEntity(Guid Id, string Name, string Icon, string EncryptSide, int Version);
+    private sealed record CollectionEntity(Guid Id, string Name, string Icon, string EncryptSide, int Version, long AddedAtTimespan);
 }

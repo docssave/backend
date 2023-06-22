@@ -15,7 +15,7 @@ public interface ICollectionRepository
         CollectionId id,
         string name,
         string icon,
-        EncryptSide encryptSide,
+        EncryptionSide encryptionSide,
         DateTimeOffset addedAt,
         int version);
 }

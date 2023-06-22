@@ -47,7 +47,7 @@ internal sealed class UserCreatedEventConsumer : INotificationHandler<UserCreate
             CollectionId.New(),
             defaultName,
             defaultIcon,
-            EncryptSide.Client,
+            EncryptionSide.Client,
             _clock.Now,
             version: 1);
 

@@ -1,6 +1,6 @@
 ﻿namespace Col.Contracts;
 
-public enum EncryptSide
+public enum EncryptionSide
 {
     Client,
     Server
