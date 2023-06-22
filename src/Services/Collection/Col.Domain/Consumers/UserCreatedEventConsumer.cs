@@ -1,27 +1,58 @@
-﻿using Col.Contracts;
+﻿using Clock;
+using Col.Contracts;
 using Col.DataAccess;
 using Idn.Contracts.Events;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Col.Domain.Consumers;
 
 internal sealed class UserCreatedEventConsumer : INotificationHandler<UserCreatedEvent>
 {
     private readonly ICollectionRepository _repository;
+    private readonly ILogger<UserCreatedEventConsumer> _logger;
+    private readonly IClock _clock;
 
-    public UserCreatedEventConsumer(ICollectionRepository repository) => 
+    public UserCreatedEventConsumer(
+        ICollectionRepository repository,
+        ILogger<UserCreatedEventConsumer> logger,
+        IClock clock)
+    {
         _repository = repository;
-    
+        _logger = logger;
+        _clock = clock;
+    }
+
     public async Task Handle(UserCreatedEvent notification, CancellationToken cancellationToken)
     {
-        var collections = await _repository.ListCollectionsAsync(notification.Id);
+        var listResult = await _repository.ListAsync(notification.Id);
 
-        if (!collections.Any())
+        if (listResult.IsT1)
         {
-            const string defaultName = "My collection";
-            const string defaultIcon = "#";
+            _logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(ICollectionRepository), listResult.AsT1.Reason);
+            
+            return;
+        }
+        
+        if (listResult.AsT0.Any())
+        {
+            return;
+        }
+        
+        const string defaultName = "My collection";
+        const string defaultIcon = "#";
 
-            await _repository.RegisterCollectionAsync(CollectionId.New(), defaultName, defaultIcon, EncryptSide.Client, version: 1);
+        var registerResult = await _repository.RegisterAsync(
+            CollectionId.New(),
+            defaultName,
+            defaultIcon,
+            EncryptSide.Client,
+            _clock.Now,
+            version: 1);
+
+        if (registerResult.IsT1)
+        {
+            _logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(ICollectionRepository), listResult.AsT1.Reason);
         }
     }
 }

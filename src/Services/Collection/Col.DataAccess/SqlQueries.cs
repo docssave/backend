@@ -1,14 +1,26 @@
 using Col.Contracts;
 using Idn.Contracts;
 using SqlKata;
+using Sql.Abstractions;
 
 namespace Col.DataAccess;
 
-internal static class SqlQueries
+internal sealed class SqlQueries
 {
+    private readonly IQueryCompiler _compiler;
+
+    public SqlQueries(IQueryCompiler compiler) =>
+        _compiler = compiler;
+
     //TODO: SQL Server doesn't support ON DUPLICATE KYE
-    public static Query RegisterCollectionQuery(CollectionId id, string name, string icon, EncryptSide encryptSide, int version) =>
-        new Query("Collections")
+    public string RegisterCollectionQuery(
+        CollectionId id,
+        string name,
+        string icon,
+        EncryptSide encryptSide,
+        int version)
+    {
+        var query = new Query("Collections")
             .AsInsert(new
             {
                 Id = id.Value,
@@ -18,18 +30,29 @@ internal static class SqlQueries
                 Version = version
             });
 
-    public static Query RegisterUserCollectionQuery(UserId userId, CollectionId collectionId) =>
-        new Query("UserCollections")
+        return _compiler.Compile(query);
+    }
+
+    public string RegisterUserCollectionQuery(UserId userId, CollectionId collectionId)
+    {
+        var query = new Query("UserCollections")
             .AsInsert(new
             {
                 UserId = userId,
                 CollectionId = collectionId
             });
 
-    public static Query GetCollectionsQuery(UserId userId) =>
-        new Query("Collections")
+        return _compiler.Compile(query);
+    }
+
+    public string GetCollectionsQuery(UserId userId)
+    {
+        var query = new Query("Collections")
             .Select("Id", "Name", "Icon", "EncryptSide", "Version")
             .Join("UserCollections", "UserCollections.CollectionId", "Collections.Id")
-            .Where("UserCollections.UserId", userId);
+            .Where("UserCollections.UserId", userId)
+            .OrderBy("AddedAtTimespan");
 
+        return _compiler.Compile(query);
+    }
 }

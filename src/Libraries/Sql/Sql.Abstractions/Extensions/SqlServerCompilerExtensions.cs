@@ -1,7 +1,7 @@
 ﻿using SqlKata;
 using SqlKata.Compilers;
 
-namespace SqlServer.Abstraction.Extensions;
+namespace Sql.Abstractions.Extensions;
 
 public static class SqlServerCompilerExtensions
 {

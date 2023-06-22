@@ -1,8 +1,8 @@
-﻿namespace SqlServer.Abstraction;
+﻿namespace Sql.Abstractions;
 
 public sealed class RepositoryResult<T> where T : class
 {
-    public RepositoryResult(T value, Exception? exception)
+    private RepositoryResult(T value, Exception? exception)
     {
         Value = value;
         Exception = exception;

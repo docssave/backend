@@ -1,6 +1,6 @@
 ﻿using SqlKata.Compilers;
 
-namespace SqlServer.Abstraction;
+namespace Sql.Abstractions;
 
 public abstract class RepositoryBase
 {

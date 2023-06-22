@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace SqlServer.Abstraction;
+namespace Sql.Abstractions;
 
 public interface IDbConnectionFactory
 {

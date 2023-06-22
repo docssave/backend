@@ -1,10 +1,14 @@
 ﻿using System.Data;
+using System.Data.Common;
 
-namespace SqlServer.Abstraction.Extensions;
+namespace Sql.Abstractions.Extensions;
 
 public static class DbConnectionFactoryExtensions
 {
-    public static async Task<T> TryAsync<T>(this IDbConnectionFactory dbConnectionFactory, Func<IDbConnection, Task<T>> sqlFunc, Func<Exception, T> exceptionFunc)
+    public static async Task<T> TryAsync<T>(
+        this IDbConnectionFactory dbConnectionFactory,
+        Func<IDbConnection, Task<T>> sqlFunc,
+        Func<Exception, T> exceptionFunc)
     {
         try
         {
@@ -12,7 +16,7 @@ public static class DbConnectionFactoryExtensions
 
             return await sqlFunc(connection);
         }
-        catch (Exception e)
+        catch (DbException e)
         {
             return exceptionFunc(e);
         }
