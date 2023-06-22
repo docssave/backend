@@ -43,6 +43,7 @@ internal sealed class UserCreatedEventConsumer : INotificationHandler<UserCreate
         const string defaultIcon = "#";
 
         var registerResult = await _repository.RegisterAsync(
+            notification.Id,
             CollectionId.New(),
             defaultName,
             defaultIcon,

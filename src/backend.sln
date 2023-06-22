@@ -56,7 +56,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Col.DataAccess", "Services\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ws.Contracts", "Services\WorkSpace\Ws.Contracts\Ws.Contracts.csproj", "{757F0C33-FB7B-45D9-9EE4-CA8E3D619AD0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collection.Extensions", "Libraries\Collection.Extensions\Collection.Extensions.csproj", "{D97697DC-36B0-411F-B3C9-A5A1AD6251E6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collections", "Libraries\Collections\Collections.csproj", "{D97697DC-36B0-411F-B3C9-A5A1AD6251E6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clock", "Libraries\Clock\Clock.csproj", "{DEC9C582-D40E-40D7-B4BC-E7C5312853B7}"
 EndProject

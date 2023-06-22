@@ -1,4 +1,5 @@
 using Col.Contracts;
+using Collections.Extensions;
 using Dapper;
 using Idn.Contracts;
 using OneOf;
@@ -21,24 +22,22 @@ public sealed class CollectionRepository : ICollectionRepository
     }
 
     public Task<OneOf<IReadOnlyList<Collection>, UnreachableError>> ListAsync(UserId userId) =>
-        _connectionFactory.TryAsync<OneOf<IReadOnlyList<Collection>, UnreachableError>>(async connection =>
-    {
-        var sqlQuery = _queries.GetCollectionsQuery(userId);
+        _connectionFactory.TryAsync(async connection =>
+        {
+            var sqlQuery = _queries.GetCollectionsQuery(userId);
 
-        var entities = await connection.QueryAsync<CollectionEntity>(sqlQuery);
+            var entities = await connection.QueryAsync<CollectionEntity>(sqlQuery);
 
-        return entities.Select(entity => new Collection(
-                new CollectionId(entity.Id),
-                entity.Name,
-                entity.Icon,
-                Enum.Parse<EncryptSide>(entity.EncryptSide),
-                entity.Version))
-            .ToReadonlyList();
-    }, ToUnreachableError);
+            return entities.Select(entity => new Collection(
+                    new CollectionId(entity.Id),
+                    entity.Name,
+                    entity.Icon,
+                    Enum.Parse<EncryptSide>(entity.EncryptSide),
+                    entity.Version))
+                .ToReadonlyList();
+        }, ToUnreachableError);
 
-    private OneOf<IReadOnlyList<Collection>, UnreachableError> ToUnreachableError(Exception exception) => new UnreachableError(exception.Message);
-
-    public Task<OneOf<Success, UnreachableError>> RegisterCollectionAsync(
+    public Task<OneOf<Success, UnreachableError>> RegisterAsync(
         UserId userId,
         CollectionId id,
         string name,
@@ -56,17 +55,9 @@ public sealed class CollectionRepository : ICollectionRepository
         await connection.ExecuteAsync(createUserCollectionQuery, transaction: transaction);
 
         return new Success();
-    }, RepositoryResult<Collection>.Failed);
+    }, ToUnreachableError);
+    
+    private static UnreachableError ToUnreachableError(Exception exception) => new UnreachableError(exception.Message);
 
     private sealed record CollectionEntity(Guid Id, string Name, string Icon, string EncryptSide, int Version);
-    
-    private static IReadOnlyList<T> ToReadonlyList<T>(this IEnumerable<T> source)
-    {
-        if (source is IReadOnlyList<T> list)
-        {
-            return list;
-        }
-
-        return source.ToList();
-    }
 }

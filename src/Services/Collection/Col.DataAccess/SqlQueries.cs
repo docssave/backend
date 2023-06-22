@@ -5,7 +5,7 @@ using Sql.Abstractions;
 
 namespace Col.DataAccess;
 
-internal sealed class SqlQueries
+public sealed class SqlQueries
 {
     private readonly IQueryCompiler _compiler;
 

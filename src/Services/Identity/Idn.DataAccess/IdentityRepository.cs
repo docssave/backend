@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using Idn.Contracts;
-using SqlServer.Abstraction;
-using SqlServer.Abstraction.Extensions;
+using Sql.Abstractions;
+using Sql.Abstractions.Extensions;
 
 namespace Idn.DataAccess;
 
