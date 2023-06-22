@@ -6,7 +6,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SqlServer.Abstraction\SqlServer.Abstraction.csproj" />
+      <ProjectReference Include="..\Sql.Abstractions\Sql.Abstractions.csproj" />
     </ItemGroup>
 
 </Project>

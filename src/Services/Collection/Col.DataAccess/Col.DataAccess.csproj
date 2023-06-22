@@ -1,5 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\Collections\Collections.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\Sql\Sql.Abstractions\Sql.Abstractions.csproj" />
     <ProjectReference Include="..\..\Identity\Idn.Contracts\Idn.Contracts.csproj" />
+    <ProjectReference Include="..\Col.Contracts\Col.Contracts.csproj" />
   </ItemGroup>
 </Project>

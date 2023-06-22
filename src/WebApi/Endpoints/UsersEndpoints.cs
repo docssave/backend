@@ -11,7 +11,9 @@ public static class UsersEndpoints
     
     public static void MapUsersEndpoints(this WebApplication application)
     {
-        application.MapPut($"{BaseRoute}/authorization", AuthorizationAsync).AllowAnonymous().AddEndpointFilter<ValidatorFilter<AuthorizationRequest>>();
+        application.MapPut($"{BaseRoute}/authorization", AuthorizationAsync)
+            .AllowAnonymous()
+            .AddEndpointFilter<ValidatorFilter<AuthorizationRequest>>();
     }
 
     private static async Task<IResult> AuthorizationAsync(AuthorizationRequest request, [FromServices] IMediator mediator)

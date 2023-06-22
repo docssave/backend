@@ -1,4 +1,5 @@
 using System.Text;
+using Clock;
 using Idn.Contracts.Options;
 using Idn.Plugin;
 using Microsoft.IdentityModel.Tokens;
@@ -33,6 +34,7 @@ builder.Services.Configure<TokenOptions>(builder.Configuration.GetSection(TokenO
 builder.Services.AddDbConnectionFactory(builder.Configuration.GetConnectionString("HoneyBadgerDb"));
 builder.Services.AddIdentityService();
 builder.Services.AddWorkspaceService();
+builder.Services.AddClock();
 
 var app = builder.Build();
 

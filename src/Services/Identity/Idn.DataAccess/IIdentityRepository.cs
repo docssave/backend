@@ -1,5 +1,4 @@
-﻿using SqlServer;
-using SqlServer.Abstraction;
+﻿using Sql.Abstractions;
 
 namespace Idn.DataAccess;
 

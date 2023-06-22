@@ -1,5 +1,5 @@
 ﻿using Idn.Contracts;
-using SqlServer.Abstraction;
+using Sql.Abstractions;
 
 namespace Ws.DataAccess;
 
