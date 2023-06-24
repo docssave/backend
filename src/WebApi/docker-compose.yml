@@ -1,17 +1,14 @@
 ﻿version: '3'
 
 services:
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:2019-latest
+  mysql:
+    image: mysql
     restart: always
-    environment:
-      MSSQL_SA_PASSWORD: "yourStrong(!)Password"
-      ACCEPT_EULA: "Y"
     ports:
-      - "1433:1433"
-    volumes:
-      - sqlserver:/var/opt/mssql
-    container_name: sqlserver
+      - "3306:3306"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "1"
+      MYSQL_DATABASE: "DocsSave"
     
 volumes:
-  sqlserver:
+  mysql:
