@@ -37,7 +37,7 @@ internal sealed class AuthorizationHandler : IRequestHandler<AuthorizationReques
         if (result.Value == null)
         {
             var encryptedEmail = await _encryptor.EncryptAsync(userInfo.Email);
-            result = await _repository.CreateUserAsync(new CreateUser(userInfo.Name, encryptedEmail, AuthorizationSource.Google, userInfo.Id));
+            result = await _repository.RegisterUserAsync(new CreateUser(userInfo.Name, encryptedEmail, AuthorizationSource.Google, userInfo.Id));
 
             if (result.IsSuccess)
             {

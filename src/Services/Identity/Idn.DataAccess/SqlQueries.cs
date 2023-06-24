@@ -1,18 +1,36 @@
-﻿using SqlKata;
+﻿using Sql.Abstractions;
+using SqlKata;
 
 namespace Idn.DataAccess;
 
-internal static class SqlQueries
+public sealed class SqlQueries
 {
-    public static Query GetUserQuery(string sourceUserId) => new Query("Users").Where("SourceUserId", sourceUserId);
+    private readonly IQueryCompiler _compiler;
 
-    public static Query CreateUserQuery(CreateUser createUser, DateTimeOffset registeredAt) => new Query("Users")
-        .AsInsert(new
-        {
-            Name = createUser.Name,
-            EncryptedEmail = createUser.EncryptedEmail,
-            Source = createUser.Source.ToString(),
-            SourceUserId = createUser.SourceUserId,
-            RegisteredAt = registeredAt.ToUnixTimeMilliseconds()
-        }, returnId: true);
+    public SqlQueries(IQueryCompiler compiler)
+    {
+        _compiler = compiler;
+    }
+    
+    public string GetUserQuery(string sourceUserId)
+    {
+        var query = new Query("Users").Where("SourceUserId", sourceUserId);
+
+        return _compiler.Compile(query);
+    }
+
+    public string CreateUserQuery(CreateUser createUser, DateTimeOffset registeredAt)
+    {
+        var query = new Query("Users")
+            .AsInsert(new
+            {
+                Name = createUser.Name,
+                EncryptedEmail = createUser.EncryptedEmail,
+                Source = createUser.Source.ToString(),
+                SourceUserId = createUser.SourceUserId,
+                RegisteredAt = registeredAt.ToUnixTimeMilliseconds()
+            }, returnId: true);
+
+        return _compiler.Compile(query);
+    }
 }

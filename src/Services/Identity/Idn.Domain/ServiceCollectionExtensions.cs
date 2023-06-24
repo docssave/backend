@@ -8,6 +8,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddIdentity(this IServiceCollection services)
     {
+        services.AddSingleton<SqlQueries>();
         services.AddScoped<IIdentityRepository, IdentityRepository>();
         services.AddScoped<ISourceService, DummySourceService>();
         services.AddScoped<IEncryptor, DummyEncryptor>();

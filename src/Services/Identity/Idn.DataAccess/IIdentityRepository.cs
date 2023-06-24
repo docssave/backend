@@ -1,10 +1,12 @@
-﻿using Sql.Abstractions;
+﻿using OneOf;
+using OneOf.Types;
+using Sql.Abstractions.Errors;
 
 namespace Idn.DataAccess;
 
 public interface IIdentityRepository
 {
-    Task<RepositoryResult<User?>> GetUserAsync(string sourceUserId);
+    Task<OneOf<User, NotFound, UnreachableError>> GetUserAsync(string sourceUserId);
 
-    Task<RepositoryResult<User>> CreateUserAsync(CreateUser createUser);
+    Task<OneOf<User, UnreachableError>> RegisterUserAsync(CreateUser createUser, DateTimeOffset registerAt);
 }
