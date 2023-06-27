@@ -40,6 +40,25 @@ public static class DbConnectionFactoryExtensions
             return exceptionFunc(e);
         }
     }
+    
+    public static async Task<OneOf<T, TError, UnreachableError>> TryAsync<T, TError>(
+        this IDbConnectionFactory dbConnectionFactory,
+        Func<IDbConnection, Task<OneOf<T, TError>>> sqlFunc,
+        Func<Exception, UnreachableError> exceptionFunc)
+    {
+        try
+        {
+            using var connection = await dbConnectionFactory.CreateAsync();
+
+            var result = await sqlFunc(connection);
+
+            return result.Match(OneOf<T, TError, UnreachableError>.FromT0, OneOf<T, TError, UnreachableError>.FromT1);
+        }
+        catch (DbException e)
+        {
+            return exceptionFunc(e);
+        }
+    }
 
     public static async Task<T> TryAsync<T>(
         this IDbConnectionFactory dbConnectionFactory,

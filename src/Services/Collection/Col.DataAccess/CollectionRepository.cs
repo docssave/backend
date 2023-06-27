@@ -59,7 +59,7 @@ public sealed class CollectionRepository : ICollectionRepository
         return new Success();
     }, ToUnreachableError);
     
-    private static UnreachableError ToUnreachableError(Exception exception) => new UnreachableError(exception.Message);
+    private static UnreachableError ToUnreachableError(Exception exception) => new(exception.Message);
 
     private sealed record CollectionEntity(Guid Id, string Name, string Icon, string EncryptSide, int Version, long AddedAtTimespan);
 }

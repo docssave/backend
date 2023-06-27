@@ -26,30 +26,31 @@ public sealed class IdentityRepository : IIdentityRepository
 
             var entity = await connection.QuerySingleOrDefaultAsync<UserEntity>(sqlQuery);
 
-            var user = entity == null
-                ? null
-                : new User(
+            if (entity == null)
+            {
+                return OneOf<User, NotFound>.FromT1(new NotFound());
+            }
+
+            return new User(
                     new UserId(entity.Id),
                     entity.Name,
                     entity.EncryptedEmail,
                     Enum.Parse<AuthorizationSource>(entity.Source),
                     DateTimeOffset.FromUnixTimeMilliseconds(entity.RegisteredAt));
+        }, ToUnreachableError);
 
-            return RepositoryResult<User?>.Success(user);
-        }, RepositoryResult<User>.Failed);
-
-    public Task<OneOf<User, UnreachableError>> CreateUserAsync(CreateUser createUser) =>
+    public Task<OneOf<User, UnreachableError>> RegisterUserAsync(CreateUser createUser, DateTimeOffset registerAt) =>
         _connectionFactory.TryAsync(async connection =>
         {
-            var now = DateTimeOffset.UtcNow;
-            
-            var sqlQuery = _sqlQueries.CreateUserQuery(createUser, now);
+            var sqlQuery = _sqlQueries.CreateUserQuery(createUser, registerAt);
 
             var userId = await connection.QuerySingleAsync<long>(sqlQuery);
-            var user = new User(new UserId(userId), createUser.Name, createUser.EncryptedEmail, createUser.Source, now);
+            var user = new User(new UserId(userId), createUser.Name, createUser.EncryptedEmail, createUser.Source, registerAt);
 
-            return RepositoryResult<User>.Success(user);
-        }, RepositoryResult<User>.Failed);
+            return user;
+        }, ToUnreachableError);
+    
+    private static UnreachableError ToUnreachableError(Exception exception) => new(exception.Message);
 
     private sealed record UserEntity(long Id, string Name, string EncryptedEmail, string Source, string SourceUserId, long RegisteredAt);
 }
