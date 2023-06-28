@@ -8,5 +8,5 @@ public interface IIdentityRepository
 {
     Task<OneOf<User, NotFound, UnreachableError>> GetUserAsync(string sourceUserId);
 
-    Task<OneOf<User, UnreachableError>> RegisterUserAsync(CreateUser createUser, DateTimeOffset registerAt);
+    Task<OneOf<User, UnreachableError>> RegisterUserAsync(CreateUser createUser, DateTimeOffset registeredAt);
 }

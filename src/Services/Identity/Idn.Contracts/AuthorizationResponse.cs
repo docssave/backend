@@ -1,5 +1,3 @@
-﻿using Common;
+﻿namespace Idn.Contracts;
 
-namespace Idn.Contracts;
-
-public record AuthorizationResponse(string? Token, Error? Error) : ResponseBase(Error);
+public record AuthorizationResponse(string Token);

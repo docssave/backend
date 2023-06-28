@@ -1,6 +1,9 @@
-﻿namespace Idn.Domain;
+﻿using OneOf;
+using OneOf.Types;
+
+namespace Idn.Domain.Services;
 
 internal interface ISourceService
 {
-    Task<SourceUserInfo> ExtractUserInfoAsync(string token);
+    Task<OneOf<SourceUserInfo, Error<string>>> ExtractUserInfoAsync(string token);
 }

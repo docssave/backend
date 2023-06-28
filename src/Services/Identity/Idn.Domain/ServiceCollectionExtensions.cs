@@ -1,5 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using Idn.DataAccess;
+using Idn.Domain.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Idn.Domain;

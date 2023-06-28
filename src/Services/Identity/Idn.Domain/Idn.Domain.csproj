@@ -1,11 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
+        <ProjectReference Include="..\..\..\Libraries\Clock\Clock.csproj" />
+        <ProjectReference Include="..\..\..\Libraries\DocsSave.OneOf\DocsSave.OneOf.csproj" />
         <ProjectReference Include="..\Idn.DataAccess\Idn.DataAccess.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.Extensions.Logging.Abstractions">
+        <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\7.0.7\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

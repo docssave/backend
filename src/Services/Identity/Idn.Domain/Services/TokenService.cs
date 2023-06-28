@@ -6,7 +6,7 @@ using Idn.DataAccess;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Idn.Domain;
+namespace Idn.Domain.Services;
 
 public sealed class TokenService : ITokenService
 {

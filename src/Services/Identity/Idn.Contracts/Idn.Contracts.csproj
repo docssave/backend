@@ -1,7 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Libraries\Common\Common.csproj"/>
+    <ProjectReference Include="..\..\..\Libraries\Common\Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OneOf" Version="3.0.255" />
   </ItemGroup>
 
 </Project>

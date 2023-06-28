@@ -1,9 +1,12 @@
-﻿namespace Idn.Domain;
+﻿using OneOf;
+using OneOf.Types;
+
+namespace Idn.Domain.Services;
 
 internal sealed class DummySourceService : ISourceService
 {
-    public Task<SourceUserInfo> ExtractUserInfoAsync(string token)
+    public Task<OneOf<SourceUserInfo, Error<string>>> ExtractUserInfoAsync(string token)
     {
-        return Task.FromResult(new SourceUserInfo(token, "No name", "test@docssave.com"));
+        return Task.FromResult(OneOf<SourceUserInfo, Error<string>>.FromT0(new SourceUserInfo(token, "No name", "test@docssave.com")));
     }
 }
