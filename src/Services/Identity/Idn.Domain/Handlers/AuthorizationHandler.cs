@@ -68,7 +68,12 @@ internal sealed class AuthorizationHandler : IRequestHandler<AuthorizationReques
         async Task<OneOf<AuthorizationResponse, Error<string>>> RegisterUser(NotFound _)
         {
             var encryptedEmail = await _encryptor.EncryptAsync(sourceUserInfo.Email);
-            var registerUserResult = await _repository.RegisterUserAsync(new CreateUser(sourceUserInfo.Name, encryptedEmail, AuthorizationSource.Google, sourceUserInfo.Id), _clock.Now);
+            var registerUserResult = await _repository.RegisterUserAsync(
+                sourceUserInfo.Id,
+                sourceUserInfo.Name,
+                encryptedEmail,
+                 request.Source ?? AuthorizationSource.Google,
+                _clock.Now);
 
             if (registerUserResult.IsT0)
             {

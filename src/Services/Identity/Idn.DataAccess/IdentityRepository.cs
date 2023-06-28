@@ -39,13 +39,13 @@ public sealed class IdentityRepository : IIdentityRepository
                     DateTimeOffset.FromUnixTimeMilliseconds(entity.RegisteredAt));
         }, ToUnreachableError);
 
-    public Task<OneOf<User, UnreachableError>> RegisterUserAsync(CreateUser createUser, DateTimeOffset registeredAt) =>
+    public Task<OneOf<User, UnreachableError>> RegisterUserAsync(string sourceUserId, string name, string encryptedEmail, AuthorizationSource source, DateTimeOffset registeredAt) =>
         _connectionFactory.TryAsync(async connection =>
         {
-            var sqlQuery = _sqlQueries.CreateUserQuery(createUser, registeredAt);
+            var sqlQuery = _sqlQueries.CreateUserQuery(sourceUserId, name, encryptedEmail, source, registeredAt);
 
             var userId = await connection.QuerySingleAsync<long>(sqlQuery);
-            var user = new User(new UserId(userId), createUser.Name, createUser.EncryptedEmail, createUser.Source, registeredAt);
+            var user = new User(new UserId(userId), name, encryptedEmail, source, registeredAt);
 
             return user;
         }, ToUnreachableError);

@@ -1,4 +1,5 @@
-﻿using Sql.Abstractions;
+﻿using Idn.Contracts;
+using Sql.Abstractions;
 using SqlKata;
 
 namespace Idn.DataAccess;
@@ -14,20 +15,20 @@ public sealed class SqlQueries
     
     public string GetUserQuery(string sourceUserId)
     {
-        var query = new Query("Users").Where("SourceUserId", sourceUserId);
+        var query = new Query("Users").Where("SourceUserId", sourceUserId).Limit(1);
 
         return _compiler.Compile(query);
     }
 
-    public string CreateUserQuery(CreateUser createUser, DateTimeOffset registeredAt)
+    public string CreateUserQuery(string sourceUserId, string name, string encryptedEmail, AuthorizationSource source, DateTimeOffset registeredAt)
     {
         var query = new Query("Users")
             .AsInsert(new
             {
-                Name = createUser.Name,
-                EncryptedEmail = createUser.EncryptedEmail,
-                Source = createUser.Source.ToString(),
-                SourceUserId = createUser.SourceUserId,
+                Name = name,
+                EncryptedEmail = encryptedEmail,
+                Source = source.ToString(),
+                SourceUserId = sourceUserId,
                 RegisteredAt = registeredAt.ToUnixTimeMilliseconds()
             }, returnId: true);
 
