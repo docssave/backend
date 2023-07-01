@@ -1,15 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
   <ItemGroup>
     <ProjectReference Include="..\..\..\Libraries\Clock\Clock.csproj" />
     <ProjectReference Include="..\..\Identity\Idn.Contracts\Idn.Contracts.csproj" />
     <ProjectReference Include="..\Col.DataAccess\Col.DataAccess.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Microsoft.Extensions.Logging.Abstractions">
-      <HintPath>..\..\..\..\..\..\.nuget\packages\microsoft.extensions.logging.abstractions\2.0.1\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.0.1" />
-  </ItemGroup>
+
 </Project>
