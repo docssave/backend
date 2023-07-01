@@ -72,13 +72,13 @@ internal sealed class AuthorizationHandler : IRequestHandler<AuthorizationReques
                 sourceUserInfo.Id,
                 sourceUserInfo.Name,
                 encryptedEmail,
-                 request.Source ?? AuthorizationSource.Google,
+                request.Source ?? AuthorizationSource.Google,
                 _clock.Now);
 
             if (registerUserResult.IsT0)
             {
                 var registeredUser = registerUserResult.AsT0;
-                await _mediator.Publish(new UserCreatedEvent(registeredUser.Id, registeredUser.RegisteredAt), cancellationToken);
+                await _mediator.Publish(new UserRegisteredEvent(registeredUser.Id, registeredUser.RegisteredAt), cancellationToken);
             }
 
             return registerUserResult.Match(ToToken, ToError);

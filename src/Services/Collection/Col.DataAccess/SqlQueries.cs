@@ -18,7 +18,8 @@ public sealed class SqlQueries
         string name,
         string icon,
         EncryptionSide encryptionSide,
-        int version)
+        int version,
+        DateTimeOffset addedAt)
     {
         var query = new Query("Collections")
             .AsInsert(new
@@ -27,7 +28,8 @@ public sealed class SqlQueries
                 Name = name,
                 Icon = icon,
                 EncryptSide = encryptionSide,
-                Version = version
+                Version = version,
+                AddedAtTimespan = addedAt.ToUnixTimeMilliseconds()
             });
 
         return _compiler.Compile(query);

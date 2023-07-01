@@ -48,7 +48,7 @@ public sealed class CollectionRepository : ICollectionRepository
         DateTimeOffset addedAt,
         int version) => _connectionFactory.TryAsync(async (connection, transaction) =>
     {
-        var createCollectionQuery = _queries.RegisterCollectionQuery(id, name, icon, encryptionSide, version);
+        var createCollectionQuery = _queries.RegisterCollectionQuery(id, name, icon, encryptionSide, version, addedAt);
 
         await connection.ExecuteAsync(createCollectionQuery, transaction: transaction);
 

@@ -1,28 +1,52 @@
 ﻿using Idn.Contracts;
+using Sql.Abstractions;
 using SqlKata;
+using Ws.Contracts;
 
 namespace Ws.DataAccess;
 
-internal static class SqlQueries
+public sealed class SqlQueries
 {
-    public static Query CreateWorkspaceQuery(string name) =>
-        new Query("Workspaces")
-            .AsInsert(new
-            {
-                Name = name
-            }, returnId: true);
+    private readonly IQueryCompiler _compiler;
 
-    public static Query CreateUserWorkspaceQuery(UserId userId, long workspaceId) =>
-        new Query("UserWorkspaces")
+    public SqlQueries(IQueryCompiler compiler)
+    {
+        _compiler = compiler;
+    }
+    
+    public string RegisterWorkspaceQuery(WorkspaceId id, string name, DateTimeOffset registeredAt)
+    {
+        var query = new Query("Workspaces")
             .AsInsert(new
             {
-                UserId = userId,
-                WorkspaceId = workspaceId
+                Id = id.Value,
+                Name = name,
+                RegisteredAtTimespan = registeredAt.ToUnixTimeMilliseconds()
             });
 
-    public static Query GetWorkspaceQuery(UserId userId) =>
-        new Query("Workspaces")
-            .Select("Id", "Name")
+        return _compiler.Compile(query);
+    }
+
+    public string RegisterUserWorkspaceQuery(UserId userId, WorkspaceId workspaceId)
+    {
+        var query = new Query("UserWorkspaces")
+            .AsInsert(new
+            {
+                UserId = userId.Value,
+                WorkspaceId = workspaceId.Value
+            });
+
+        return _compiler.Compile(query);
+    }
+
+    public string GetWorkspaceQuery(UserId userId)
+    {
+        var query = new Query("Workspaces")
+            .Select("Id", "Name", "RegisteredAtTimespan")
             .Join("UserWorkspaces", "UserWorkspaces.WorkspaceId", "Workspaces.Id")
-            .Where("UserWorkspaces.UserId", userId);
+            .Where("UserWorkspaces.UserId", userId)
+            .OrderByDesc("RegisteredAtTimespan");
+
+        return _compiler.Compile(query);
+    }
 }

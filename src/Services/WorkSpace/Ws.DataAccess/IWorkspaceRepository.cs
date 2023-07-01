@@ -1,11 +1,14 @@
 ﻿using Idn.Contracts;
-using Sql.Abstractions;
+using OneOf;
+using OneOf.Types;
+using Sql.Abstractions.Errors;
+using Ws.Contracts;
 
 namespace Ws.DataAccess;
 
 public interface IWorkspaceRepository
 {
-    Task<RepositoryResult<Workspace?>> GetWorkspaceAsync(UserId userId);
+    Task<OneOf<IReadOnlyList<Workspace>, UnreachableError>> ListAsync(UserId userId);
 
-    Task<RepositoryResult<Workspace>> CreateWorkspaceAsync(UserId userId, string name);
+    Task<OneOf<Success, UnreachableError>> RegisterAsync(WorkspaceId id, string name,  UserId userId, DateTimeOffset registeredAt);
 }
