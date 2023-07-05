@@ -4,16 +4,16 @@ namespace Ws.DataAccess;
 
 public sealed class Workspace
 {
-    public Workspace(WorkspaceId id, string name, DateTimeOffset registeredAt)
+    public Workspace(WorkspaceId id, string name, DateTimeOffset addedAt)
     {
         Id = id;
         Name = name;
-        RegisteredAt = registeredAt;
+        AddedAt = addedAt;
     }
 
     public WorkspaceId Id { get; }
     
     public string Name { get; }
 
-    public DateTimeOffset RegisteredAt { get; }
+    public DateTimeOffset AddedAt { get; }
 }

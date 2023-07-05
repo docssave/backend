@@ -27,7 +27,7 @@ public sealed class SqlQueries
                 Id = id.Value,
                 Name = name,
                 Icon = icon,
-                EncryptSide = encryptionSide,
+                EncryptSide = encryptionSide.ToString(),
                 Version = version,
                 AddedAtTimespan = addedAt.ToUnixTimeMilliseconds()
             });

@@ -1,3 +1,3 @@
 ﻿namespace Idn.Contracts;
 
-public record AuthorizationResponse(string Token);
+public sealed record AuthorizationResponse(string Token);

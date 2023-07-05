@@ -8,9 +8,9 @@ public sealed class AddWorkspacesTable : Migration
     public override void Up()
     {
         Create.Table("Workspaces")
-            .WithColumn("Id").AsGuid().PrimaryKey().Identity()
+            .WithColumn("Id").AsGuid().PrimaryKey()
             .WithColumn("Name").AsAnsiString().NotNullable()
-            .WithColumn("RegisteredAtTimespan").AsInt64();
+            .WithColumn("AddedAtTimespan").AsInt64();
     }
 
     public override void Down()

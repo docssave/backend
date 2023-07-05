@@ -32,7 +32,7 @@ public sealed class WorkspaceRepository : IWorkspaceRepository
                 .Select(entity => new Workspace(
                     new WorkspaceId(entity.Id),
                     entity.Name,
-                    DateTimeOffset.FromUnixTimeMilliseconds(entity.RegisteredAtTimespan)))
+                    DateTimeOffset.FromUnixTimeMilliseconds(entity.AddedAtTimespan)))
                 .ToReadonlyList();
         }, ToUnreachableError);
 
@@ -52,5 +52,5 @@ public sealed class WorkspaceRepository : IWorkspaceRepository
     
     private static UnreachableError ToUnreachableError(Exception exception) => new(exception.Message);
 
-    private sealed record WorkspaceEntity(Guid Id, string Name, long RegisteredAtTimespan);
+    private sealed record WorkspaceEntity(Guid Id, string Name, long AddedAtTimespan);
 }

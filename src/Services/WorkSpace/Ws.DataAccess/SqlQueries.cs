@@ -21,7 +21,7 @@ public sealed class SqlQueries
             {
                 Id = id.Value,
                 Name = name,
-                RegisteredAtTimespan = registeredAt.ToUnixTimeMilliseconds()
+                AddedAtTimespan = registeredAt.ToUnixTimeMilliseconds()
             });
 
         return _compiler.Compile(query);
@@ -42,10 +42,10 @@ public sealed class SqlQueries
     public string GetWorkspaceQuery(UserId userId)
     {
         var query = new Query("Workspaces")
-            .Select("Id", "Name", "RegisteredAtTimespan")
+            .Select("Id", "Name", "AddedAtTimespan")
             .Join("UserWorkspaces", "UserWorkspaces.WorkspaceId", "Workspaces.Id")
             .Where("UserWorkspaces.UserId", userId)
-            .OrderByDesc("RegisteredAtTimespan");
+            .OrderByDesc("AddedAtTimespan");
 
         return _compiler.Compile(query);
     }

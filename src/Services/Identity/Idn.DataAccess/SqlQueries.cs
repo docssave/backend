@@ -15,7 +15,9 @@ public sealed class SqlQueries
     
     public string GetUserQuery(string sourceUserId)
     {
-        var query = new Query("Users").Where("SourceUserId", sourceUserId).Limit(1);
+        var query = new Query("Users")
+            .Select("Id", "Name", "EncryptedEmail", "Source", "SourceUserId", "RegisteredAtTimespan")
+            .Where("SourceUserId", sourceUserId).Limit(1);
 
         return _compiler.Compile(query);
     }
@@ -29,7 +31,7 @@ public sealed class SqlQueries
                 EncryptedEmail = encryptedEmail,
                 Source = source.ToString(),
                 SourceUserId = sourceUserId,
-                RegisteredAt = registeredAt.ToUnixTimeMilliseconds()
+                RegisteredAtTimespan = registeredAt.ToUnixTimeMilliseconds()
             }, returnId: true);
 
         return _compiler.Compile(query);

@@ -36,7 +36,7 @@ public sealed class IdentityRepository : IIdentityRepository
                     entity.Name,
                     entity.EncryptedEmail,
                     Enum.Parse<AuthorizationSource>(entity.Source),
-                    DateTimeOffset.FromUnixTimeMilliseconds(entity.RegisteredAt));
+                    DateTimeOffset.FromUnixTimeMilliseconds(entity.RegisteredAtTimespan));
         }, ToUnreachableError);
 
     public Task<OneOf<User, UnreachableError>> RegisterUserAsync(string sourceUserId, string name, string encryptedEmail, AuthorizationSource source, DateTimeOffset registeredAt) =>
@@ -52,5 +52,5 @@ public sealed class IdentityRepository : IIdentityRepository
     
     private static UnreachableError ToUnreachableError(Exception exception) => new(exception.Message);
 
-    private sealed record UserEntity(long Id, string Name, string EncryptedEmail, string Source, string SourceUserId, long RegisteredAt);
+    private sealed record UserEntity(long Id, string Name, string EncryptedEmail, string Source, string SourceUserId, long RegisteredAtTimespan);
 }
