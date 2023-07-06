@@ -58,13 +58,6 @@ internal sealed class AuthorizationHandler : IRequestHandler<AuthorizationReques
 
         OneOf<AuthorizationResponse, Error<string>> ToToken(User user) => new AuthorizationResponse(_tokenService.Create(user));
 
-        OneOf<AuthorizationResponse, Error<string>> ToError(UnreachableError unreachableError)
-        {
-            _logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(IIdentityRepository), unreachableError.Reason);
-            
-            return new Error<string>(unreachableError.Reason);
-        }
-
         async Task<OneOf<AuthorizationResponse, Error<string>>> RegisterUser(NotFound _)
         {
             var encryptedEmail = await _encryptor.EncryptAsync(sourceUserInfo.Email);
@@ -82,6 +75,13 @@ internal sealed class AuthorizationHandler : IRequestHandler<AuthorizationReques
             }
 
             return registerUserResult.Match(ToToken, ToError);
+        }
+
+        OneOf<AuthorizationResponse, Error<string>> ToError(UnreachableError unreachableError)
+        {
+            _logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(IIdentityRepository), unreachableError.Reason);
+            
+            return new Error<string>(unreachableError.Reason);
         }
     }
 }
