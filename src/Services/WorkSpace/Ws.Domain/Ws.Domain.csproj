@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\Clock\Clock.csproj" />
     <ProjectReference Include="..\..\Identity\Idn.Contracts\Idn.Contracts.csproj" />
     <ProjectReference Include="..\Ws.DataAccess\Ws.DataAccess.csproj" />
   </ItemGroup>

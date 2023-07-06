@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Col.Domain.Consumers;
 
-internal sealed class UserCreatedEventConsumer : INotificationHandler<UserCreatedEvent>
+internal sealed class UserCreatedEventConsumer : INotificationHandler<UserRegisteredEvent>
 {
     private readonly ICollectionRepository _repository;
     private readonly ILogger<UserCreatedEventConsumer> _logger;
@@ -23,7 +23,7 @@ internal sealed class UserCreatedEventConsumer : INotificationHandler<UserCreate
         _clock = clock;
     }
 
-    public async Task Handle(UserCreatedEvent notification, CancellationToken cancellationToken)
+    public async Task Handle(UserRegisteredEvent notification, CancellationToken cancellationToken)
     {
         var listResult = await _repository.ListAsync(notification.Id);
 

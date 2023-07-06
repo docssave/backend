@@ -20,6 +20,6 @@ public static class UsersEndpoints
     {
         var response = await mediator.Send(request);
 
-        return response.IsSuccess ? Results.Ok(response.Token) : Results.BadRequest(response.Error!.Message);
+        return response.Match(Results.Ok, Results.BadRequest);
     }
 }

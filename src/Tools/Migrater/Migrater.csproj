@@ -6,9 +6,11 @@
 
     <ItemGroup>
       <PackageReference Include="FluentMigrator.Runner" Version="3.3.2" />
+      <PackageReference Include="MySql.Data" Version="8.0.33" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Services\Collection\Col.DataAccess\Col.DataAccess.csproj" />
       <ProjectReference Include="..\..\Services\Identity\Idn.DataAccess\Idn.DataAccess.csproj" />
       <ProjectReference Include="..\..\Services\WorkSpace\Ws.DataAccess\Ws.DataAccess.csproj" />
     </ItemGroup>

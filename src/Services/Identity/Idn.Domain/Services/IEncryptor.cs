@@ -1,4 +1,4 @@
-﻿namespace Idn.Domain;
+﻿namespace Idn.Domain.Services;
 
 internal interface IEncryptor
 {

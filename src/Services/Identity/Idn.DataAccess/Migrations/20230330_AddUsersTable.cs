@@ -13,7 +13,7 @@ public sealed class AddUsersTable : Migration
             .WithColumn("EncryptedEmail").AsAnsiString(320).NotNullable()
             .WithColumn("Source").AsAnsiString(12).NotNullable()
             .WithColumn("SourceUserId").AsAnsiString(36).NotNullable()
-            .WithColumn("RegisteredAt").AsInt64().NotNullable();
+            .WithColumn("RegisteredAtTimespan").AsInt64().NotNullable();
 
         Create.Index("Users_SourceUserId_Index")
             .OnTable("Users")

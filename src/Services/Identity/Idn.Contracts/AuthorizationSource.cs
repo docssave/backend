@@ -4,5 +4,6 @@ public enum AuthorizationSource : byte
 {
     Google,
     Apple,
-    Microsoft
+    Microsoft,
+    Facebook
 } 

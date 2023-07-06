@@ -1,55 +1,87 @@
-﻿using Common;
+﻿using Clock;
 using Idn.Contracts;
 using Idn.Contracts.Events;
 using Idn.DataAccess;
+using Idn.Domain.Services;
 using MediatR;
+using Microsoft.Extensions.Logging;
+using OneOf;
+using OneOf.Types;
+using Sql.Abstractions.Errors;
+using DocsSave.OneOf.Extensions;
 
 namespace Idn.Domain.Handlers;
 
-internal sealed class AuthorizationHandler : IRequestHandler<AuthorizationRequest, AuthorizationResponse>
+internal sealed class AuthorizationHandler : IRequestHandler<AuthorizationRequest, OneOf<AuthorizationResponse, Error<string>>>
 {
     private readonly IMediator _mediator;
     private readonly IIdentityRepository _repository;
     private readonly ISourceService _sourceService;
     private readonly ITokenService _tokenService;
     private readonly IEncryptor _encryptor;
+    private readonly IClock _clock;
+    private readonly ILogger<AuthorizationHandler> _logger;
 
-    public AuthorizationHandler(IMediator mediator, IIdentityRepository repository, ISourceService sourceService, ITokenService tokenService, IEncryptor encryptor)
+    public AuthorizationHandler(IMediator mediator,
+        IIdentityRepository repository,
+        ISourceService sourceService,
+        ITokenService tokenService,
+        IEncryptor encryptor,
+        IClock clock,
+        ILogger<AuthorizationHandler> logger)
     {
         _mediator = mediator;
         _repository = repository;
         _sourceService = sourceService;
         _tokenService = tokenService;
         _encryptor = encryptor;
+        _clock = clock;
+        _logger = logger;
     }
 
-    public async Task<AuthorizationResponse> Handle(AuthorizationRequest request, CancellationToken cancellationToken)
+    public async Task<OneOf<AuthorizationResponse, Error<string>>> Handle(AuthorizationRequest request, CancellationToken cancellationToken)
     {
-        var userInfo = await _sourceService.ExtractUserInfoAsync(request.Token);
+        var userInfoResult = await _sourceService.ExtractUserInfoAsync(request.Token);
 
-        var result = await _repository.GetUserAsync(userInfo.Id);
-
-        if (!result.IsSuccess)
+        if (userInfoResult.IsT1)
         {
-            return new AuthorizationResponse(null, new Error(ErrorType.ServerError, result.Exception!.ToString()));
+            _logger.LogError("Could not extract user info from token; returned error is `{Error}`", userInfoResult.AsT1);
+
+            return userInfoResult.AsT1;
         }
 
-        if (result.Value == null)
-        {
-            var encryptedEmail = await _encryptor.EncryptAsync(userInfo.Email);
-            result = await _repository.CreateUserAsync(new CreateUser(userInfo.Name, encryptedEmail, AuthorizationSource.Google, userInfo.Id));
+        var sourceUserInfo = userInfoResult.AsT0;
 
-            if (result.IsSuccess)
+        var getUserResult = await _repository.GetUserAsync(sourceUserInfo.Id);
+
+        return await getUserResult.Match(ToToken, RegisterUser, ToError);
+
+        OneOf<AuthorizationResponse, Error<string>> ToToken(User user) => new AuthorizationResponse(_tokenService.Create(user));
+
+        async Task<OneOf<AuthorizationResponse, Error<string>>> RegisterUser(NotFound _)
+        {
+            var encryptedEmail = await _encryptor.EncryptAsync(sourceUserInfo.Email);
+            var registerUserResult = await _repository.RegisterUserAsync(
+                sourceUserInfo.Id,
+                sourceUserInfo.Name,
+                encryptedEmail,
+                request.Source ?? AuthorizationSource.Google,
+                _clock.Now);
+
+            if (registerUserResult.IsT0)
             {
-                await _mediator.Publish(new UserCreatedEvent(result.Value.Id, result.Value.RegisteredAt), cancellationToken);
+                var registeredUser = registerUserResult.AsT0;
+                await _mediator.Publish(new UserRegisteredEvent(registeredUser.Id, registeredUser.RegisteredAt), cancellationToken);
             }
+
+            return registerUserResult.Match(ToToken, ToError);
         }
 
-        if (!result.IsSuccess)
+        OneOf<AuthorizationResponse, Error<string>> ToError(UnreachableError unreachableError)
         {
-            return new AuthorizationResponse(null, new Error(ErrorType.ServerError, result.Exception!.ToString()));
+            _logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(IIdentityRepository), unreachableError.Reason);
+            
+            return new Error<string>(unreachableError.Reason);
         }
-
-        return new AuthorizationResponse(_tokenService.Create(result.Value!), null);
     }
 }

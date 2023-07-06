@@ -1,6 +1,6 @@
 ﻿using Idn.DataAccess;
 
-namespace Idn.Domain;
+namespace Idn.Domain.Services;
 
 internal interface ITokenService
 {

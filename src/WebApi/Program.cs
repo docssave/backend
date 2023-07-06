@@ -1,9 +1,10 @@
 using System.Text;
 using Clock;
+using Col.Plugin;
 using Idn.Contracts.Options;
 using Idn.Plugin;
 using Microsoft.IdentityModel.Tokens;
-using SqlServer;
+using MySql;
 using WebApi.Endpoints;
 using Ws.Plugin;
 
@@ -34,6 +35,7 @@ builder.Services.Configure<TokenOptions>(builder.Configuration.GetSection(TokenO
 builder.Services.AddDbConnectionFactory(builder.Configuration.GetConnectionString("HoneyBadgerDb"));
 builder.Services.AddIdentityService();
 builder.Services.AddWorkspaceService();
+builder.Services.AddCollectionService();
 builder.Services.AddClock();
 
 var app = builder.Build();

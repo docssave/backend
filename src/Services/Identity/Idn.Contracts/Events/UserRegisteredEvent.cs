@@ -2,9 +2,9 @@
 
 namespace Idn.Contracts.Events;
 
-public sealed class UserCreatedEvent : INotification
+public sealed class UserRegisteredEvent : INotification
 {
-    public UserCreatedEvent(UserId id, DateTimeOffset registeredAt)
+    public UserRegisteredEvent(UserId id, DateTimeOffset registeredAt)
     {
         Id = id;
         this.RegisteredAt = registeredAt;

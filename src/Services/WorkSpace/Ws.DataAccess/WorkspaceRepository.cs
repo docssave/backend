@@ -1,45 +1,56 @@
-﻿using Dapper;
+﻿using Collections.Extensions;
+using Dapper;
 using Idn.Contracts;
+using OneOf;
+using OneOf.Types;
 using Sql.Abstractions;
+using Sql.Abstractions.Errors;
 using Sql.Abstractions.Extensions;
 using Ws.Contracts;
 
 namespace Ws.DataAccess;
 
-public sealed class WorkspaceRepository : RepositoryBase, IWorkspaceRepository
+public sealed class WorkspaceRepository : IWorkspaceRepository
 {
     private readonly IDbConnectionFactory _connectionFactory;
+    private readonly SqlQueries _queries;
 
-    public WorkspaceRepository(IDbConnectionFactory connectionFactory) =>
+    public WorkspaceRepository(IDbConnectionFactory connectionFactory, SqlQueries queries)
+    {
         _connectionFactory = connectionFactory;
+        _queries = queries;
+    }
 
-    public Task<RepositoryResult<Workspace?>> GetWorkspaceAsync(UserId userId) =>
+    public Task<OneOf<IReadOnlyList<Workspace>, UnreachableError>> ListAsync(UserId userId) =>
         _connectionFactory.TryAsync(async connection =>
         {
-            var sqlQuery = QueryCompiler.ToSqlQueryString(SqlQueries.GetWorkspaceQuery(userId));
+            var sqlQuery = _queries.GetWorkspaceQuery(userId);
 
-            var entity = await connection.QuerySingleOrDefaultAsync<WorkspaceEntity>(sqlQuery);
+            var entities = await connection.QueryAsync<WorkspaceEntity>(sqlQuery);
 
-            var workspace = entity == null
-                ? null
-                : new Workspace(new WorkspaceId(entity.Id), entity.Name);
+            return entities
+                .Select(entity => new Workspace(
+                    new WorkspaceId(entity.Id),
+                    entity.Name,
+                    DateTimeOffset.FromUnixTimeMilliseconds(entity.AddedAtTimespan)))
+                .ToReadonlyList();
+        }, ToUnreachableError);
 
-            return RepositoryResult<Workspace?>.Success(workspace);
-        }, RepositoryResult<Workspace?>.Failed);
-
-    public Task<RepositoryResult<Workspace>> CreateWorkspaceAsync(UserId userId, string name) =>
+    public Task<OneOf<Success, UnreachableError>> RegisterAsync(WorkspaceId id, string name,  UserId userId, DateTimeOffset registeredAt) =>
         _connectionFactory.TryAsync(async (connection, transaction) =>
         {
-            var createWorkspaceQuery = QueryCompiler.ToSqlQueryString(SqlQueries.CreateWorkspaceQuery(name));
+            var createWorkspaceQuery = _queries.RegisterWorkspaceQuery(id, name, registeredAt);
 
-            var workspaceId = await connection.QuerySingleOrDefaultAsync<long>(createWorkspaceQuery, transaction: transaction);
+            await connection.ExecuteAsync(createWorkspaceQuery, transaction: transaction);
 
-            var createUserWorkspaceQuery = QueryCompiler.ToSqlQueryString(SqlQueries.CreateUserWorkspaceQuery(userId, workspaceId));
+            var createUserWorkspaceQuery = _queries.RegisterUserWorkspaceQuery(userId, id);
 
             await connection.ExecuteAsync(createUserWorkspaceQuery, transaction: transaction);
 
-            return RepositoryResult<Workspace>.Success(new Workspace(new WorkspaceId(workspaceId), name));
-        }, RepositoryResult<Workspace>.Failed);
+            return new Success();
+        }, ToUnreachableError);
+    
+    private static UnreachableError ToUnreachableError(Exception exception) => new(exception.Message);
 
-    private sealed record WorkspaceEntity(long Id, string Name);
+    private sealed record WorkspaceEntity(Guid Id, string Name, long AddedAtTimespan);
 }

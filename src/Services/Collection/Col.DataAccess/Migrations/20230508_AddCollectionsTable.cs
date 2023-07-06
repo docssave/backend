@@ -2,7 +2,7 @@ using FluentMigrator;
 
 namespace Col.DataAccess.Migrations;
 
-[Migration(20230508)]
+[Migration(202305080623)]
 public class AddCollectionTable : Migration
 {
     public override void Up()

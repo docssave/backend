@@ -2,7 +2,7 @@
 
 namespace Ws.Contracts;
 
-[StronglyTypedId(StronglyTypedIdBackingType.Long)]
+[StronglyTypedId]
 public partial struct WorkspaceId
 {
 }

@@ -10,7 +10,7 @@ public sealed class AddUserWorkspacesTable : Migration
     {
         Create.Table("UserWorkspaces")
             .WithColumn("UserId").AsInt64()
-            .WithColumn("WorkspaceId").AsInt64().ForeignKey("WorkspaceId_ForeignKey", "Workspaces", "Id").OnDeleteOrUpdate(Rule.Cascade);
+            .WithColumn("WorkspaceId").AsGuid().ForeignKey("WorkspaceId_ForeignKey", "Workspaces", "Id").OnDeleteOrUpdate(Rule.Cascade);
 
         Create.PrimaryKey("UserWorkspaces_PrimaryKey")
             .OnTable("UserWorkspaces")

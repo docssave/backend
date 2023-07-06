@@ -1,43 +1,56 @@
 ﻿using Dapper;
 using Idn.Contracts;
+using OneOf;
+using OneOf.Types;
 using Sql.Abstractions;
+using Sql.Abstractions.Errors;
 using Sql.Abstractions.Extensions;
 
 namespace Idn.DataAccess;
 
-public sealed class IdentityRepository : RepositoryBase, IIdentityRepository
+public sealed class IdentityRepository : IIdentityRepository
 {
     private readonly IDbConnectionFactory _connectionFactory;
+    private readonly SqlQueries _sqlQueries;
 
-    public IdentityRepository(IDbConnectionFactory connectionFactory) =>
+    public IdentityRepository(IDbConnectionFactory connectionFactory, SqlQueries sqlQueries)
+    {
         _connectionFactory = connectionFactory;
+        _sqlQueries = sqlQueries;
+    }
 
-    public Task<RepositoryResult<User>> GetUserAsync(string sourceUserId) =>
+    public Task<OneOf<User, NotFound, UnreachableError>> GetUserAsync(string sourceUserId) =>
         _connectionFactory.TryAsync(async connection =>
         {
-            var sqlQuery = QueryCompiler.ToSqlQueryString(SqlQueries.GetUserQuery(sourceUserId));
+            var sqlQuery = _sqlQueries.GetUserQuery(sourceUserId);
 
             var entity = await connection.QuerySingleOrDefaultAsync<UserEntity>(sqlQuery);
 
-            var user = entity == null
-                ? null
-                : new User(new UserId(entity.Id), entity.Name, entity.EncryptedEmail, Enum.Parse<AuthorizationSource>(entity.Source), DateTimeOffset.FromUnixTimeMilliseconds(entity.RegisteredAt));
+            if (entity == null)
+            {
+                return OneOf<User, NotFound>.FromT1(new NotFound());
+            }
 
-            return RepositoryResult<User?>.Success(user);
-        }, RepositoryResult<User>.Failed);
+            return new User(
+                    new UserId(entity.Id),
+                    entity.Name,
+                    entity.EncryptedEmail,
+                    Enum.Parse<AuthorizationSource>(entity.Source),
+                    DateTimeOffset.FromUnixTimeMilliseconds(entity.RegisteredAtTimespan));
+        }, ToUnreachableError);
 
-    public Task<RepositoryResult<User>> CreateUserAsync(CreateUser createUser) =>
+    public Task<OneOf<User, UnreachableError>> RegisterUserAsync(string sourceUserId, string name, string encryptedEmail, AuthorizationSource source, DateTimeOffset registeredAt) =>
         _connectionFactory.TryAsync(async connection =>
         {
-            var now = DateTimeOffset.UtcNow;
-            
-            var sqlQuery = QueryCompiler.ToSqlQueryString(SqlQueries.CreateUserQuery(createUser, now));
+            var sqlQuery = _sqlQueries.CreateUserQuery(sourceUserId, name, encryptedEmail, source, registeredAt);
 
             var userId = await connection.QuerySingleAsync<long>(sqlQuery);
-            var user = new User(new UserId(userId), createUser.Name, createUser.EncryptedEmail, createUser.Source, now);
+            var user = new User(new UserId(userId), name, encryptedEmail, source, registeredAt);
 
-            return RepositoryResult<User>.Success(user);
-        }, RepositoryResult<User>.Failed);
+            return user;
+        }, ToUnreachableError);
+    
+    private static UnreachableError ToUnreachableError(Exception exception) => new(exception.Message);
 
-    private sealed record UserEntity(long Id, string Name, string EncryptedEmail, string Source, string SourceUserId, long RegisteredAt);
+    private sealed record UserEntity(long Id, string Name, string EncryptedEmail, string Source, string SourceUserId, long RegisteredAtTimespan);
 }
