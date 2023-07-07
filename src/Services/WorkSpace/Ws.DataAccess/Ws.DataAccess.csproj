@@ -1,9 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Libraries\Collections\Collections.csproj" />
-    <ProjectReference Include="..\..\Identity\Idn.Contracts\Idn.Contracts.csproj" />
-    <ProjectReference Include="..\Ws.Contracts\Ws.Contracts.csproj" />
-  </ItemGroup>
-
-</Project>

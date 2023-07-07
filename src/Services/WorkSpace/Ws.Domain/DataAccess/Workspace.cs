@@ -1,6 +1,6 @@
 ﻿using Ws.Contracts;
 
-namespace Ws.DataAccess;
+namespace Ws.Domain.DataAccess;
 
 public sealed class Workspace
 {
