@@ -2,9 +2,9 @@
 using Sql.Abstractions;
 using SqlKata;
 
-namespace Idn.Domain.DataAccess;
+namespace Idn.DataAccess;
 
-internal sealed class SqlQueries
+public sealed class SqlQueries
 {
     private readonly IQueryCompiler _compiler;
 

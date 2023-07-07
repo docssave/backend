@@ -1,11 +1,11 @@
 using Col.Contracts;
 using Idn.Contracts;
-using Sql.Abstractions;
 using SqlKata;
+using Sql.Abstractions;
 
-namespace Col.Domain.DataAccess;
+namespace Col.DataAccess;
 
-internal sealed class SqlQueries
+public sealed class SqlQueries
 {
     private readonly IQueryCompiler _compiler;
 

@@ -1,4 +1,4 @@
-﻿using Col.Domain.DataAccess;
+﻿using Col.DataAccess;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Col.Domain;

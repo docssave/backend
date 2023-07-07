@@ -1,12 +1,12 @@
-using Col.Contracts;
 using Idn.Contracts;
+using Col.Contracts;
 using OneOf;
 using OneOf.Types;
 using Sql.Abstractions.Errors;
 
-namespace Col.Domain.DataAccess;
+namespace Col.DataAccess;
 
-internal interface ICollectionRepository
+public interface ICollectionRepository
 {
     Task<OneOf<IReadOnlyList<Collection>, UnreachableError>> ListAsync(UserId userId);
 

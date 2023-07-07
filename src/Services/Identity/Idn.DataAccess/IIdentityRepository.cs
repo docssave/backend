@@ -3,9 +3,9 @@ using OneOf;
 using OneOf.Types;
 using Sql.Abstractions.Errors;
 
-namespace Idn.Domain.DataAccess;
+namespace Idn.DataAccess;
 
-internal interface IIdentityRepository
+public interface IIdentityRepository
 {
     Task<OneOf<User, NotFound, UnreachableError>> GetUserAsync(string sourceUserId);
 

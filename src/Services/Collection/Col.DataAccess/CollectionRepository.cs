@@ -8,9 +8,9 @@ using Sql.Abstractions;
 using Sql.Abstractions.Errors;
 using Sql.Abstractions.Extensions;
 
-namespace Col.Domain.DataAccess;
+namespace Col.DataAccess;
 
-internal sealed class CollectionRepository : ICollectionRepository
+public sealed class CollectionRepository : ICollectionRepository
 {
     private readonly IDbConnectionFactory _connectionFactory;
     private readonly SqlQueries _queries;

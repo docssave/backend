@@ -8,9 +8,9 @@ using Sql.Abstractions.Errors;
 using Sql.Abstractions.Extensions;
 using Ws.Contracts;
 
-namespace Ws.Domain.DataAccess;
+namespace Ws.DataAccess;
 
-internal sealed class WorkspaceRepository : IWorkspaceRepository
+public sealed class WorkspaceRepository : IWorkspaceRepository
 {
     private readonly IDbConnectionFactory _connectionFactory;
     private readonly SqlQueries _queries;

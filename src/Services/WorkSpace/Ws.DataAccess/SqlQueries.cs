@@ -3,9 +3,9 @@ using Sql.Abstractions;
 using SqlKata;
 using Ws.Contracts;
 
-namespace Ws.Domain.DataAccess;
+namespace Ws.DataAccess;
 
-internal sealed class SqlQueries
+public sealed class SqlQueries
 {
     private readonly IQueryCompiler _compiler;
 

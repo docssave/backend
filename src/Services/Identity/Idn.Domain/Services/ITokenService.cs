@@ -1,5 +1,4 @@
 ﻿using Idn.DataAccess;
-using Idn.Domain.DataAccess;
 
 namespace Idn.Domain.Services;
 

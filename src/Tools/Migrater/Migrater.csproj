@@ -10,9 +10,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Services\Collection\Col.Domain\Col.Domain.csproj" />
-      <ProjectReference Include="..\..\Services\Identity\Idn.Domain\Idn.Domain.csproj" />
-      <ProjectReference Include="..\..\Services\WorkSpace\Ws.Domain\Ws.Domain.csproj" />
+      <ProjectReference Include="..\..\Services\Collection\Col.DataAccess\Col.DataAccess.csproj" />
+      <ProjectReference Include="..\..\Services\Identity\Idn.DataAccess\Idn.DataAccess.csproj" />
+      <ProjectReference Include="..\..\Services\WorkSpace\Ws.DataAccess\Ws.DataAccess.csproj" />
     </ItemGroup>
 
 </Project>
