@@ -54,7 +54,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tag.Contracts", "Services\T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tag.Domain", "Services\Tag\Tag.Domain\Tag.Domain.csproj", "{91198217-552A-4C7D-9E9C-B715DD3287BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tag.Extensions", "Services\Tag\Tag.Extensions\Tag.Extensions.csproj", "{476065C9-BCEA-4388-A015-3C6C4CD0B1FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tag.Plugin", "Services\Tag\Tag.Plugin\Tag.Plugin.csproj", "{476065C9-BCEA-4388-A015-3C6C4CD0B1FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
