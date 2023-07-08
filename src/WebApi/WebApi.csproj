@@ -4,6 +4,7 @@
         <ProjectReference Include="..\Libraries\Sql\SqlServer\SqlServer.csproj" />
         <ProjectReference Include="..\Services\Identity\Idn.Contracts\Idn.Contracts.csproj" />
         <ProjectReference Include="..\Services\Identity\Idn.Plugin\Idn.Plugin.csproj" />
+        <ProjectReference Include="..\Services\Tag\Tag.Plugin\Tag.Plugin.csproj" />
         <ProjectReference Include="..\Services\WorkSpace\Ws.Plugin\Ws.Plugin.csproj" />
         <ProjectReference Include="..\Services\Tag\Tag.Contracts\Tag.Contracts.csproj" />
         <ProjectReference Include="..\Services\Tag\Tag.DataAccess\Tag.DataAccess.csproj" />

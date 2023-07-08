@@ -1,11 +1,10 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace Tag.Domain;
 
 public static class ServiceTagExtensions
 {
-    public static IServiceTag AddIdentity(this IServiceTag services)
+    public static IServiceCollection AddTags(this IServiceCollection services)
     {
         return services;
     }

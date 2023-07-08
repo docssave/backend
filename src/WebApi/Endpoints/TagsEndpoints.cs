@@ -15,7 +15,7 @@ namespace WebApi.Endpoints
         }
 
         private static async Task<IResult> CreateAsync(
-            TagRequest request,
+            CreateTagRequest request,
             [FromServices] IUserIdAccessor userAccessor,
             [FromServices] IMediator mediator)
         {

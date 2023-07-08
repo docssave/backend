@@ -1,17 +1,17 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Tag.Domain;
 
 namespace Tag.Extensions;
 
 public static class ServiceTagExtensions
 {
     
-    public static IServiceTag AddWorkspaceServiceTag(this IServiceTag services)
-        {
-            return services
-                .AddMediatR(typeof(MediatorEntryPoint).Assembly)
-                .AddWorkspace(services)
-                .BuildServiceProvider();
-        }
+    public static IServiceCollection AddTagService(this IServiceCollection services)
+    {
+        return services
+            .AddMediatR(typeof(MediatorEntryPoint).Assembly)
+            .AddTags();
+    }
     
 }

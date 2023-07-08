@@ -7,4 +7,8 @@
         <RootNamespace>Tag.Extensions</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Tag.Domain\Tag.Domain.csproj" />
+    </ItemGroup>
+
 </Project>
