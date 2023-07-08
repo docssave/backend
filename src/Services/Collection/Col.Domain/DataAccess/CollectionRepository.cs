@@ -8,7 +8,7 @@ using Sql.Abstractions;
 using Sql.Abstractions.Errors;
 using Sql.Abstractions.Extensions;
 
-namespace Col.DataAccess;
+namespace Col.Domain.DataAccess;
 
 public sealed class CollectionRepository : ICollectionRepository
 {

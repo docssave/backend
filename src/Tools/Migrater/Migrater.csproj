@@ -10,7 +10,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Services\Collection\Col.DataAccess\Col.DataAccess.csproj" />
       <ProjectReference Include="..\..\Services\Identity\Idn.DataAccess\Idn.DataAccess.csproj" />
       <ProjectReference Include="..\..\Services\WorkSpace\Ws.DataAccess\Ws.DataAccess.csproj" />
     </ItemGroup>

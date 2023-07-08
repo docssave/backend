@@ -1,6 +1,7 @@
 ﻿using Clock;
 using Col.Contracts;
 using Col.DataAccess;
+using Col.Domain.DataAccess;
 using Idn.Contracts.Events;
 using MediatR;
 using Microsoft.Extensions.Logging;

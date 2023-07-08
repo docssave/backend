@@ -1,10 +1,10 @@
-using Idn.Contracts;
 using Col.Contracts;
+using Idn.Contracts;
 using OneOf;
 using OneOf.Types;
 using Sql.Abstractions.Errors;
 
-namespace Col.DataAccess;
+namespace Col.Domain.DataAccess;
 
 public interface ICollectionRepository
 {
