@@ -11,7 +11,7 @@ namespace WebApi.Endpoints
 
         public static void MapTagsEndpoints(this WebApplication application)
         {
-            application.MapPost($"{BaseRoute}", CreateAsync);
+            application.MapPut($"{BaseRoute}", CreateAsync);
         }
 
         private static async Task<IResult> CreateAsync(
