@@ -11,10 +11,10 @@ namespace WebApi.Endpoints
 
         public static void MapTagsEndpoints(this WebApplication application)
         {
-            application.MapPut($"{BaseRoute}", CreateAsync);
+            application.MapPut($"{BaseRoute}", CreateTagAsync);
         }
 
-        private static async Task<IResult> CreateAsync(
+        private static async Task<IResult> CreateTagAsync(
             CreateTagRequest request,
             [FromServices] IUserIdAccessor userAccessor,
             [FromServices] IMediator mediator)
