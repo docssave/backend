@@ -1,6 +1,6 @@
 using SqlKata;
 
-namespace Sql.Abstractions;
+namespace Badger.Sql.Abstractions;
 
 public interface IQueryCompiler
 {

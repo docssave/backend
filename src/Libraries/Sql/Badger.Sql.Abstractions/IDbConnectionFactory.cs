@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace Sql.Abstractions;
+namespace Badger.Sql.Abstractions;
 
 public interface IDbConnectionFactory
 {

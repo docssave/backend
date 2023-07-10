@@ -1,4 +1,4 @@
-﻿using Clock;
+﻿using Badger.Clock;
 using Col.Contracts;
 using Col.DataAccess;
 using Col.Domain.DataAccess;

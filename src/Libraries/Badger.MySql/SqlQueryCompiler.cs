@@ -1,8 +1,8 @@
-﻿using Sql.Abstractions;
+﻿using Badger.Sql.Abstractions;
 using SqlKata;
 using SqlKata.Compilers;
 
-namespace MySql;
+namespace Badger.MySql;
 
 internal sealed class SqlQueryCompiler : IQueryCompiler
 {

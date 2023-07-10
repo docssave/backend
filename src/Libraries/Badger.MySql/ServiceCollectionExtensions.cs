@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Sql.Abstractions;
+using Badger.Sql.Abstractions;
 using SqlKata.Compilers;
 
-namespace MySql;
+namespace Badger.MySql;
 
 public static class ServiceCollectionExtensions
 {

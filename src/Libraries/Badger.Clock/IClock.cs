@@ -1,4 +1,4 @@
-namespace Clock;
+namespace Badger.Clock;
 
 public interface IClock
 {

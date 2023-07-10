@@ -1,4 +1,5 @@
-﻿using Clock;
+﻿using Badger.Clock;
+using Badger.Sql.Abstractions.Errors;
 using Idn.Contracts;
 using Idn.Contracts.Events;
 using Idn.Domain.Services;
@@ -6,8 +7,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using OneOf;
 using OneOf.Types;
-using Sql.Abstractions.Errors;
-using DocsSave.OneOf.Extensions;
+using Badger.OneOf.Extensions;
 using Idn.Domain.DataAccess;
 
 namespace Idn.Domain.Handlers;

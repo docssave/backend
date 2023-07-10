@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\Libraries\Clock\Clock.csproj" />
-        <ProjectReference Include="..\..\..\Libraries\DocsSave.OneOf\DocsSave.OneOf.csproj" />
+        <ProjectReference Include="..\..\..\Libraries\Badger.Clock\Badger.Clock.csproj" />
+        <ProjectReference Include="..\..\..\Libraries\Badger.OneOf\Badger.OneOf.csproj" />
         <ProjectReference Include="..\Idn.Contracts\Idn.Contracts.csproj" />
     </ItemGroup>
 

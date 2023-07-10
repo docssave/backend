@@ -1,8 +1,8 @@
 ﻿using System.Data;
 using MySql.Data.MySqlClient;
-using Sql.Abstractions;
+using Badger.Sql.Abstractions;
 
-namespace MySql;
+namespace Badger.MySql;
 
 internal sealed class DbConnectionFactory : IDbConnectionFactory
 {

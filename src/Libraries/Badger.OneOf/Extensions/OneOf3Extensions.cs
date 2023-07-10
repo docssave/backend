@@ -1,6 +1,6 @@
 ﻿using OneOf;
 
-namespace DocsSave.OneOf.Extensions;
+namespace Badger.OneOf.Extensions;
 
 public static class OneOf3Extensions
 {

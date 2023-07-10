@@ -1,4 +1,4 @@
-namespace Sql.Abstractions.Errors;
+namespace Badger.Sql.Abstractions.Errors;
 
 public sealed class UnreachableError
 {
