@@ -6,9 +6,9 @@ using Sql.Abstractions;
 using Sql.Abstractions.Errors;
 using Sql.Abstractions.Extensions;
 
-namespace Idn.DataAccess;
+namespace Idn.Domain.DataAccess;
 
-public sealed class IdentityRepository : IIdentityRepository
+internal sealed class IdentityRepository : IIdentityRepository
 {
     private readonly IDbConnectionFactory _connectionFactory;
     private readonly SqlQueries _sqlQueries;

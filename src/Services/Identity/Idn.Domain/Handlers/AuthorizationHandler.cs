@@ -1,7 +1,6 @@
 ﻿using Clock;
 using Idn.Contracts;
 using Idn.Contracts.Events;
-using Idn.DataAccess;
 using Idn.Domain.Services;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -9,6 +8,7 @@ using OneOf;
 using OneOf.Types;
 using Sql.Abstractions.Errors;
 using DocsSave.OneOf.Extensions;
+using Idn.Domain.DataAccess;
 
 namespace Idn.Domain.Handlers;
 

@@ -21,7 +21,7 @@ new ServiceCollection()
 static Assembly[] GetDataAccessAssemblies()
 {
     var gamingAssemblyNames = Directory
-        .GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.DataAccess.dll")
+        .GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.Domain.dll")
         .Select(filePath =>
         {
             try
