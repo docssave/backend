@@ -1,11 +1,11 @@
-﻿using Collections.Extensions;
+﻿using Badger.Sql.Abstractions;
+using Badger.Sql.Abstractions.Errors;
+using Badger.Sql.Abstractions.Extensions;
+using Badger.Collections.Extensions;
 using Dapper;
 using Idn.Contracts;
 using OneOf;
 using OneOf.Types;
-using Sql.Abstractions;
-using Sql.Abstractions.Errors;
-using Sql.Abstractions.Extensions;
 using Ws.Contracts;
 
 namespace Ws.Domain.DataAccess;

@@ -12,7 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Sql\Sql.Abstractions\Sql.Abstractions.csproj" />
+      <ProjectReference Include="..\Sql\Badger.Sql.Abstractions\Badger.Sql.Abstractions.csproj" />
     </ItemGroup>
 
 </Project>

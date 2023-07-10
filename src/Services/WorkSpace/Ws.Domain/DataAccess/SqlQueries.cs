@@ -1,5 +1,5 @@
-﻿using Idn.Contracts;
-using Sql.Abstractions;
+﻿using Badger.Sql.Abstractions;
+using Idn.Contracts;
 using SqlKata;
 using Ws.Contracts;
 

@@ -1,10 +1,10 @@
-﻿using Dapper;
+﻿using Badger.Sql.Abstractions;
+using Badger.Sql.Abstractions.Errors;
+using Badger.Sql.Abstractions.Extensions;
+using Dapper;
 using Idn.Contracts;
 using OneOf;
 using OneOf.Types;
-using Sql.Abstractions;
-using Sql.Abstractions.Errors;
-using Sql.Abstractions.Extensions;
 
 namespace Idn.Domain.DataAccess;
 

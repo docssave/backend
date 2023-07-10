@@ -1,4 +1,4 @@
-﻿namespace Collections.Extensions;
+﻿namespace Badger.Collections.Extensions;
 
 public static class CollectionExtensions
 {

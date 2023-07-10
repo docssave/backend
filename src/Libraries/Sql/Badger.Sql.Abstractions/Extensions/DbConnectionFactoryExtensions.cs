@@ -1,9 +1,9 @@
 ﻿using System.Data;
 using System.Data.Common;
+using Badger.Sql.Abstractions.Errors;
 using OneOf;
-using Sql.Abstractions.Errors;
 
-namespace Sql.Abstractions.Extensions;
+namespace Badger.Sql.Abstractions.Extensions;
 
 public static class DbConnectionFactoryExtensions
 {

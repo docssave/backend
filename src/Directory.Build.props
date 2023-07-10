@@ -13,7 +13,7 @@
         <PackageReference Include="FluentMigrator" Version="3.3.2" />
         <PackageReference Include="Dapper" Version="2.0.123" />
         <PackageReference Include="OneOf" Version="3.0.255" />
-        <ProjectReference Include="..\..\..\Libraries\Sql\Sql.Abstractions\Sql.Abstractions.csproj" />
+        <ProjectReference Include="..\..\..\Libraries\Sql\Badger.Sql.Abstractions\Badger.Sql.Abstractions.csproj" />
     </ItemGroup>
 
     <ItemGroup Condition="$(MSBuildProjectName.EndsWith('.Plugin'))">

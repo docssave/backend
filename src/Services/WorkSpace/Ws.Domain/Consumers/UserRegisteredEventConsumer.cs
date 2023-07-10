@@ -1,4 +1,4 @@
-﻿using Clock;
+﻿using Badger.Clock;
 using Idn.Contracts.Events;
 using MediatR;
 using Microsoft.Extensions.Logging;

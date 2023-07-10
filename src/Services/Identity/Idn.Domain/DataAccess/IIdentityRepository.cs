@@ -1,7 +1,7 @@
-﻿using Idn.Contracts;
+﻿using Badger.Sql.Abstractions.Errors;
+using Idn.Contracts;
 using OneOf;
 using OneOf.Types;
-using Sql.Abstractions.Errors;
 
 namespace Idn.Domain.DataAccess;
 
