@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Idn.Contracts.Options;
 using Idn.DataAccess;
+using Idn.Domain.DataAccess;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 

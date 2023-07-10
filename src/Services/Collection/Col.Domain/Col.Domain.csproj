@@ -3,7 +3,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Libraries\Clock\Clock.csproj" />
     <ProjectReference Include="..\..\Identity\Idn.Contracts\Idn.Contracts.csproj" />
-    <ProjectReference Include="..\Col.DataAccess\Col.DataAccess.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\Collections\Collections.csproj" />
+    <ProjectReference Include="..\..\Identity\Idn.Contracts\Idn.Contracts.csproj" />
+    <ProjectReference Include="..\Col.Contracts\Col.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

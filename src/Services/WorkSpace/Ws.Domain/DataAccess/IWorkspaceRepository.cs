@@ -4,9 +4,9 @@ using OneOf.Types;
 using Sql.Abstractions.Errors;
 using Ws.Contracts;
 
-namespace Ws.DataAccess;
+namespace Ws.Domain.DataAccess;
 
-public interface IWorkspaceRepository
+internal interface IWorkspaceRepository
 {
     Task<OneOf<IReadOnlyList<Workspace>, UnreachableError>> ListAsync(UserId userId);
 

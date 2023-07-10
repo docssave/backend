@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Ws.DataAccess;
+using Ws.Domain.DataAccess;
 
 namespace Ws.Domain;
 

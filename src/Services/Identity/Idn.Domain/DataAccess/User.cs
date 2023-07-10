@@ -1,6 +1,6 @@
 ﻿using Idn.Contracts;
 
-namespace Idn.DataAccess;
+namespace Idn.Domain.DataAccess;
 
 public sealed class User
 {
