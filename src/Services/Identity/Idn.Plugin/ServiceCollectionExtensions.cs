@@ -3,7 +3,6 @@ using Idn.Contracts;
 using Idn.Contracts.Validators;
 using Idn.Domain;
 using MediatR;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Idn.Plugin;
 

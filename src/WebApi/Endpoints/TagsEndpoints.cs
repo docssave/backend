@@ -9,7 +9,7 @@ public static class TagsEndpoints
 
     public static void MapTagsEndpoints(this WebApplication application)
     {
-        application.MapPut($"{BaseRoute}", CreateAsync);
+        application.MapPut($"{BaseRoute}", CreateAsync).AllowAnonymous();
     }
 
     private static async Task<IResult> CreateAsync([FromServices] IUserIdAccessor userIdAccessor)

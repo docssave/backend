@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace WebApi.Filters;
+namespace Badger.Plugin.Filters;
 
 internal sealed class ValidatorFilter<TRequest> : IEndpointFilter where TRequest : class
 {
@@ -13,7 +13,7 @@ internal sealed class ValidatorFilter<TRequest> : IEndpointFilter where TRequest
 
     public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
     {
-        var argument = context.Arguments.SingleOrDefault(argument => argument.GetType() == typeof(TRequest));
+        var argument = context.Arguments.SingleOrDefault(argument => argument?.GetType() == typeof(TRequest));
 
         if (argument is not TRequest request)
         {
