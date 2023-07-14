@@ -1,11 +1,8 @@
 ﻿using Idn.Contracts;
 using MediatR;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
-using WebApi.Filters;
 
-namespace WebApi.Endpoints;
+namespace Idn.Plugin.V1.Endpoints;
 
 public static class UsersEndpoints
 {

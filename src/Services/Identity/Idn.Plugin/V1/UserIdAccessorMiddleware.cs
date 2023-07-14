@@ -1,8 +1,7 @@
 ﻿using System.Security.Claims;
 using Idn.Contracts;
-using Microsoft.AspNetCore.Http;
 
-namespace Idn.Plugin;
+namespace Idn.Plugin.V1;
 
 public sealed class UserIdAccessorMiddleware
 {

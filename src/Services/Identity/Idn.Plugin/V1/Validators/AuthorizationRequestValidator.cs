@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
+using Idn.Contracts;
 
-namespace Idn.Contracts.Validators;
+namespace Idn.Plugin.V1.Validators;
 
 public sealed class AuthorizationRequestValidator : AbstractValidator<AuthorizationRequest>
 {

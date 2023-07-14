@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 using Idn.Contracts;
-using Idn.Contracts.Validators;
 using Idn.Domain;
+using Idn.Plugin.V1.Validators;
 using MediatR;
 
-namespace Idn.Plugin;
+namespace Idn.Plugin.V1;
 
 public static class ServiceCollectionExtensions
 {
