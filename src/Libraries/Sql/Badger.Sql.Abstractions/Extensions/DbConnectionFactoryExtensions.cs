@@ -82,7 +82,7 @@ public static class DbConnectionFactoryExtensions
             {
                 transaction.Rollback();
 
-                throw e;
+                throw;
             }
             finally
             {
@@ -112,7 +112,7 @@ public static class DbConnectionFactoryExtensions
             {
                 transaction.Rollback();
 
-                throw e;
+                throw;
             }
             finally
             {

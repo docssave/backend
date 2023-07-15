@@ -1,8 +1,8 @@
 using Badger.Clock;
 using Badger.MySql;
-using Col.Plugin;
+using Col.Plugin.V1.Extensions;
 using Idn.Plugin.V1.Extensions;
-using Ws.Plugin;
+using Ws.Plugin.V1.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

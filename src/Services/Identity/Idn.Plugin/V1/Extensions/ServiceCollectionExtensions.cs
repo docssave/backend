@@ -1,8 +1,10 @@
 ﻿using System.Text;
 using FluentValidation;
 using Idn.Contracts;
+using Idn.Contracts.V1;
 using Idn.Domain;
-using Idn.Domain.Options;
+using Idn.Domain.V1;
+using Idn.Domain.V1.Options;
 using Idn.Plugin.V1.Validators;
 using MediatR;
 using Microsoft.Extensions.Configuration;

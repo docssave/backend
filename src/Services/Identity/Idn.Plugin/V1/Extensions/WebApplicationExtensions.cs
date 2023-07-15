@@ -1,5 +1,6 @@
 ﻿using Badger.Plugin.Filters;
 using Idn.Contracts;
+using Idn.Contracts.V1;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
