@@ -1,18 +1,23 @@
-﻿using Idn.Contracts;
+﻿using Badger.Plugin.Filters;
+using Idn.Contracts;
 using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Idn.Plugin.V1.Endpoints;
+namespace Idn.Plugin.V1.Extensions;
 
-public static class UsersEndpoints
+public static class WebApplicationExtensions
 {
     private const string BaseRoute = "api/v1/users";
     
-    public static void MapUsersEndpoints(this IEndpointRouteBuilder application)
+    public static void UseIdentity(this WebApplication application)
     {
+        application.UseMiddleware<UserIdAccessorMiddleware>();
+        
         application.MapPut($"{BaseRoute}/authorization", AuthorizationAsync)
             .AllowAnonymous()
-            .AddEndpointFilter<ValidatorFilter<AuthorizationRequest>>();
+            .AddEndpointFilter<ValidationFilter<AuthorizationRequest>>();
     }
 
     private static async Task<IResult> AuthorizationAsync(AuthorizationRequest request, [FromServices] IMediator mediator)

@@ -1,4 +1,4 @@
-﻿namespace Idn.Plugin.V1.Options;
+﻿namespace Idn.Domain.Options;
 
 public sealed class TokenOptions
 {

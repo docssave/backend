@@ -1,12 +1,13 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 
 namespace Badger.Plugin.Filters;
 
-internal sealed class ValidatorFilter<TRequest> : IEndpointFilter where TRequest : class
+public sealed class ValidationFilter<TRequest> : IEndpointFilter where TRequest : class
 {
     private readonly IValidator<TRequest> _validator;
 
-    public ValidatorFilter(IValidator<TRequest> validator)
+    public ValidationFilter(IValidator<TRequest> validator)
     {
         _validator = validator;
     }
