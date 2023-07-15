@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-using Idn.Contracts;
 using Idn.Contracts.V1;
 using Microsoft.AspNetCore.Http;
 

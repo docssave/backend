@@ -1,5 +1,4 @@
-﻿using Idn.Contracts;
-using Idn.Contracts.V1;
+﻿using Idn.Contracts.V1;
 
 namespace Idn.Domain.V1.DataAccess;
 

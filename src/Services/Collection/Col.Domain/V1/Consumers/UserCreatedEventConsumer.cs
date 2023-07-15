@@ -1,5 +1,4 @@
 ﻿using Badger.Clock;
-using Col.Contracts;
 using Col.Contracts.V1;
 using Col.Domain.V1.DataAccess;
 using Idn.Contracts.V1.Events;

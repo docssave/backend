@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using FluentValidation;
-using Idn.Contracts;
 using Idn.Contracts.V1;
 using Idn.Domain;
 using Idn.Domain.V1;
