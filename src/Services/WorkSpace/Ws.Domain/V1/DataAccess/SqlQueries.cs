@@ -1,7 +1,6 @@
 ﻿using Badger.Sql.Abstractions;
 using Idn.Contracts.V1;
 using SqlKata;
-using Ws.Contracts;
 using Ws.Contracts.V1;
 
 namespace Ws.Domain.V1.DataAccess;

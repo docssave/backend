@@ -2,7 +2,6 @@
 using Idn.Contracts.V1.Events;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Ws.Contracts;
 using Ws.Contracts.V1;
 using Ws.Domain.V1.DataAccess;
 

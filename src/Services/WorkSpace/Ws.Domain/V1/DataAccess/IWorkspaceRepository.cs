@@ -2,7 +2,6 @@
 using Idn.Contracts.V1;
 using OneOf;
 using OneOf.Types;
-using Ws.Contracts;
 using Ws.Contracts.V1;
 
 namespace Ws.Domain.V1.DataAccess;
