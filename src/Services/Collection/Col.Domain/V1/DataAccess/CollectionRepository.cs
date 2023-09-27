@@ -34,8 +34,7 @@ public sealed class CollectionRepository : ICollectionRepository
                     entity.Icon,
                     Enum.Parse<EncryptionSide>(entity.EncryptSide),
                     entity.Version,
-                    DateTimeOffset.FromUnixTimeMilliseconds(entity.AddedAtTimespan)
-                    ))
+                    DateTimeOffset.FromUnixTimeMilliseconds(entity.AddedAtTimespan)))
                 .ToReadonlyList();
         }, ToUnreachableError);
 
