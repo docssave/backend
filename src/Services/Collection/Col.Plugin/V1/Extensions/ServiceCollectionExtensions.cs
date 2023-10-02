@@ -1,5 +1,8 @@
-﻿using Col.Domain;
+﻿using Col.Contracts.V1;
+using Col.Domain;
 using Col.Domain.V1;
+using Col.Plugin.V1.Validators;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +14,7 @@ public static class ServiceCollectionExtensions
     {
         return services
             .AddMediatR(typeof(MediatorEntryPoint).Assembly)
+            .AddSingleton<IValidator<RegisterCollectionRequest>, RegisterCollectionRequestValidator>()
             .AddCollection();
     }
 }

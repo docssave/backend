@@ -17,5 +17,6 @@ var app = builder.Build();
 
 app.UseAuthentication();
 app.UseIdentity();
+app.UseCollection();
 
 await app.RunAsync();

@@ -8,7 +8,7 @@ namespace Col.Plugin.V1.Extensions;
 
 public static class WebApplicationExtensions
 {
-    private const string BaseRoute = "api/v1/collection";
+    private const string BaseRoute = "api/v1/collections";
 
     public static void UseCollection(this WebApplication application)
     {
