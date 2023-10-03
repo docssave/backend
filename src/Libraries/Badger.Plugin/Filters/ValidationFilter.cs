@@ -7,10 +7,8 @@ public sealed class ValidationFilter<TRequest> : IEndpointFilter where TRequest 
 {
     private readonly IValidator<TRequest> _validator;
 
-    public ValidationFilter(IValidator<TRequest> validator)
-    {
+    public ValidationFilter(IValidator<TRequest> validator) =>
         _validator = validator;
-    }
 
     public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
     {
