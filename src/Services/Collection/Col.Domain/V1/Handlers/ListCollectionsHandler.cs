@@ -21,8 +21,7 @@ internal sealed class ListCollectionsHandler : IRequestHandler<ListCollectionsRe
         _userIdAccessor = userIdAccessor;
         _logger = logger;
     }
-    
-    
+
     public async Task<OneOf<IReadOnlyList<Collection>, Error<string>>> Handle(ListCollectionsRequest request, CancellationToken cancellationToken)
     {
         var userId = _userIdAccessor.UserId;

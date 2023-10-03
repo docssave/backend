@@ -9,7 +9,9 @@ new ServiceCollection()
         migrationRunner
             .AddMySql5()
             .WithGlobalConnectionString("server=localhost;port=3306;uid=root;database=DocsSave;")
-            .ScanIn(GetDataAccessAssemblies()).For.Migrations();
+            .ScanIn(GetDataAccessAssemblies())
+            .For
+            .Migrations();
     })
     .AddLogging(builder => builder.AddFluentMigratorConsole())
     .BuildServiceProvider(validateScopes: false)
@@ -52,4 +54,3 @@ static Assembly[] GetDataAccessAssemblies()
 
     return assemblies.ToArray();
 }
-

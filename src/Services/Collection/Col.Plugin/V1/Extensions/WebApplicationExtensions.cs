@@ -1,7 +1,6 @@
 ﻿using Badger.Plugin.Filters;
 using Col.Contracts.V1;
 using Col.Plugin.V1.Dtos;
-using Col.Plugin.V1.Validators;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -14,10 +13,8 @@ public static class WebApplicationExtensions
 {
     private const string BaseRoute = "api/v1/collections";
 
-    public static void UseCollection(this WebApplication application)
-    {
+    public static void UseCollection(this WebApplication application) =>
         application.MapGroup(BaseRoute).UseCollectionsEndpoints();
-    }
     
     private static void UseCollectionsEndpoints(this IEndpointRouteBuilder group)
     {
@@ -25,9 +22,9 @@ public static class WebApplicationExtensions
         group.MapGet("/", ListCollectionsAsync);
     }
 
-    private static async Task<IResult> RegisterCollectionAsync(RegisterCollectionDto request, [FromServices] IMediator mediator)
+    private static async Task<IResult> RegisterCollectionAsync([FromQuery] CollectionId id, RegisterCollectionDto request, [FromServices] IMediator mediator)
     {
-        var response = await mediator.Send(request);
+        var response = await mediator.Send(new RegisterCollectionRequest(id, request.Name, request.Icon, request.EncryptionSide, request.Version));
 
         return response.Match(Results.Ok, Results.BadRequest);
     }
