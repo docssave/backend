@@ -22,9 +22,9 @@ public static class WebApplicationExtensions
         group.MapGet("/", ListCollectionsAsync);
     }
 
-    private static async Task<IResult> RegisterCollectionAsync([FromQuery] CollectionId id, RegisterCollectionDto request, [FromServices] IMediator mediator)
+    private static async Task<IResult> RegisterCollectionAsync([FromRoute] CollectionId collectionId, RegisterCollectionDto request, [FromServices] IMediator mediator)
     {
-        var response = await mediator.Send(new RegisterCollectionRequest(id, request.Name, request.Icon, request.EncryptionSide, request.Version));
+        var response = await mediator.Send(new RegisterCollectionRequest(collectionId, request.Name, request.Icon, request.EncryptionSide, request.Version));
 
         return response.Match(Results.Ok, Results.BadRequest);
     }
