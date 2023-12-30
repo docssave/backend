@@ -1,8 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\Badger.Clock\Badger.Clock.csproj" />
     <ProjectReference Include="..\..\Identity\Idn.Contracts\Idn.Contracts.csproj" />
-    <ProjectReference Include="..\Ws.DataAccess\Ws.DataAccess.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\Badger.Collections\Badger.Collections.csproj" />
+    <ProjectReference Include="..\Ws.Contracts\Ws.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

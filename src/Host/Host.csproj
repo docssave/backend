@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <ItemGroup>
+        <ProjectReference Include="..\Libraries\Badger.Clock\Badger.Clock.csproj" />
+        <ProjectReference Include="..\Libraries\Badger.MySql\Badger.MySql.csproj" />
+        <ProjectReference Include="..\Services\Collection\Col.Plugin\Col.Plugin.csproj" />
+        <ProjectReference Include="..\Services\Identity\Idn.Contracts\Idn.Contracts.csproj" />
+        <ProjectReference Include="..\Services\Identity\Idn.Plugin\Idn.Plugin.csproj" />
+        <ProjectReference Include="..\Services\WorkSpace\Ws.Plugin\Ws.Plugin.csproj" />
+        <ProjectReference Include="..\Services\Tag\Tag.Contracts\Tag.Contracts.csproj" />
+        <ProjectReference Include="..\Services\Tag\Tag.DataAccess\Tag.DataAccess.csproj" />
+        <ProjectReference Include="..\Services\Tag\Tag.Domain\Tag.Domain.csproj" />
+        <ProjectReference Include="..\Services\Tag\Tag.Contracts\Tag.Contracts.csproj" />
+        <ProjectReference Include="..\Services\Tag\Tag.DataAccess\Tag.DataAccess.csproj" />
+        <ProjectReference Include="..\Services\Tag\Tag.Domain\Tag.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

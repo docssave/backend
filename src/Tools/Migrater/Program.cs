@@ -1,18 +1,17 @@
 ﻿using System.Reflection;
 using FluentMigrator.Runner;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Data.SqlClient;
-
-await CreateDatabaseAsync();
 
 new ServiceCollection()
     .AddFluentMigratorCore()
     .ConfigureRunner(migrationRunner =>
     {
         migrationRunner
-            .AddSqlServer2016()
-            .WithGlobalConnectionString("Data Source=localhost,1433;Initial Catalog=DocsSave;Integrated Security=false; User ID=SA; Password=yourStrong(!)Password")
-            .ScanIn(GetDataAccessAssemblies()).For.Migrations();
+            .AddMySql5()
+            .WithGlobalConnectionString("server=localhost;port=3306;uid=root;database=DocsSave;")
+            .ScanIn(GetDataAccessAssemblies())
+            .For
+            .Migrations();
     })
     .AddLogging(builder => builder.AddFluentMigratorConsole())
     .BuildServiceProvider(validateScopes: false)
@@ -24,7 +23,7 @@ new ServiceCollection()
 static Assembly[] GetDataAccessAssemblies()
 {
     var gamingAssemblyNames = Directory
-        .GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.DataAccess.dll")
+        .GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.Domain.dll")
         .Select(filePath =>
         {
             try
@@ -55,20 +54,3 @@ static Assembly[] GetDataAccessAssemblies()
 
     return assemblies.ToArray();
 }
-
-static async Task CreateDatabaseAsync()
-{
-    await using var connection = new SqlConnection("Data Source=localhost,1433; Integrated Security=False; User ID=SA; Password=yourStrong(!)Password");
-    await using var command = connection.CreateCommand();
-
-    await connection.OpenAsync();
-    
-    command.CommandText =
-        @"IF NOT EXISTS(SELECT * FROM SYS.DATABASES WHERE name = 'DocsSave')
-            BEGIN
-                CREATE DATABASE DocsSave
-            END;";
-
-    await command.ExecuteNonQueryAsync();
-}
-

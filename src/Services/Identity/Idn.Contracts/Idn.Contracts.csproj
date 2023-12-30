@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Libraries\Common\Common.csproj"/>
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Macross.Json.Extensions" Version="3.0.0" />
+    </ItemGroup>
 
 </Project>

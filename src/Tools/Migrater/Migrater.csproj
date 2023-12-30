@@ -6,11 +6,14 @@
 
     <ItemGroup>
       <PackageReference Include="FluentMigrator.Runner" Version="3.3.2" />
+      <PackageReference Include="MySql.Data" Version="8.0.33" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0-preview.2.23128.3" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Services\Identity\Idn.DataAccess\Idn.DataAccess.csproj" />
-      <ProjectReference Include="..\..\Services\WorkSpace\Ws.DataAccess\Ws.DataAccess.csproj" />
+      <ProjectReference Include="..\..\Services\Collection\Col.Domain\Col.Domain.csproj" />
+      <ProjectReference Include="..\..\Services\Identity\Idn.Domain\Idn.Domain.csproj" />
+      <ProjectReference Include="..\..\Services\WorkSpace\Ws.Domain\Ws.Domain.csproj" />
     </ItemGroup>
 
 </Project>

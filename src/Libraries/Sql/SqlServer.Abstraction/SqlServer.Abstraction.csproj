@@ -1,7 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-    
-    <ItemGroup>
-        <PackageReference Include="SqlKata" Version="3.0.0-beta" />
-    </ItemGroup>
-
-</Project>

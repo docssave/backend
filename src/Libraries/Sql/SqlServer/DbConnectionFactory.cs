@@ -1,6 +1,6 @@
 ﻿using System.Data;
 using Microsoft.Data.SqlClient;
-using SqlServer.Abstraction;
+using Sql.Abstractions;
 
 namespace SqlServer;
 
