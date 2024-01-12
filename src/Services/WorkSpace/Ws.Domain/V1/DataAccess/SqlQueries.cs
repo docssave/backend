@@ -1,4 +1,5 @@
 ﻿using Badger.Sql.Abstractions;
+using Badger.SqlKata.Extensions;
 using Idn.Contracts.V1;
 using SqlKata;
 using Ws.Contracts.V1;
@@ -17,11 +18,15 @@ internal sealed class SqlQueries
     public string RegisterWorkspaceQuery(WorkspaceId id, string name, DateTimeOffset registeredAt)
     {
         var query = new Query("Workspaces")
-            .AsInsert(new
+            .AsUpsert(new Dictionary<string, object>
             {
-                Id = id.Value,
-                Name = name,
-                AddedAtTimespan = registeredAt.ToUnixTimeMilliseconds()
+                { "Id", id.Value },
+                { "Name", name },
+                { "AddedAtTimespan", registeredAt.ToUnixTimeMilliseconds() }
+            }, new Dictionary<string, object>
+            {
+                { "Name", name },
+                { "AddedAtTimespan", registeredAt.ToUnixTimeMilliseconds() }
             });
 
         return _compiler.Compile(query);
@@ -30,10 +35,13 @@ internal sealed class SqlQueries
     public string RegisterUserWorkspaceQuery(UserId userId, WorkspaceId workspaceId)
     {
         var query = new Query("UserWorkspaces")
-            .AsInsert(new
+            .AsUpsert(new Dictionary<string, object>
             {
-                UserId = userId.Value,
-                WorkspaceId = workspaceId.Value
+                { "UserId", userId.Value },
+                { "WorkspaceId", workspaceId.Value }
+            }, new Dictionary<string, object>
+            {
+                { "UserId", userId.Value }
             });
 
         return _compiler.Compile(query);

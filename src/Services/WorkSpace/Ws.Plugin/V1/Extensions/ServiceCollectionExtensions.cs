@@ -10,7 +10,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddWorkspaceService(this IServiceCollection services)
     {
         return services
-            .AddMediatR(typeof(MediatorEntryPoint).Assembly)
+            .AddMediatR(configuration => configuration.RegisterServicesFromAssembly(typeof(MediatorEntryPoint).Assembly))
             .AddWorkspace();
     }
 }
