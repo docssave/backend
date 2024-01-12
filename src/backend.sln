@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host", "Host\Host.csproj", "{AC69A43B-6A95-4BB3-9366-840DD5B37D21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Host", "Host\Host.csproj", "{AC69A43B-6A95-4BB3-9366-840DD5B37D21}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{075A0A9A-B3E9-4AB6-BD0F-1D77A26218EA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{CC59E423-F83D-4DBC-9D3F-A5BA51A96914}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Idn.Contracts", "Services\Identity\Idn.Contracts\Idn.Contracts.csproj", "{C2E1B5A6-BCB8-482B-A639-E8C59642F0B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Idn.Contracts", "Services\Identity\Idn.Contracts\Idn.Contracts.csproj", "{C2E1B5A6-BCB8-482B-A639-E8C59642F0B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Idn.Domain", "Services\Identity\Idn.Domain\Idn.Domain.csproj", "{4DE1F54A-8DC0-4984-AC38-A0AFE10D5C35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Idn.Domain", "Services\Identity\Idn.Domain\Idn.Domain.csproj", "{4DE1F54A-8DC0-4984-AC38-A0AFE10D5C35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Idn.Plugin", "Services\Identity\Idn.Plugin\Idn.Plugin.csproj", "{74707CCB-DC66-4036-AD7D-75A231C13B68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Idn.Plugin", "Services\Identity\Idn.Plugin\Idn.Plugin.csproj", "{74707CCB-DC66-4036-AD7D-75A231C13B68}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{5EF80484-B2DE-4ADB-8B96-0877E99BB48C}"
 	ProjectSection(SolutionItems) = preProject
@@ -24,45 +24,44 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{CB5901F0-ACE1-4914-B947-9A9917E6BFA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Badger.Sql.Abstractions", "Libraries\Sql\Badger.Sql.Abstractions\Badger.Sql.Abstractions.csproj", "{33E57DA4-9BFF-4A82-B5B8-F2B5B693AF20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Badger.Sql.Abstractions", "Libraries\Sql\Badger.Sql.Abstractions\Badger.Sql.Abstractions.csproj", "{33E57DA4-9BFF-4A82-B5B8-F2B5B693AF20}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{6CD86EE8-3E2C-4095-8D30-773036F39B14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Migrater", "Tools\Migrater\Migrater.csproj", "{A08E989A-B1FD-4415-B672-1A5EDE1D2C4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Migrater", "Tools\Migrater\Migrater.csproj", "{A08E989A-B1FD-4415-B672-1A5EDE1D2C4C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workspace", "Workspace", "{21D36DE3-5B67-4B8E-B886-C8C47AE094B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ws.Plugin", "Services\WorkSpace\Ws.Plugin\Ws.Plugin.csproj", "{F8344B1B-D417-4231-8DB8-2857272CB4D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ws.Plugin", "Services\WorkSpace\Ws.Plugin\Ws.Plugin.csproj", "{F8344B1B-D417-4231-8DB8-2857272CB4D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ws.Domain", "Services\WorkSpace\Ws.Domain\Ws.Domain.csproj", "{CF28FA05-532D-47A2-BFB0-9139954DC77E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ws.Domain", "Services\WorkSpace\Ws.Domain\Ws.Domain.csproj", "{CF28FA05-532D-47A2-BFB0-9139954DC77E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Collection", "Collection", "{12BD7F4E-46CE-40B0-A41B-E547852818B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Col.Contracts", "Services\Collection\Col.Contracts\Col.Contracts.csproj", "{84909248-5AC0-4B7D-A0FD-AE40F9C926FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Col.Contracts", "Services\Collection\Col.Contracts\Col.Contracts.csproj", "{84909248-5AC0-4B7D-A0FD-AE40F9C926FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Col.Domain", "Services\Collection\Col.Domain\Col.Domain.csproj", "{C2A0DEF3-ADBD-47C2-B89D-B82206A49C6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Col.Domain", "Services\Collection\Col.Domain\Col.Domain.csproj", "{C2A0DEF3-ADBD-47C2-B89D-B82206A49C6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Col.Plugin", "Services\Collection\Col.Plugin\Col.Plugin.csproj", "{24F07C43-96F4-44F1-B104-751418E79DF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Col.Plugin", "Services\Collection\Col.Plugin\Col.Plugin.csproj", "{24F07C43-96F4-44F1-B104-751418E79DF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ws.Contracts", "Services\WorkSpace\Ws.Contracts\Ws.Contracts.csproj", "{757F0C33-FB7B-45D9-9EE4-CA8E3D619AD0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ws.Contracts", "Services\WorkSpace\Ws.Contracts\Ws.Contracts.csproj", "{757F0C33-FB7B-45D9-9EE4-CA8E3D619AD0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Badger.Collections", "Libraries\Badger.Collections\Badger.Collections.csproj", "{D97697DC-36B0-411F-B3C9-A5A1AD6251E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Badger.Collections", "Libraries\Badger.Collections\Badger.Collections.csproj", "{D97697DC-36B0-411F-B3C9-A5A1AD6251E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Badger.Clock", "Libraries\Badger.Clock\Badger.Clock.csproj", "{DEC9C582-D40E-40D7-B4BC-E7C5312853B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Badger.Clock", "Libraries\Badger.Clock\Badger.Clock.csproj", "{DEC9C582-D40E-40D7-B4BC-E7C5312853B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Badger.MySql", "Libraries\Badger.MySql\Badger.MySql.csproj", "{345E7D69-70C9-4CEA-B5C1-76B503A1719A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Badger.MySql", "Libraries\Badger.MySql\Badger.MySql.csproj", "{345E7D69-70C9-4CEA-B5C1-76B503A1719A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Badger.OneOf", "Libraries\Badger.OneOf\Badger.OneOf.csproj", "{C7E77BB9-85AA-4B99-B5A7-4862F4FE9411}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Badger.OneOf", "Libraries\Badger.OneOf\Badger.OneOf.csproj", "{C7E77BB9-85AA-4B99-B5A7-4862F4FE9411}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Badger.Plugin", "Libraries\Badger.Plugin\Badger.Plugin.csproj", "{36EDAD99-B045-45B6-9D7F-4F4CAA593BE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Badger.Plugin", "Libraries\Badger.Plugin\Badger.Plugin.csproj", "{36EDAD99-B045-45B6-9D7F-4F4CAA593BE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Badger.SqlKata", "Libraries\Badger.SqlKata\Badger.SqlKata.csproj", "{3302D584-BC4A-497A-B5D5-A925AE04502D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{AC69A43B-6A95-4BB3-9366-840DD5B37D21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -133,6 +132,13 @@ Global
 		{36EDAD99-B045-45B6-9D7F-4F4CAA593BE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36EDAD99-B045-45B6-9D7F-4F4CAA593BE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36EDAD99-B045-45B6-9D7F-4F4CAA593BE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3302D584-BC4A-497A-B5D5-A925AE04502D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3302D584-BC4A-497A-B5D5-A925AE04502D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3302D584-BC4A-497A-B5D5-A925AE04502D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3302D584-BC4A-497A-B5D5-A925AE04502D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{CC59E423-F83D-4DBC-9D3F-A5BA51A96914} = {075A0A9A-B3E9-4AB6-BD0F-1D77A26218EA}
@@ -155,5 +161,9 @@ Global
 		{345E7D69-70C9-4CEA-B5C1-76B503A1719A} = {CB5901F0-ACE1-4914-B947-9A9917E6BFA8}
 		{C7E77BB9-85AA-4B99-B5A7-4862F4FE9411} = {AA957496-C892-4616-8152-519C9C9ABEFB}
 		{36EDAD99-B045-45B6-9D7F-4F4CAA593BE2} = {AA957496-C892-4616-8152-519C9C9ABEFB}
+		{3302D584-BC4A-497A-B5D5-A925AE04502D} = {AA957496-C892-4616-8152-519C9C9ABEFB}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EB885B4D-DD97-42AD-8493-19EE539EF658}
 	EndGlobalSection
 EndGlobal

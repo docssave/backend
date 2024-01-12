@@ -30,6 +30,10 @@ public sealed class SqlQueries
                 EncryptSide = encryptionSide.ToString(),
                 Version = version,
                 AddedAtTimespan = addedAt.ToUnixTimeMilliseconds()
+            })
+            .OnKeyDuplicate(new
+            {
+                AddedAtTimespan = addedAt.ToUnixTimeMilliseconds()
             });
 
         return _compiler.Compile(query);
