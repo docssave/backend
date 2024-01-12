@@ -37,7 +37,7 @@ public static class ServiceCollectionExtensions
         services.Configure<TokenOptions>(tokenOptions);
         
         return services
-            .AddMediatR(typeof(MediatorEntryPoint).Assembly)
+            .AddMediatR(configuration => configuration.RegisterServicesFromAssembly(typeof(MediatorEntryPoint).Assembly))
             .AddScoped<IUserIdAccessor, UserIdAccessor>()
             .AddSingleton<IValidator<AuthorizationRequest>, AuthorizationRequestValidator>()
             .AddIdentity();

@@ -1,4 +1,5 @@
 using Badger.Sql.Abstractions;
+using Badger.SqlKata.Extensions;
 using Col.Contracts.V1;
 using Idn.Contracts.V1;
 using SqlKata;
@@ -12,7 +13,6 @@ public sealed class SqlQueries
     public SqlQueries(IQueryCompiler compiler) =>
         _compiler = compiler;
 
-    //TODO: SQL Server doesn't support ON DUPLICATE KYE
     public string RegisterCollectionQuery(
         CollectionId id,
         string name,
@@ -22,18 +22,21 @@ public sealed class SqlQueries
         DateTimeOffset addedAt)
     {
         var query = new Query("Collections")
-            .AsInsert(new
+            .AsUpsert(new Dictionary<string, object>
             {
-                Id = id.Value,
-                Name = name,
-                Icon = icon,
-                EncryptSide = encryptionSide.ToString(),
-                Version = version,
-                AddedAtTimespan = addedAt.ToUnixTimeMilliseconds()
-            })
-            .OnKeyDuplicate(new
+                { "Id", id.Value },
+                { "Name", name},
+                { "Icon", icon },
+                { "EncryptSide", encryptionSide.ToString()},
+                { "Version", version },
+                { "AddedAtTimespan", addedAt.ToUnixTimeMilliseconds() }
+            }, new Dictionary<string, object>
             {
-                AddedAtTimespan = addedAt.ToUnixTimeMilliseconds()
+                { "Name", name},
+                { "Icon", icon },
+                { "EncryptSide", encryptionSide.ToString()},
+                { "Version", version },
+                { "AddedAtTimespan", addedAt.ToUnixTimeMilliseconds() }
             });
 
         return _compiler.Compile(query);

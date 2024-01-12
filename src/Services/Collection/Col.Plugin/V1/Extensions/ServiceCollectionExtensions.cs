@@ -13,7 +13,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddCollectionService(this IServiceCollection services)
     {
         return services
-            .AddMediatR(typeof(MediatorEntryPoint).Assembly)
+            .AddMediatR(configuration => configuration.RegisterServicesFromAssembly(typeof(MediatorEntryPoint).Assembly))
             .AddSingleton<IValidator<RegisterCollectionDto>, RegisterCollectionRequestValidator>()
             .AddCollection();
     }
