@@ -1,5 +1,3 @@
 ﻿namespace Ws.Domain;
 
-public sealed class MediatorEntryPoint
-{
-}
+public sealed class MediatorEntryPoint;
