@@ -6,15 +6,8 @@ using Ws.Contracts.V1;
 
 namespace Ws.Domain.V1.DataAccess;
 
-internal sealed class SqlQueries
+internal sealed class SqlQueries(IQueryCompiler compiler)
 {
-    private readonly IQueryCompiler _compiler;
-
-    public SqlQueries(IQueryCompiler compiler)
-    {
-        _compiler = compiler;
-    }
-    
     public string RegisterWorkspaceQuery(WorkspaceId id, string name, DateTimeOffset registeredAt)
     {
         var query = new Query("Workspaces")
@@ -29,7 +22,7 @@ internal sealed class SqlQueries
                 { "AddedAtTimespan", registeredAt.ToUnixTimeMilliseconds() }
             });
 
-        return _compiler.Compile(query);
+        return compiler.Compile(query);
     }
 
     public string RegisterUserWorkspaceQuery(UserId userId, WorkspaceId workspaceId)
@@ -44,7 +37,7 @@ internal sealed class SqlQueries
                 { "UserId", userId.Value }
             });
 
-        return _compiler.Compile(query);
+        return compiler.Compile(query);
     }
 
     public string GetWorkspaceQuery(UserId userId)
@@ -55,6 +48,6 @@ internal sealed class SqlQueries
             .Where("UserWorkspaces.UserId", userId)
             .OrderByDesc("AddedAtTimespan");
 
-        return _compiler.Compile(query);
+        return compiler.Compile(query);
     }
 }
