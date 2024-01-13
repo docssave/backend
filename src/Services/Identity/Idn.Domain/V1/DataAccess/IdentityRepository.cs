@@ -8,21 +8,12 @@ using OneOf.Types;
 
 namespace Idn.Domain.V1.DataAccess;
 
-internal sealed class IdentityRepository : IIdentityRepository
+internal sealed class IdentityRepository(IDbConnectionFactory connectionFactory, SqlQueries sqlQueries) : IIdentityRepository
 {
-    private readonly IDbConnectionFactory _connectionFactory;
-    private readonly SqlQueries _sqlQueries;
-
-    public IdentityRepository(IDbConnectionFactory connectionFactory, SqlQueries sqlQueries)
-    {
-        _connectionFactory = connectionFactory;
-        _sqlQueries = sqlQueries;
-    }
-
     public Task<OneOf<User, NotFound, UnreachableError>> GetUserAsync(string sourceUserId) =>
-        _connectionFactory.TryAsync(async connection =>
+        connectionFactory.TryAsync(async connection =>
         {
-            var sqlQuery = _sqlQueries.GetUserQuery(sourceUserId);
+            var sqlQuery = sqlQueries.GetUserQuery(sourceUserId);
 
             var entity = await connection.QuerySingleOrDefaultAsync<UserEntity>(sqlQuery);
 
@@ -39,10 +30,15 @@ internal sealed class IdentityRepository : IIdentityRepository
                     DateTimeOffset.FromUnixTimeMilliseconds(entity.RegisteredAtTimespan));
         }, ToUnreachableError);
 
-    public Task<OneOf<User, UnreachableError>> RegisterUserAsync(string sourceUserId, string name, string encryptedEmail, AuthorizationSource source, DateTimeOffset registeredAt) =>
-        _connectionFactory.TryAsync(async connection =>
+    public Task<OneOf<User, UnreachableError>> RegisterUserAsync(
+        string sourceUserId,
+        string name,
+        string encryptedEmail,
+        AuthorizationSource source,
+        DateTimeOffset registeredAt) =>
+        connectionFactory.TryAsync(async connection =>
         {
-            var sqlQuery = _sqlQueries.CreateUserQuery(sourceUserId, name, encryptedEmail, source, registeredAt);
+            var sqlQuery = sqlQueries.CreateUserQuery(sourceUserId, name, encryptedEmail, source, registeredAt);
 
             var userId = await connection.QuerySingleAsync<long>(sqlQuery);
             var user = new User(new UserId(userId), name, encryptedEmail, source, registeredAt);

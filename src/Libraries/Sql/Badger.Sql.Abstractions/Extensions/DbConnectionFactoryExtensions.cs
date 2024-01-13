@@ -7,23 +7,6 @@ namespace Badger.Sql.Abstractions.Extensions;
 
 public static class DbConnectionFactoryExtensions
 {
-    public static async Task<T> TryAsync<T>(
-        this IDbConnectionFactory dbConnectionFactory,
-        Func<IDbConnection, Task<T>> sqlFunc,
-        Func<Exception, T> exceptionFunc)
-    {
-        try
-        {
-            using var connection = await dbConnectionFactory.CreateAsync();
-
-            return await sqlFunc(connection);
-        }
-        catch (DbException e)
-        {
-            return exceptionFunc(e);
-        }
-    }
-    
     public static async Task<OneOf<T, UnreachableError>> TryAsync<T>(
         this IDbConnectionFactory dbConnectionFactory,
         Func<IDbConnection, Task<T>> sqlFunc,
@@ -119,4 +102,21 @@ public static class DbConnectionFactoryExtensions
                 connection.Close();
             }
         }, exceptionFunc);
+
+    private static async Task<T> TryAsync<T>(
+        this IDbConnectionFactory dbConnectionFactory,
+        Func<IDbConnection, Task<T>> sqlFunc,
+        Func<Exception, T> exceptionFunc)
+    {
+        try
+        {
+            using var connection = await dbConnectionFactory.CreateAsync();
+
+            return await sqlFunc(connection);
+        }
+        catch (DbException e)
+        {
+            return exceptionFunc(e);
+        }
+    }
 }

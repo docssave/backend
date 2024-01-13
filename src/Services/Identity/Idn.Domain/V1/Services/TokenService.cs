@@ -8,17 +8,10 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Idn.Domain.V1.Services;
 
-public sealed class TokenService : ITokenService
+public sealed class TokenService(JwtSecurityTokenHandler tokenHandler, IOptions<TokenOptions> options) : ITokenService
 {
-    private readonly JwtSecurityTokenHandler _tokenHandler;
-    private readonly TokenOptions _options;
+    private readonly TokenOptions _options = options.Value;
 
-    public TokenService(JwtSecurityTokenHandler tokenHandler, IOptions<TokenOptions> options)
-    {
-        _tokenHandler = tokenHandler;
-        _options = options.Value;
-    }
-    
     public string Create(User user)
     {
         var jwt = new JwtSecurityToken(
@@ -28,7 +21,7 @@ public sealed class TokenService : ITokenService
             signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_options.ClientSecret)), SecurityAlgorithms.HmacSha256)
         );
 
-        return _tokenHandler.WriteToken(jwt);
+        return tokenHandler.WriteToken(jwt);
 
         IReadOnlyList<Claim> GetClaimsIdentity()
         {

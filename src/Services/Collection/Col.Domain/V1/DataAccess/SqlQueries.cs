@@ -6,13 +6,8 @@ using SqlKata;
 
 namespace Col.Domain.V1.DataAccess;
 
-public sealed class SqlQueries
+public sealed class SqlQueries(IQueryCompiler compiler)
 {
-    private readonly IQueryCompiler _compiler;
-
-    public SqlQueries(IQueryCompiler compiler) =>
-        _compiler = compiler;
-
     public string RegisterCollectionQuery(
         CollectionId id,
         string name,
@@ -39,7 +34,7 @@ public sealed class SqlQueries
                 { "AddedAtTimespan", addedAt.ToUnixTimeMilliseconds() }
             });
 
-        return _compiler.Compile(query);
+        return compiler.Compile(query);
     }
 
     public string RegisterUserCollectionQuery(UserId userId, CollectionId collectionId)
@@ -51,7 +46,7 @@ public sealed class SqlQueries
                 CollectionId = collectionId
             });
 
-        return _compiler.Compile(query);
+        return compiler.Compile(query);
     }
 
     public string GetCollectionsQuery(UserId userId)
@@ -62,6 +57,6 @@ public sealed class SqlQueries
             .Where("UserCollections.UserId", userId)
             .OrderBy("AddedAtTimespan");
 
-        return _compiler.Compile(query);
+        return compiler.Compile(query);
     }
 }
