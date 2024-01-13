@@ -4,15 +4,8 @@ using Microsoft.AspNetCore.Http;
 
 namespace Idn.Plugin.V1;
 
-public sealed class UserIdAccessorMiddleware
+public sealed class UserIdAccessorMiddleware(RequestDelegate next)
 {
-    private readonly RequestDelegate _next;
-
-    public UserIdAccessorMiddleware(RequestDelegate next)
-    {
-        _next = next;
-    }
-
     public async Task Invoke(HttpContext context, IUserIdAccessor userIdAccessor)
     {
         if (context.User.Identity is ClaimsIdentity { IsAuthenticated: true } identity)
@@ -21,6 +14,6 @@ public sealed class UserIdAccessorMiddleware
             userIdAccessor.UserId = UserId.TryParse(idClaim?.Value);
         }
         
-        await _next(context);
+        await next(context);
     }
 }

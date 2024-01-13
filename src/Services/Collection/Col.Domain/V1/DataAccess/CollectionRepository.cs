@@ -10,21 +10,12 @@ using OneOf.Types;
 
 namespace Col.Domain.V1.DataAccess;
 
-public sealed class CollectionRepository : ICollectionRepository
+public sealed class CollectionRepository(IDbConnectionFactory connectionFactory, SqlQueries queries) : ICollectionRepository
 {
-    private readonly IDbConnectionFactory _connectionFactory;
-    private readonly SqlQueries _queries;
-
-    public CollectionRepository(IDbConnectionFactory connectionFactory, SqlQueries queries)
-    {
-        _connectionFactory = connectionFactory;
-        _queries = queries;
-    }
-
     public Task<OneOf<IReadOnlyList<Collection>, UnreachableError>> ListAsync(UserId userId) =>
-        _connectionFactory.TryAsync(async connection =>
+        connectionFactory.TryAsync(async connection =>
         {
-            var sqlQuery = _queries.GetCollectionsQuery(userId);
+            var sqlQuery = queries.GetCollectionsQuery(userId);
 
             var entities = await connection.QueryAsync<CollectionEntity>(sqlQuery);
 
@@ -45,13 +36,13 @@ public sealed class CollectionRepository : ICollectionRepository
         string icon,
         EncryptionSide encryptionSide,
         DateTimeOffset addedAt,
-        int version) => _connectionFactory.TryAsync(async (connection, transaction) =>
+        int version) => connectionFactory.TryAsync(async (connection, transaction) =>
     {
-        var createCollectionQuery = _queries.RegisterCollectionQuery(id, name, icon, encryptionSide, version, addedAt);
+        var createCollectionQuery = queries.RegisterCollectionQuery(id, name, icon, encryptionSide, version, addedAt);
 
         await connection.ExecuteAsync(createCollectionQuery, transaction: transaction);
 
-        var createUserCollectionQuery = _queries.RegisterUserCollectionQuery(userId, id);
+        var createUserCollectionQuery = queries.RegisterUserCollectionQuery(userId, id);
 
         await connection.ExecuteAsync(createUserCollectionQuery, transaction: transaction);
 

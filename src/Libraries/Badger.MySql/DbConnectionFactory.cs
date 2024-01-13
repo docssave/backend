@@ -4,21 +4,15 @@ using Badger.Sql.Abstractions;
 
 namespace Badger.MySql;
 
-internal sealed class DbConnectionFactory : IDbConnectionFactory
+internal sealed class DbConnectionFactory(string connectionString) : IDbConnectionFactory
 {
-    private readonly string _connectionString;
     private IDbConnection? _dbConnection;
 
-    public DbConnectionFactory(string connectionString)
-    {
-        _connectionString = connectionString;
-    }
-    
     public Task<IDbConnection> CreateAsync()
     {
         if (_dbConnection is not { State: ConnectionState.Open })
         {
-            _dbConnection = new MySqlConnection(_connectionString);
+            _dbConnection = new MySqlConnection(connectionString);
         }
 
         return Task.FromResult(_dbConnection);

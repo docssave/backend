@@ -2,24 +2,15 @@
 
 namespace Idn.Domain.V1.DataAccess;
 
-public sealed class User
+public sealed class User(UserId id, string name, string encryptedEmail, AuthorizationSource source, DateTimeOffset registeredAt)
 {
-    public User(UserId id, string name, string encryptedEmail, AuthorizationSource source, DateTimeOffset registeredAt)
-    {
-        Id = id;
-        Name = name;
-        EncryptedEmail = encryptedEmail;
-        Source = source;
-        RegisteredAt = registeredAt;
-    }
-    
-    public UserId Id { get; }
-    
-    public string Name { get; }
-    
-    public string EncryptedEmail { get; }
-    
-    public AuthorizationSource Source { get; }
-    
-    public DateTimeOffset RegisteredAt { get; }
+    public UserId Id { get; } = id;
+
+    public string Name { get; } = name;
+
+    public string EncryptedEmail { get; } = encryptedEmail;
+
+    public AuthorizationSource Source { get; } = source;
+
+    public DateTimeOffset RegisteredAt { get; } = registeredAt;
 }

@@ -39,14 +39,14 @@ namespace Badger.SqlKata
 
             void UpdateRawSql(UpsertClause upsertClause)
             {
-                var inserColumns = GetInsertColumnsList(upsertClause.InsertColumns);
+                var insertColumns = GetInsertColumnsList(upsertClause.InsertColumns);
                 var insertValues = Parameterize(sqlResult, upsertClause.InsertValues);
                 var updateColumnsValue = GetUpdateColumnsValue(upsertClause.UpdateColumns, upsertClause.UpdateValues);
 
                 var rawSql = new StringBuilder()
                     .Append(SingleInsertStartClause)
                     .Append($" {tableName} ")
-                    .AppendLine($" {inserColumns} ")
+                    .AppendLine($" {insertColumns} ")
                     .AppendLine($"VALUES ({insertValues})")
                     .AppendLine("ON DUPLICATE KEY UPDATE")
                     .Append(updateColumnsValue)

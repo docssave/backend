@@ -3,13 +3,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace Badger.Plugin.Filters;
 
-public sealed class ValidationFilter<TRequest> : IEndpointFilter where TRequest : class
+public sealed class ValidationFilter<TRequest>(IValidator<TRequest> validator) : IEndpointFilter
+    where TRequest : class
 {
-    private readonly IValidator<TRequest> _validator;
-
-    public ValidationFilter(IValidator<TRequest> validator) =>
-        _validator = validator;
-
     public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
     {
         var argument = context.Arguments.SingleOrDefault(argument => argument?.GetType() == typeof(TRequest));
@@ -19,7 +15,7 @@ public sealed class ValidationFilter<TRequest> : IEndpointFilter where TRequest 
             throw new ArgumentException($"Could not find request with the following type `{typeof(TRequest)}`");
         }
 
-        var validationResult = await _validator.ValidateAsync(request);
+        var validationResult = await validator.ValidateAsync(request);
 
         if (!validationResult.IsValid)
         {
