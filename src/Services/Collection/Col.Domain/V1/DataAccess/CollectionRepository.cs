@@ -26,7 +26,7 @@ public sealed class CollectionRepository(IDbConnectionFactory connectionFactory,
                     Enum.Parse<EncryptionSide>(entity.EncryptSide),
                     entity.Version,
                     DateTimeOffset.FromUnixTimeMilliseconds(entity.AddedAtTimespan)))
-                .ToReadonlyList();
+                .ToReadOnlyList();
         }, ToUnreachableError);
 
     public Task<OneOf<Success, UnreachableError>> RegisterAsync(
