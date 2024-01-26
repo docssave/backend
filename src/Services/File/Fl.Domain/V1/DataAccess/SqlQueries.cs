@@ -53,4 +53,31 @@ internal sealed class SqlQueries(IQueryCompiler compiler)
 
         return compiler.Compile(query);
     }
+
+    public string DeleteFiles(FileId[] fileIds)
+    {
+        var query = new Query("Files")
+            .WhereIn("Files.Id", fileIds.Select(fileId => fileId.Value))
+            .AsDelete();
+
+        return compiler.Compile(query);
+    }
+
+    public string DeleteFilesMetadata(FileId[] fileIds)
+    {
+        var query = new Query("FileMetadata")
+            .WhereIn("FileMetadata.FileId", fileIds.Select(fileId => fileId.Value))
+            .AsDelete();
+
+        return compiler.Compile(query);
+    }
+
+    public string GetFileIds(DocumentId documentId)
+    {
+        var query = new Query("FileMetadata")
+            .Select("FileId")
+            .Where("FileMetadata.DocumentId", documentId.Value);
+
+        return compiler.Compile(query);
+    }
 }
