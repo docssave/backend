@@ -24,7 +24,7 @@ internal sealed class WorkspaceRepository(IDbConnectionFactory connectionFactory
                     new WorkspaceId(entity.Id),
                     entity.Name,
                     DateTimeOffset.FromUnixTimeMilliseconds(entity.AddedAtTimespan)))
-                .ToReadonlyList();
+                .ToReadOnlyList();
         }, ToUnreachableError);
 
     public Task<OneOf<Success, UnreachableError>> RegisterAsync(WorkspaceId id, string name,  UserId userId, DateTimeOffset registeredAt) =>
