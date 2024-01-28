@@ -1,5 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <ItemGroup>
     <ProjectReference Include="..\..\Document\Doc.Contracts\Doc.Contracts.csproj" />
   </ItemGroup>
+
 </Project>
