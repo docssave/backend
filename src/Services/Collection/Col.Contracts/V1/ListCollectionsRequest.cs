@@ -4,4 +4,4 @@ using OneOf.Types;
 
 namespace Col.Contracts.V1;
 
-public sealed record ListCollectionsRequest() : IRequest<OneOf<IReadOnlyList<Collection>, Error<string>>>;
+public sealed record ListCollectionsRequest : IRequest<OneOf<IReadOnlyList<Collection>, Error<string>>>;
