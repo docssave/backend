@@ -25,9 +25,9 @@ public sealed class TagRepository : ITagRepository
     public Task<OneOf<IReadOnlyList<TagValue>, UnreachableError>> ListAsync(UserId userId) =>
         _connectionFactory.TryAsync(async connection =>
         {
-            var sqlQuery = _queries.GetCollectionsQuery(userId);
+            var sqlQuery = _queries.GetTagsQuery(userId);
 
-            var entities = await connection.QueryAsync<CollectionEntity>(sqlQuery);
+            var entities = await connection.QueryAsync<TagEntity>(sqlQuery);
 
             return entities.Select(entity => new TagValue(entity.Name)).ToReadonlyList();
         
@@ -37,27 +37,24 @@ public sealed class TagRepository : ITagRepository
 
     public Task<OneOf<Success, UnreachableError>> RegisterAsync(
         UserId userId,
-        CollectionId id,
-        string name,
-        string icon,
-        EncryptionSide encryptionSide,
-        DateTimeOffset addedAt,
+        Id id,
+        Tags tags,
         int version) => _connectionFactory.TryAsync(async (connection, transaction) =>
     {
-        var createCollectionQuery = _queries.RegisterCollectionQuery(id, name, icon, encryptionSide, version, addedAt);
+        var createCollectionQuery = _queries.RegisterCollectionQuery(id, userId, tags);
 
         await connection.ExecuteAsync(createCollectionQuery, transaction: transaction);
 
-        var createUserCollectionQuery = _queries.RegisterUserCollectionQuery(userId, id);
+        var createUserTagQuery = _queries.RegisterUserCollectionQuery(userId, id);
 
-        await connection.ExecuteAsync(createUserCollectionQuery, transaction: transaction);
+        await connection.ExecuteAsync(createUserTagQuery, transaction: transaction);
 
         return new Success();
     }, ToUnreachableError);
     
     private static UnreachableError ToUnreachableError(Exception exception) => new(exception.Message);
 
-    private sealed record CollectionEntity(Guid Id, string Name, string Icon, string EncryptSide, int Version, long AddedAtTimespan);
+    private sealed record CollectionEntity(Guid Id, long userId, Tag tags);
 }
 
 }
