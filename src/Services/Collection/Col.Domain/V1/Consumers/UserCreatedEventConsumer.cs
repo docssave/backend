@@ -18,7 +18,7 @@ internal sealed class UserCreatedEventConsumer : INotificationHandler<UserRegist
         ILogger<UserCreatedEventConsumer> logger,
         IClock clock)
     {
-        _repository = repository;
+        _repository = repository; 
         _logger = logger;
         _clock = clock;
     }
