@@ -1,4 +1,4 @@
-﻿using Badger.Sql.Abstractions.Errors;
+﻿using Badger.Sql.Error;
 using Col.Contracts.V1;
 using Col.Domain.V1.DataAccess;
 using Idn.Contracts.V1;

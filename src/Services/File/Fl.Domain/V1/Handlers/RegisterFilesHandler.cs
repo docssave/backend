@@ -1,5 +1,5 @@
 ﻿using Badger.Clock;
-using Badger.Sql.Abstractions.Errors;
+using Badger.Sql.Error;
 using Doc.Contracts.V1;
 using Fl.Contracts.V1;
 using Fl.Domain.V1.DataAccess;

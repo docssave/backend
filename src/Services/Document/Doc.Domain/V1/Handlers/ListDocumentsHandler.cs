@@ -1,4 +1,4 @@
-﻿using Badger.Sql.Abstractions.Errors;
+﻿using Badger.Sql.Error;
 using Doc.Contracts.V1;
 using Doc.Domain.V1.DataAccess;
 using MediatR;

@@ -2,6 +2,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Libraries\Badger.Collections\Badger.Collections.csproj" />
+      <ProjectReference Include="..\..\..\Libraries\Badger.SqlKata\Badger.SqlKata.csproj" />
       <ProjectReference Include="..\..\Collection\Col.Contracts\Col.Contracts.csproj" />
       <ProjectReference Include="..\Doc.Contracts\Doc.Contracts.csproj" />
     </ItemGroup>

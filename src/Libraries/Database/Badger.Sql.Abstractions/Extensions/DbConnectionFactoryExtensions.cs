@@ -1,6 +1,6 @@
 ﻿using System.Data;
 using System.Data.Common;
-using Badger.Sql.Abstractions.Errors;
+using Badger.Sql.Error;
 using OneOf;
 
 namespace Badger.Sql.Abstractions.Extensions;

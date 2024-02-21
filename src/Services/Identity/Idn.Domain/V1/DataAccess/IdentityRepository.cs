@@ -1,6 +1,6 @@
 ﻿using Badger.Sql.Abstractions;
-using Badger.Sql.Abstractions.Errors;
 using Badger.Sql.Abstractions.Extensions;
+using Badger.Sql.Error;
 using Dapper;
 using Idn.Contracts.V1;
 using OneOf;

@@ -1,4 +1,4 @@
-﻿using Badger.Sql.Abstractions.Errors;
+﻿using Badger.Sql.Error;
 using Idn.Contracts.V1;
 using OneOf;
 using OneOf.Types;

@@ -1,6 +1,6 @@
 ﻿using Badger.Clock;
 using Badger.OneOf.Extensions;
-using Badger.Sql.Abstractions.Errors;
+using Badger.Sql.Error;
 using Idn.Contracts.V1;
 using Idn.Contracts.V1.Events;
 using Idn.Domain.V1.DataAccess;

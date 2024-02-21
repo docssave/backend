@@ -6,8 +6,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Badger.SqlKata\Badger.SqlKata.csproj" />
-      <ProjectReference Include="..\Sql\Badger.Sql.Abstractions\Badger.Sql.Abstractions.csproj" />
+      <ProjectReference Include="..\..\Badger.SqlKata\Badger.SqlKata.csproj" />
+      <ProjectReference Include="..\Badger.Sql.Abstractions\Badger.Sql.Abstractions.csproj" />
     </ItemGroup>
 
 </Project>

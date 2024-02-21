@@ -1,7 +1,7 @@
 using Badger.Collections.Extensions;
 using Badger.Sql.Abstractions;
-using Badger.Sql.Abstractions.Errors;
 using Badger.Sql.Abstractions.Extensions;
+using Badger.Sql.Error;
 using Col.Contracts.V1;
 using Dapper;
 using Idn.Contracts.V1;

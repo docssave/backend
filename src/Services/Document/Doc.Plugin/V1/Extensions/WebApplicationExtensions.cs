@@ -21,8 +21,9 @@ public static class WebApplicationExtensions
         group.MapGet("/{collectionId}/documents", ListDocumentsAsync);
     }
 
-    private static async Task<IResult> RegisterDocumentsAsync([FromQuery] CollectionId collectionId, IFormFileCollection files, [FromServices] IMediator mediator)
+    private static Task<IResult> RegisterDocumentsAsync([FromQuery] CollectionId collectionId, IFormFileCollection files, [FromServices] IMediator mediator)
     {
+        return Task.FromResult(Results.Empty);
     }
 
     private static async Task<IResult> ListDocumentsAsync([FromQuery] CollectionId collectionId, [FromServices] IMediator mediator)

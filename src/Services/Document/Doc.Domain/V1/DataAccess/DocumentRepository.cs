@@ -1,11 +1,12 @@
 ﻿using Badger.Collections.Extensions;
 using Badger.Sql.Abstractions;
-using Badger.Sql.Abstractions.Errors;
 using Badger.Sql.Abstractions.Extensions;
+using Badger.Sql.Error;
 using Col.Contracts.V1;
 using Dapper;
 using Doc.Contracts.V1;
 using OneOf;
+using OneOf.Types;
 
 namespace Doc.Domain.V1.DataAccess;
 
@@ -25,7 +26,12 @@ internal sealed class DocumentRepository(IDbConnectionFactory connectionFactory,
                     DateTimeOffset.FromUnixTimeMilliseconds(entity.RegisteredAtTimespan)))
                 .ToReadOnlyList();
         }, ToUnreachableError);
-    
+
+    public Task<OneOf<Success, UnreachableError>> RegisterDocumentAsync(Document document)
+    {
+        throw new NotImplementedException();
+    }
+
     private static UnreachableError ToUnreachableError(Exception exception) => new(exception.Message);
     
     private sealed record DocumentEntity(Guid Id, string Name, string Icon, long Version, long RegisteredAtTimespan);
