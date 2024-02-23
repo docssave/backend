@@ -5,10 +5,11 @@ namespace Doc.Domain.V1;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddDocumentService(this IServiceCollection services)
+    public static IServiceCollection AddDocument(this IServiceCollection services)
     {
         services.AddSingleton<SqlQueries>();
         services.AddScoped<IDocumentRepository, DocumentRepository>();
+        services.AddScoped<IFileRepository, FileRepository>();
         
         return services;
     }

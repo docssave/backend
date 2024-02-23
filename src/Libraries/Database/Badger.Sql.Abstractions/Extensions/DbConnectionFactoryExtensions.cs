@@ -7,10 +7,10 @@ namespace Badger.Sql.Abstractions.Extensions;
 
 public static class DbConnectionFactoryExtensions
 {
-    public static async Task<OneOf<T, UnreachableError>> TryAsync<T>(
+    public static async Task<OneOf<T, UnreachableDatabaseError>> TryAsync<T>(
         this IDbConnectionFactory dbConnectionFactory,
         Func<IDbConnection, Task<T>> sqlFunc,
-        Func<Exception, UnreachableError> exceptionFunc)
+        Func<Exception, UnreachableDatabaseError> exceptionFunc)
     {
         try
         {
@@ -24,10 +24,10 @@ public static class DbConnectionFactoryExtensions
         }
     }
     
-    public static async Task<OneOf<T, TError, UnreachableError>> TryAsync<T, TError>(
+    public static async Task<OneOf<T, TError, UnreachableDatabaseError>> TryAsync<T, TError>(
         this IDbConnectionFactory dbConnectionFactory,
         Func<IDbConnection, Task<OneOf<T, TError>>> sqlFunc,
-        Func<Exception, UnreachableError> exceptionFunc)
+        Func<Exception, UnreachableDatabaseError> exceptionFunc)
     {
         try
         {
@@ -35,7 +35,7 @@ public static class DbConnectionFactoryExtensions
 
             var result = await sqlFunc(connection);
 
-            return result.Match(OneOf<T, TError, UnreachableError>.FromT0, OneOf<T, TError, UnreachableError>.FromT1);
+            return result.Match(OneOf<T, TError, UnreachableDatabaseError>.FromT0, OneOf<T, TError, UnreachableDatabaseError>.FromT1);
         }
         catch (DbException e)
         {
@@ -73,10 +73,10 @@ public static class DbConnectionFactoryExtensions
             }
         }, exceptionFunc);
     
-    public static async Task<OneOf<T, UnreachableError>> TryAsync<T>(
+    public static async Task<OneOf<T, UnreachableDatabaseError>> TryAsync<T>(
         this IDbConnectionFactory dbConnectionFactory,
         Func<IDbConnection, IDbTransaction, Task<T>> sqlFunc,
-        Func<Exception, UnreachableError> exceptionFunc) =>
+        Func<Exception, UnreachableDatabaseError> exceptionFunc) =>
         await dbConnectionFactory.TryAsync(async connection =>
         {
             connection.Open();

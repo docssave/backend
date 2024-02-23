@@ -60,7 +60,7 @@ internal sealed class AuthorizationHandler(
             return registerUserResult.Match(ToToken, ToError);
         }
 
-        OneOf<AuthorizationResponse, Error<string>> ToError(UnreachableError unreachableError)
+        OneOf<AuthorizationResponse, Error<string>> ToError(UnreachableDatabaseError unreachableError)
         {
             logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(IIdentityRepository), unreachableError.Reason);
             

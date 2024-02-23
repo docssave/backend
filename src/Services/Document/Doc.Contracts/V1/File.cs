@@ -1,4 +1,4 @@
-﻿namespace Fl.Contracts.V1;
+﻿namespace Doc.Contracts.V1;
 
 public sealed class File(FileId id, byte[] content, string mimeType)
 {

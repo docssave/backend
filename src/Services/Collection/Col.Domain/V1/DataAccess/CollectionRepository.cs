@@ -12,7 +12,7 @@ namespace Col.Domain.V1.DataAccess;
 
 public sealed class CollectionRepository(IDbConnectionFactory connectionFactory, SqlQueries queries) : ICollectionRepository
 {
-    public Task<OneOf<IReadOnlyList<Collection>, UnreachableError>> ListAsync(UserId userId) =>
+    public Task<OneOf<IReadOnlyList<Collection>, UnreachableDatabaseError>> ListAsync(UserId userId) =>
         connectionFactory.TryAsync(async connection =>
         {
             var sqlQuery = queries.GetCollectionsQuery(userId);
@@ -29,7 +29,7 @@ public sealed class CollectionRepository(IDbConnectionFactory connectionFactory,
                 .ToReadOnlyList();
         }, ToUnreachableError);
 
-    public Task<OneOf<Success, UnreachableError>> RegisterAsync(
+    public Task<OneOf<Success, UnreachableDatabaseError>> RegisterAsync(
         UserId userId,
         CollectionId id,
         string name,
@@ -49,7 +49,7 @@ public sealed class CollectionRepository(IDbConnectionFactory connectionFactory,
         return new Success();
     }, ToUnreachableError);
     
-    private static UnreachableError ToUnreachableError(Exception exception) => new(exception.Message);
+    private static UnreachableDatabaseError ToUnreachableError(Exception exception) => new(exception.Message);
 
     private sealed record CollectionEntity(Guid Id, string Name, string Icon, string EncryptSide, int Version, long AddedAtTimespan);
 }

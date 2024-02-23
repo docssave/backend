@@ -17,7 +17,7 @@ internal sealed class ListDocumentsHandler(IDocumentRepository repository, ILogg
 
         return result.MapT1(ToError);
         
-        Error<string> ToError(UnreachableError error)
+        Error<string> ToError(UnreachableDatabaseError error)
         {
             logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(IDocumentRepository), error.Reason);
 

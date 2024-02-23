@@ -12,7 +12,7 @@ namespace Doc.Domain.V1.DataAccess;
 
 internal sealed class DocumentRepository(IDbConnectionFactory connectionFactory, SqlQueries queries) : IDocumentRepository
 {
-    public Task<OneOf<IReadOnlyList<Document>, UnreachableError>> ListDocumentsAsync(CollectionId collectionId) =>
+    public Task<OneOf<IReadOnlyList<Document>, UnreachableDatabaseError>> ListDocumentsAsync(CollectionId collectionId) =>
         connectionFactory.TryAsync(async connection =>
         {
             var entities = await connection.QueryAsync<DocumentEntity>(queries.GetDocumentsQuery(collectionId));
@@ -27,12 +27,12 @@ internal sealed class DocumentRepository(IDbConnectionFactory connectionFactory,
                 .ToReadOnlyList();
         }, ToUnreachableError);
 
-    public Task<OneOf<Success, UnreachableError>> RegisterDocumentAsync(Document document)
+    public Task<OneOf<Success, UnreachableDatabaseError>> RegisterDocumentAsync(Document document)
     {
         throw new NotImplementedException();
     }
 
-    private static UnreachableError ToUnreachableError(Exception exception) => new(exception.Message);
+    private static UnreachableDatabaseError ToUnreachableError(Exception exception) => new(exception.Message);
     
     private sealed record DocumentEntity(Guid Id, string Name, string Icon, long Version, long RegisteredAtTimespan);
 }

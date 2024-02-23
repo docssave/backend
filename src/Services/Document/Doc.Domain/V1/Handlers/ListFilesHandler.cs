@@ -1,14 +1,13 @@
 ﻿using Badger.Sql.Error;
 using Doc.Contracts.V1;
-using Fl.Contracts.V1;
-using Fl.Domain.V1.DataAccess;
+using Doc.Domain.V1.DataAccess;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using OneOf;
 using OneOf.Types;
-using File = Fl.Contracts.V1.File;
+using File = Doc.Contracts.V1.File;
 
-namespace Fl.Domain.V1.Handlers;
+namespace Doc.Domain.V1.Handlers;
 
 internal sealed class ListFilesHandler(IFileRepository repository, ILogger<ListFilesHandler> logger) 
     : IRequestHandler<ListFilesRequest, OneOf<IReadOnlyList<File>, Error<string>>>
@@ -26,7 +25,7 @@ internal sealed class ListFilesHandler(IFileRepository repository, ILogger<ListF
 
         return result.MapT1(ToError);
         
-        Error<string> ToError(UnreachableError error)
+        Error<string> ToError(UnreachableDatabaseError error)
         {
             logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(IFileRepository), error.Reason);
 

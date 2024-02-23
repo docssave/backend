@@ -8,7 +8,7 @@ namespace Ws.Domain.V1.DataAccess;
 
 internal interface IWorkspaceRepository
 {
-    Task<OneOf<IReadOnlyList<Workspace>, UnreachableError>> ListAsync(UserId userId);
+    Task<OneOf<IReadOnlyList<Workspace>, UnreachableDatabaseError>> ListAsync(UserId userId);
 
-    Task<OneOf<Success, UnreachableError>> RegisterAsync(WorkspaceId id, string name,  UserId userId, DateTimeOffset registeredAt);
+    Task<OneOf<Success, UnreachableDatabaseError>> RegisterAsync(WorkspaceId id, string name,  UserId userId, DateTimeOffset registeredAt);
 }

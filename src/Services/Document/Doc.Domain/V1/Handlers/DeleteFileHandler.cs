@@ -1,12 +1,12 @@
 ﻿using Badger.Sql.Error;
-using Fl.Contracts.V1;
-using Fl.Domain.V1.DataAccess;
+using Doc.Contracts.V1;
+using Doc.Domain.V1.DataAccess;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using OneOf;
 using OneOf.Types;
 
-namespace Fl.Domain.V1.Handlers;
+namespace Doc.Domain.V1.Handlers;
 
 internal sealed class DeleteFileHandler(IFileRepository repository, ILogger<DeleteFileHandler> logger) : IRequestHandler<DeleteFileRequest, OneOf<Success, Error<string>>>
 {
@@ -23,7 +23,7 @@ internal sealed class DeleteFileHandler(IFileRepository repository, ILogger<Dele
 
         return result.MapT1(ToError);
         
-        Error<string> ToError(UnreachableError error)
+        Error<string> ToError(UnreachableDatabaseError error)
         {
             logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(IFileRepository), error.Reason);
 

@@ -10,7 +10,7 @@ namespace Idn.Domain.V1.DataAccess;
 
 internal sealed class IdentityRepository(IDbConnectionFactory connectionFactory, SqlQueries sqlQueries) : IIdentityRepository
 {
-    public Task<OneOf<User, NotFound, UnreachableError>> GetUserAsync(string sourceUserId) =>
+    public Task<OneOf<User, NotFound, UnreachableDatabaseError>> GetUserAsync(string sourceUserId) =>
         connectionFactory.TryAsync(async connection =>
         {
             var sqlQuery = sqlQueries.GetUserQuery(sourceUserId);
@@ -30,7 +30,7 @@ internal sealed class IdentityRepository(IDbConnectionFactory connectionFactory,
                     DateTimeOffset.FromUnixTimeMilliseconds(entity.RegisteredAtTimespan));
         }, ToUnreachableError);
 
-    public Task<OneOf<User, UnreachableError>> RegisterUserAsync(
+    public Task<OneOf<User, UnreachableDatabaseError>> RegisterUserAsync(
         string sourceUserId,
         string name,
         string encryptedEmail,
@@ -46,7 +46,7 @@ internal sealed class IdentityRepository(IDbConnectionFactory connectionFactory,
             return user;
         }, ToUnreachableError);
     
-    private static UnreachableError ToUnreachableError(Exception exception) => new(exception.Message);
+    private static UnreachableDatabaseError ToUnreachableError(Exception exception) => new(exception.Message);
 
     private sealed record UserEntity(long Id, string Name, string EncryptedEmail, string Source, string SourceUserId, long RegisteredAtTimespan);
 }

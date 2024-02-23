@@ -8,9 +8,9 @@ namespace Col.Domain.V1.DataAccess;
 
 public interface ICollectionRepository
 {
-    Task<OneOf<IReadOnlyList<Collection>, UnreachableError>> ListAsync(UserId userId);
+    Task<OneOf<IReadOnlyList<Collection>, UnreachableDatabaseError>> ListAsync(UserId userId);
 
-    Task<OneOf<Success, UnreachableError>> RegisterAsync(
+    Task<OneOf<Success, UnreachableDatabaseError>> RegisterAsync(
         UserId userId,
         CollectionId id,
         string name,

@@ -5,7 +5,6 @@
         <ProjectReference Include="..\Libraries\Database\Badger.MySql\Badger.MySql.csproj" />
         <ProjectReference Include="..\Services\Collection\Col.Plugin\Col.Plugin.csproj" />
         <ProjectReference Include="..\Services\Document\Doc.Plugin\Doc.Plugin.csproj" />
-        <ProjectReference Include="..\Services\File\Fl.Plugin\Fl.Plugin.csproj" />
         <ProjectReference Include="..\Services\Identity\Idn.Contracts\Idn.Contracts.csproj" />
         <ProjectReference Include="..\Services\Identity\Idn.Plugin\Idn.Plugin.csproj" />
         <ProjectReference Include="..\Services\WorkSpace\Ws.Plugin\Ws.Plugin.csproj" />

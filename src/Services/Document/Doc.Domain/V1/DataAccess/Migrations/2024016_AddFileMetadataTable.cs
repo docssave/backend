@@ -1,6 +1,6 @@
 ﻿using FluentMigrator;
 
-namespace Fl.Domain.V1.DataAccess.Migrations;
+namespace Doc.Domain.V1.DataAccess.Migrations;
 
 [Migration(202401160831)]
 public sealed class AddFileMetadataTable : Migration

@@ -1,14 +1,13 @@
 ﻿using Badger.Clock;
 using Badger.Sql.Error;
 using Doc.Contracts.V1;
-using Fl.Contracts.V1;
-using Fl.Domain.V1.DataAccess;
+using Doc.Domain.V1.DataAccess;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using OneOf;
 using OneOf.Types;
 
-namespace Fl.Domain.V1.Handlers;
+namespace Doc.Domain.V1.Handlers;
 
 internal sealed class RegisterFilesHandler(IFileRepository repository, ILogger<RegisterFilesHandler> logger, IClock clock) 
     : IRequestHandler<UploadFilesRequest, OneOf<Success, Error<string>>>
@@ -26,7 +25,7 @@ internal sealed class RegisterFilesHandler(IFileRepository repository, ILogger<R
 
         return result.MapT1(ToError);
 
-        Error<string> ToError(UnreachableError unreachableError)
+        Error<string> ToError(UnreachableDatabaseError unreachableError)
         {
             logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(IFileRepository), unreachableError.Reason);
             
