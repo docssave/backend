@@ -1,4 +1,4 @@
-﻿using Badger.Sql.Abstractions.Errors;
+﻿using Badger.Sql.Error;
 using Col.Contracts.V1;
 using Col.Domain.V1.DataAccess;
 using Idn.Contracts.V1;
@@ -27,7 +27,7 @@ internal sealed class ListCollectionsHandler(ICollectionRepository repository, I
 
         return result.MapT1(ToError);
 
-        Error<string> ToError(UnreachableError error)
+        Error<string> ToError(UnreachableDatabaseError error)
         {
             logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(ICollectionRepository), error.Reason);
 

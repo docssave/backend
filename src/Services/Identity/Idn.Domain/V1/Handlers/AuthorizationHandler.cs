@@ -1,6 +1,6 @@
 ﻿using Badger.Clock;
 using Badger.OneOf.Extensions;
-using Badger.Sql.Abstractions.Errors;
+using Badger.Sql.Error;
 using Idn.Contracts.V1;
 using Idn.Contracts.V1.Events;
 using Idn.Domain.V1.DataAccess;
@@ -60,7 +60,7 @@ internal sealed class AuthorizationHandler(
             return registerUserResult.Match(ToToken, ToError);
         }
 
-        OneOf<AuthorizationResponse, Error<string>> ToError(UnreachableError unreachableError)
+        OneOf<AuthorizationResponse, Error<string>> ToError(UnreachableDatabaseError unreachableError)
         {
             logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(IIdentityRepository), unreachableError.Reason);
             

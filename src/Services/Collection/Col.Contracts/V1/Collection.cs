@@ -1,6 +1,6 @@
 ﻿namespace Col.Contracts.V1;
 
-public sealed class Collection(CollectionId id, string name, string icon, EncryptionSide encryptionSide, int version, DateTimeOffset addedAt)
+public sealed class Collection(CollectionId id, string name, string icon, EncryptionSide encryptionSide, long version, DateTimeOffset addedAt)
 {
     public CollectionId Id { get; } = id;
 
@@ -10,7 +10,7 @@ public sealed class Collection(CollectionId id, string name, string icon, Encryp
 
     public EncryptionSide EncryptionSide { get; } = encryptionSide;
 
-    public int Version { get; } = version;
+    public long Version { get; } = version;
 
     public DateTimeOffset AddedAt { get; } = addedAt;
 }

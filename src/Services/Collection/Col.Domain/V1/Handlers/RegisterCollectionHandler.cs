@@ -1,5 +1,5 @@
 ﻿using Badger.Clock;
-using Badger.Sql.Abstractions.Errors;
+using Badger.Sql.Error;
 using Col.Contracts.V1;
 using Col.Domain.V1.DataAccess;
 using Idn.Contracts.V1;
@@ -37,7 +37,7 @@ internal sealed class RegisterCollectionHandler(
 
         OneOf<Collection, Error<string>> ToCollection(Success _) => new Collection(request.Id, request.Name, request.Icon, request.EncryptionSide, version, addedAt);
 
-        OneOf<Collection, Error<string>> ToError(UnreachableError error)
+        OneOf<Collection, Error<string>> ToError(UnreachableDatabaseError error)
         {
             logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(ICollectionRepository), error.Reason);
 
