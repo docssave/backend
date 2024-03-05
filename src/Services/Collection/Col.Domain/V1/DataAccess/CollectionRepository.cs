@@ -1,4 +1,5 @@
 using Badger.Collections.Extensions;
+using Badger.Service.Error;
 using Badger.Sql.Abstractions;
 using Badger.Sql.Abstractions.Extensions;
 using Badger.Sql.Error;
@@ -48,7 +49,17 @@ public sealed class CollectionRepository(IDbConnectionFactory connectionFactory,
 
         return new Success();
     }, ToUnreachableError);
-    
+
+    public Task<OneOf<Success, NotFoundDatabaseError, UnreachableDatabaseError>> CheckExistingAsync(CollectionId collectionId) =>
+        connectionFactory.TryAsync(async connection =>
+        {
+            var result = await connection.QuerySingleAsync<bool>(queries.CheckCollectionExistingQuery(collectionId));
+
+            return result
+                ? OneOf<Success, NotFoundDatabaseError>.FromT0(new Success())
+                : OneOf<Success, NotFoundDatabaseError>.FromT1(new NotFoundDatabaseError());
+        }, ToUnreachableError);
+
     private static UnreachableDatabaseError ToUnreachableError(Exception exception) => new(exception.Message);
 
     private sealed record CollectionEntity(Guid Id, string Name, string Icon, string EncryptSide, int Version, long AddedAtTimespan);

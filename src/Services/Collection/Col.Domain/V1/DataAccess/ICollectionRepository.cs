@@ -18,4 +18,6 @@ public interface ICollectionRepository
         EncryptionSide encryptionSide,
         DateTimeOffset addedAt,
         int version);
+
+    Task<OneOf<Success, NotFoundDatabaseError, UnreachableDatabaseError>> CheckExistingAsync(CollectionId collectionId);
 }

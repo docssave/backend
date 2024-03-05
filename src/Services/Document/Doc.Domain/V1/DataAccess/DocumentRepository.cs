@@ -7,6 +7,7 @@ using Dapper;
 using Doc.Contracts.V1;
 using OneOf;
 using OneOf.Types;
+using File = Doc.Contracts.V1.File;
 
 namespace Doc.Domain.V1.DataAccess;
 
@@ -27,10 +28,11 @@ internal sealed class DocumentRepository(IDbConnectionFactory connectionFactory,
                 .ToReadOnlyList();
         }, ToUnreachableError);
 
-    public Task<OneOf<Success, UnreachableDatabaseError>> RegisterDocumentAsync(Document document)
-    {
-        throw new NotImplementedException();
-    }
+    public Task<OneOf<Success, NotFoundDatabaseError, UnreachableDatabaseError>> RegisterDocumentAsync(CollectionId collectionId, Document document, File[] files) =>
+        connectionFactory.TryAsync(async (connection, transaction) =>
+        {
+            
+        }, ToUnreachableError);
 
     private static UnreachableDatabaseError ToUnreachableError(Exception exception) => new(exception.Message);
     

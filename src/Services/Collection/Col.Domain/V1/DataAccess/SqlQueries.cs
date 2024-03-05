@@ -59,4 +59,18 @@ public sealed class SqlQueries(IQueryCompiler compiler)
 
         return compiler.Compile(query);
     }
+
+    public string CheckCollectionExistingQuery(CollectionId collectionId)
+    {
+        var subQuery = new Query("Collections")
+            .Select("1")
+            .Where("Collections.Id", collectionId.Value);
+
+        var compiledSubQuery = compiler.Compile(subQuery);
+
+        var query = new Query("Collections")
+            .SelectRaw($"EXISTS ({compiledSubQuery})");
+
+        return compiler.Compile(query);
+    }
 }

@@ -3,5 +3,9 @@
     <ItemGroup>
         <PackageReference Include="Macross.Json.Extensions" Version="3.0.0" />
     </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Libraries\Badger.Service.Error\Badger.Service.Error.csproj" />
+    </ItemGroup>
     
 </Project>

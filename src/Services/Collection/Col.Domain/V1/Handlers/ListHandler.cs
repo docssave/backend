@@ -9,7 +9,7 @@ using OneOf;
 
 namespace Col.Domain.V1.Handlers;
 
-internal sealed class ListCollectionsHandler(ICollectionRepository repository, IUserIdAccessor userIdAccessor, ILogger<ListCollectionsHandler> logger)
+internal sealed class ListHandler(ICollectionRepository repository, IUserIdAccessor userIdAccessor, ILogger<ListHandler> logger)
     : IRequestHandler<ListCollectionsRequest, OneOf<IReadOnlyList<Collection>, Error<string>>>
 {
     public async Task<OneOf<IReadOnlyList<Collection>, Error<string>>> Handle(ListCollectionsRequest request, CancellationToken cancellationToken)

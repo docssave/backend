@@ -10,11 +10,11 @@ using OneOf.Types;
 
 namespace Col.Domain.V1.Handlers;
 
-internal sealed class RegisterCollectionHandler(
+internal sealed class RegisterHandler(
     ICollectionRepository repository,
     IUserIdAccessor userIdAccessor,
     IClock clock,
-    ILogger<RegisterCollectionHandler> logger)
+    ILogger<RegisterHandler> logger)
     : IRequestHandler<RegisterCollectionRequest, OneOf<Collection, Error<string>>>
 {
     public async Task<OneOf<Collection, Error<string>>> Handle(RegisterCollectionRequest request, CancellationToken cancellationToken)

@@ -17,16 +17,16 @@ public static class WebApplicationExtensions
 
     private static void UseDocumentsEndpoints(this IEndpointRouteBuilder group)
     {
-        group.MapPut("/{collectionId}/documents", RegisterDocumentsAsync);
+        group.MapPut("/{collectionId}/documents/{documentId}", RegisterDocumentsAsync);
         group.MapGet("/{collectionId}/documents", ListDocumentsAsync);
     }
 
-    private static Task<IResult> RegisterDocumentsAsync([FromQuery] CollectionId collectionId, IFormFileCollection files, [FromServices] IMediator mediator)
+    private static Task<IResult> RegisterDocumentsAsync([FromRoute] CollectionId collectionId, IFormFileCollection files, [FromServices] IMediator mediator)
     {
         return Task.FromResult(Results.Empty);
     }
 
-    private static async Task<IResult> ListDocumentsAsync([FromQuery] CollectionId collectionId, [FromServices] IMediator mediator)
+    private static async Task<IResult> ListDocumentsAsync([FromRoute] CollectionId collectionId, [FromServices] IMediator mediator)
     {
         var result = await mediator.Send(new ListDocumentsRequest(collectionId));
 
