@@ -19,7 +19,7 @@ internal sealed class UserCreatedEventConsumer(
 
         if (listResult.IsT1)
         {
-            logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(ICollectionRepository), listResult.AsT1.Reason);
+            logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(ICollectionRepository), listResult.AsT1.Value);
             
             return;
         }
@@ -43,7 +43,7 @@ internal sealed class UserCreatedEventConsumer(
 
         if (registerResult.IsT1)
         {
-            logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(ICollectionRepository), listResult.AsT1.Reason);
+            logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(ICollectionRepository), listResult.AsT1.Value);
         }
     }
 }

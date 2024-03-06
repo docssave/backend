@@ -1,16 +1,16 @@
 ﻿using System.Data;
 using System.Data.Common;
-using Badger.Sql.Error;
+using Badger.OneOf.Types;
 using OneOf;
 
 namespace Badger.Sql.Abstractions.Extensions;
 
 public static class DbConnectionFactoryExtensions
 {
-    public static async Task<OneOf<T, UnreachableDatabaseError>> TryAsync<T>(
+    public static async Task<OneOf<T, Unreachable<string>>> TryAsync<T>(
         this IDbConnectionFactory dbConnectionFactory,
         Func<IDbConnection, Task<T>> sqlFunc,
-        Func<Exception, UnreachableDatabaseError> exceptionFunc)
+        Func<Exception, Unreachable<string>> exceptionFunc)
     {
         try
         {
@@ -24,10 +24,10 @@ public static class DbConnectionFactoryExtensions
         }
     }
     
-    public static async Task<OneOf<T, TError, UnreachableDatabaseError>> TryAsync<T, TError>(
+    public static async Task<OneOf<T, TError, Unreachable<string>>> TryAsync<T, TError>(
         this IDbConnectionFactory dbConnectionFactory,
         Func<IDbConnection, Task<OneOf<T, TError>>> sqlFunc,
-        Func<Exception, UnreachableDatabaseError> exceptionFunc)
+        Func<Exception, Unreachable<string>> exceptionFunc)
     {
         try
         {
@@ -35,7 +35,7 @@ public static class DbConnectionFactoryExtensions
 
             var result = await sqlFunc(connection);
 
-            return result.Match(OneOf<T, TError, UnreachableDatabaseError>.FromT0, OneOf<T, TError, UnreachableDatabaseError>.FromT1);
+            return result.Match(OneOf<T, TError, Unreachable<string>>.FromT0, OneOf<T, TError, Unreachable<string>>.FromT1);
         }
         catch (DbException e)
         {
@@ -61,11 +61,11 @@ public static class DbConnectionFactoryExtensions
 
                 return result;
             }
-            catch (Exception e)
+            catch
             {
                 transaction.Rollback();
 
-                throw e;
+                throw;
             }
             finally
             {
@@ -73,10 +73,10 @@ public static class DbConnectionFactoryExtensions
             }
         }, exceptionFunc);
     
-    public static async Task<OneOf<T, UnreachableDatabaseError>> TryAsync<T>(
+    public static async Task<OneOf<T, Unreachable<string>>> TryAsync<T>(
         this IDbConnectionFactory dbConnectionFactory,
         Func<IDbConnection, IDbTransaction, Task<T>> sqlFunc,
-        Func<Exception, UnreachableDatabaseError> exceptionFunc) =>
+        Func<Exception, Unreachable<string>> exceptionFunc) =>
         await dbConnectionFactory.TryAsync(async connection =>
         {
             connection.Open();

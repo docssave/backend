@@ -5,7 +5,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Libraries\Badger.Service.Error\Badger.Service.Error.csproj" />
+      <ProjectReference Include="..\..\..\Libraries\Badger.OneOf\Badger.OneOf.csproj" />
     </ItemGroup>
     
 </Project>

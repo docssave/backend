@@ -1,8 +1,7 @@
 using Badger.Collections.Extensions;
-using Badger.Service.Error;
+using Badger.OneOf.Types;
 using Badger.Sql.Abstractions;
 using Badger.Sql.Abstractions.Extensions;
-using Badger.Sql.Error;
 using Col.Contracts.V1;
 using Dapper;
 using Idn.Contracts.V1;
@@ -13,7 +12,7 @@ namespace Col.Domain.V1.DataAccess;
 
 public sealed class CollectionRepository(IDbConnectionFactory connectionFactory, SqlQueries queries) : ICollectionRepository
 {
-    public Task<OneOf<IReadOnlyList<Collection>, UnreachableDatabaseError>> ListAsync(UserId userId) =>
+    public Task<OneOf<IReadOnlyList<Collection>, Unreachable<string>>> ListAsync(UserId userId) =>
         connectionFactory.TryAsync(async connection =>
         {
             var sqlQuery = queries.GetCollectionsQuery(userId);
@@ -30,7 +29,7 @@ public sealed class CollectionRepository(IDbConnectionFactory connectionFactory,
                 .ToReadOnlyList();
         }, ToUnreachableError);
 
-    public Task<OneOf<Success, UnreachableDatabaseError>> RegisterAsync(
+    public Task<OneOf<Success, Unreachable<string>>> RegisterAsync(
         UserId userId,
         CollectionId id,
         string name,
@@ -50,17 +49,17 @@ public sealed class CollectionRepository(IDbConnectionFactory connectionFactory,
         return new Success();
     }, ToUnreachableError);
 
-    public Task<OneOf<Success, NotFoundDatabaseError, UnreachableDatabaseError>> CheckExistingAsync(CollectionId collectionId) =>
+    public Task<OneOf<Success, NotFound, Unreachable<string>>> CheckExistingAsync(CollectionId collectionId) =>
         connectionFactory.TryAsync(async connection =>
         {
             var result = await connection.QuerySingleAsync<bool>(queries.CheckCollectionExistingQuery(collectionId));
 
             return result
-                ? OneOf<Success, NotFoundDatabaseError>.FromT0(new Success())
-                : OneOf<Success, NotFoundDatabaseError>.FromT1(new NotFoundDatabaseError());
+                ? OneOf<Success, NotFound>.FromT0(new Success())
+                : OneOf<Success, NotFound>.FromT1(new NotFound());
         }, ToUnreachableError);
 
-    private static UnreachableDatabaseError ToUnreachableError(Exception exception) => new(exception.Message);
+    private static Unreachable<string> ToUnreachableError(Exception exception) => new(exception.Message);
 
     private sealed record CollectionEntity(Guid Id, string Name, string Icon, string EncryptSide, int Version, long AddedAtTimespan);
 }

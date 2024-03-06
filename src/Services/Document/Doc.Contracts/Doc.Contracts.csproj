@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Libraries\Badger.Service.Error\Badger.Service.Error.csproj" />
     <ProjectReference Include="..\..\Collection\Col.Contracts\Col.Contracts.csproj" />
   </ItemGroup>
 

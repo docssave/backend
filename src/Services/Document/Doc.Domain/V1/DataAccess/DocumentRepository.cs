@@ -31,7 +31,7 @@ internal sealed class DocumentRepository(IDbConnectionFactory connectionFactory,
     public Task<OneOf<Success, NotFoundDatabaseError, UnreachableDatabaseError>> RegisterDocumentAsync(CollectionId collectionId, Document document, File[] files) =>
         connectionFactory.TryAsync(async (connection, transaction) =>
         {
-            
+            throw new NotImplementedException();
         }, ToUnreachableError);
 
     private static UnreachableDatabaseError ToUnreachableError(Exception exception) => new(exception.Message);

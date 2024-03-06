@@ -1,5 +1,5 @@
 ﻿using Badger.Clock;
-using Badger.Sql.Error;
+using Badger.OneOf.Types;
 using Col.Contracts.V1;
 using Col.Domain.V1.DataAccess;
 using Idn.Contracts.V1;
@@ -15,9 +15,9 @@ internal sealed class RegisterHandler(
     IUserIdAccessor userIdAccessor,
     IClock clock,
     ILogger<RegisterHandler> logger)
-    : IRequestHandler<RegisterCollectionRequest, OneOf<Collection, Error<string>>>
+    : IRequestHandler<RegisterCollectionRequest, OneOf<Collection, Conflct, Unreachable>>
 {
-    public async Task<OneOf<Collection, Error<string>>> Handle(RegisterCollectionRequest request, CancellationToken cancellationToken)
+    public async Task<OneOf<Collection, Conflct, Unreachable>> Handle(RegisterCollectionRequest request, CancellationToken cancellationToken)
     {
         var userId = userIdAccessor.UserId;
 

@@ -6,7 +6,7 @@
     </ItemGroup>
     
     <ItemGroup>
-      <ProjectReference Include="..\Badger.Sql.Error\Badger.Sql.Error.csproj" />
+      <ProjectReference Include="..\..\Badger.OneOf\Badger.OneOf.csproj" />
     </ItemGroup>
 
 </Project>

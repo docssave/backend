@@ -1,4 +1,5 @@
-﻿using Badger.Plugin.Filters;
+﻿using System.Net;
+using Badger.Plugin.Filters;
 using Col.Contracts.V1;
 using Col.Plugin.V1.Dtos;
 using MediatR;
@@ -33,6 +34,9 @@ public static class WebApplicationExtensions
     {
         var response = await mediator.Send(new ListCollectionsRequest());
 
-        return response.Match(Results.Ok, Results.BadRequest);
+        return response.Match(
+            Results.Ok,
+            _ => Results.StatusCode((int)HttpStatusCode.InternalServerError),
+            _ => Results.StatusCode((int)HttpStatusCode.ServiceUnavailable));
     }
 }
