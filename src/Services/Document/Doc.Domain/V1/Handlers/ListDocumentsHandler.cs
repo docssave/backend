@@ -1,4 +1,4 @@
-﻿using Badger.Sql.Error;
+﻿using Badger.OneOf.Types;
 using Doc.Contracts.V1;
 using Doc.Domain.V1.DataAccess;
 using MediatR;
@@ -17,11 +17,11 @@ internal sealed class ListDocumentsHandler(IDocumentRepository repository, ILogg
 
         return result.MapT1(ToError);
         
-        Error<string> ToError(UnreachableDatabaseError error)
+        Error<string> ToError(Unreachable<string> error)
         {
-            logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(IDocumentRepository), error.Reason);
+            logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(IDocumentRepository), error.Value);
 
-            return new Error<string>(error.Reason);
+            return new Error<string>(error.Value);
         }
     }
 }

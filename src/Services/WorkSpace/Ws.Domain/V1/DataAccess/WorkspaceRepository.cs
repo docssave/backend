@@ -1,7 +1,7 @@
 ﻿using Badger.Collections.Extensions;
+using Badger.OneOf.Types;
 using Badger.Sql.Abstractions;
 using Badger.Sql.Abstractions.Extensions;
-using Badger.Sql.Error;
 using Dapper;
 using Idn.Contracts.V1;
 using OneOf;
@@ -12,7 +12,7 @@ namespace Ws.Domain.V1.DataAccess;
 
 internal sealed class WorkspaceRepository(IDbConnectionFactory connectionFactory, SqlQueries queries) : IWorkspaceRepository
 {
-    public Task<OneOf<IReadOnlyList<Workspace>, UnreachableDatabaseError>> ListAsync(UserId userId) =>
+    public Task<OneOf<IReadOnlyList<Workspace>, Unreachable<string>>> ListAsync(UserId userId) =>
         connectionFactory.TryAsync(async connection =>
         {
             var sqlQuery = queries.GetWorkspaceQuery(userId);
@@ -27,7 +27,7 @@ internal sealed class WorkspaceRepository(IDbConnectionFactory connectionFactory
                 .ToReadOnlyList();
         }, ToUnreachableError);
 
-    public Task<OneOf<Success, UnreachableDatabaseError>> RegisterAsync(WorkspaceId id, string name,  UserId userId, DateTimeOffset registeredAt) =>
+    public Task<OneOf<Success, Unreachable<string>>> RegisterAsync(WorkspaceId id, string name, UserId userId, DateTimeOffset registeredAt) =>
         connectionFactory.TryAsync(async (connection, transaction) =>
         {
             var createWorkspaceQuery = queries.RegisterWorkspaceQuery(id, name, registeredAt);
@@ -40,8 +40,8 @@ internal sealed class WorkspaceRepository(IDbConnectionFactory connectionFactory
 
             return new Success();
         }, ToUnreachableError);
-    
-    private static UnreachableDatabaseError ToUnreachableError(Exception exception) => new(exception.Message);
+
+    private static Unreachable<string> ToUnreachableError(Exception exception) => new(exception.Message);
 
     private sealed record WorkspaceEntity(Guid Id, string Name, long AddedAtTimespan);
 }

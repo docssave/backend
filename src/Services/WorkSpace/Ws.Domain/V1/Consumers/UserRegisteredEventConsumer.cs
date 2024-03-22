@@ -16,7 +16,7 @@ internal sealed class UserRegisteredEventConsumer(IWorkspaceRepository repositor
 
         if (listResult.IsT1)
         {
-            logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(IWorkspaceRepository), listResult.AsT1.Reason);
+            logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(IWorkspaceRepository), listResult.AsT1.Value);
             
             return;
         }
@@ -32,7 +32,7 @@ internal sealed class UserRegisteredEventConsumer(IWorkspaceRepository repositor
         
         if (registerResult.IsT1)
         {
-            logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(IWorkspaceRepository), listResult.AsT1.Reason);
+            logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(IWorkspaceRepository), listResult.AsT1.Value);
         }
     }
 }

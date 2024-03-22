@@ -18,6 +18,7 @@
 
     <ItemGroup Condition="$(MSBuildProjectName.EndsWith('.Plugin'))">
         <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+        <ProjectReference Include="..\..\..\Libraries\Badger.AspNetCore\Badger.AspNetCore.csproj" />
     </ItemGroup>
 
     <ItemGroup Condition="$(MSBuildProjectName.EndsWith('.Contracts'))">

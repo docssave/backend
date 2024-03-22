@@ -1,4 +1,4 @@
-﻿using System.Net;
+﻿using Badger.AspNetCore.Extensions;
 using Badger.Plugin.Filters;
 using Col.Contracts.V1;
 using Col.Plugin.V1.Dtos;
@@ -27,7 +27,11 @@ public static class WebApplicationExtensions
     {
         var response = await mediator.Send(new RegisterCollectionRequest(collectionId, request.Name, request.Icon, request.EncryptionSide, request.Version));
 
-        return response.Match(Results.Ok, Results.BadRequest);
+        return response.Match(
+            Results.Ok,
+            _ => Results.Extensions.Unknown(),
+            _ => Results.Conflict(),
+            _ => Results.Extensions.RetryLate());
     }
 
     private static async Task<IResult> ListCollectionsAsync([FromServices] IMediator mediator)
@@ -36,7 +40,7 @@ public static class WebApplicationExtensions
 
         return response.Match(
             Results.Ok,
-            _ => Results.StatusCode((int)HttpStatusCode.InternalServerError),
-            _ => Results.StatusCode((int)HttpStatusCode.ServiceUnavailable));
+            _ => Results.Extensions.Unknown(),
+            _ => Results.Extensions.RetryLate());
     }
 }

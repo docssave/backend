@@ -1,5 +1,5 @@
 ﻿using Badger.Clock;
-using Badger.Sql.Error;
+using Badger.OneOf.Types;
 using Doc.Contracts.V1;
 using Doc.Domain.V1.DataAccess;
 using MediatR;
@@ -25,11 +25,11 @@ internal sealed class RegisterFilesHandler(IFileRepository repository, ILogger<R
 
         return result.MapT1(ToError);
 
-        Error<string> ToError(UnreachableDatabaseError unreachableError)
+        Error<string> ToError(Unreachable<string> unreachableError)
         {
-            logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(IFileRepository), unreachableError.Reason);
+            logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(IFileRepository), unreachableError.Value);
             
-            return new(unreachableError.Reason);
+            return new(unreachableError.Value);
         }
     }
 }

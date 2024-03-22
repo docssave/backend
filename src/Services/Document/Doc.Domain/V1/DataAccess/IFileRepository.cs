@@ -1,4 +1,4 @@
-﻿using Badger.Sql.Error;
+﻿using Badger.OneOf.Types;
 using Doc.Contracts.V1;
 using OneOf;
 using OneOf.Types;
@@ -8,11 +8,11 @@ namespace Doc.Domain.V1.DataAccess;
 
 internal interface IFileRepository
 {
-    Task<OneOf<Success, UnreachableDatabaseError>> RegisterAsync(DocumentId documentId, File[] files, DateTimeOffset registeredAt);
+    Task<OneOf<Success, Unreachable<string>>> RegisterAsync(DocumentId documentId, File[] files, DateTimeOffset registeredAt);
 
-    Task<OneOf<IReadOnlyList<File>, UnreachableDatabaseError>> ListAsync(DocumentId documentId);
+    Task<OneOf<IReadOnlyList<File>, Unreachable<string>>> ListAsync(DocumentId documentId);
 
-    Task<OneOf<Success, UnreachableDatabaseError>> DeleteAsync(FileId fileId);
+    Task<OneOf<Success, Unreachable<string>>> DeleteAsync(FileId fileId);
 
-    Task<OneOf<Success, UnreachableDatabaseError>> DeleteDocumentFilesAsync(DocumentId documentId);
+    Task<OneOf<Success, Unreachable<string>>> DeleteDocumentFilesAsync(DocumentId documentId);
 }

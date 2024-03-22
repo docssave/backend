@@ -1,7 +1,7 @@
 ﻿using Badger.Collections.Extensions;
+using Badger.OneOf.Types;
 using Badger.Sql.Abstractions;
 using Badger.Sql.Abstractions.Extensions;
-using Badger.Sql.Error;
 using Col.Contracts.V1;
 using Dapper;
 using Doc.Contracts.V1;
@@ -13,7 +13,7 @@ namespace Doc.Domain.V1.DataAccess;
 
 internal sealed class DocumentRepository(IDbConnectionFactory connectionFactory, SqlQueries queries) : IDocumentRepository
 {
-    public Task<OneOf<IReadOnlyList<Document>, UnreachableDatabaseError>> ListDocumentsAsync(CollectionId collectionId) =>
+    public Task<OneOf<IReadOnlyList<Document>, Unreachable<string>>> ListDocumentsAsync(CollectionId collectionId) =>
         connectionFactory.TryAsync(async connection =>
         {
             var entities = await connection.QueryAsync<DocumentEntity>(queries.GetDocumentsQuery(collectionId));
@@ -28,13 +28,13 @@ internal sealed class DocumentRepository(IDbConnectionFactory connectionFactory,
                 .ToReadOnlyList();
         }, ToUnreachableError);
 
-    public Task<OneOf<Success, NotFoundDatabaseError, UnreachableDatabaseError>> RegisterDocumentAsync(CollectionId collectionId, Document document, File[] files) =>
+    public Task<OneOf<Success, NotFound, Unreachable<string>>> RegisterDocumentAsync(CollectionId collectionId, Document document, File[] files) =>
         connectionFactory.TryAsync(async (connection, transaction) =>
         {
             throw new NotImplementedException();
         }, ToUnreachableError);
 
-    private static UnreachableDatabaseError ToUnreachableError(Exception exception) => new(exception.Message);
+    private static Unreachable<string> ToUnreachableError(Exception exception) => new(exception.Message);
     
     private sealed record DocumentEntity(Guid Id, string Name, string Icon, long Version, long RegisteredAtTimespan);
 }

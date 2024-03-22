@@ -15,9 +15,9 @@ internal sealed class RegisterHandler(
     IUserIdAccessor userIdAccessor,
     IClock clock,
     ILogger<RegisterHandler> logger)
-    : IRequestHandler<RegisterCollectionRequest, OneOf<Collection, Conflct, Unreachable>>
+    : IRequestHandler<RegisterCollectionRequest, OneOf<Collection, Unknown, Conflict, Unreachable>>
 {
-    public async Task<OneOf<Collection, Conflct, Unreachable>> Handle(RegisterCollectionRequest request, CancellationToken cancellationToken)
+    public async Task<OneOf<Collection, Unknown, Conflict, Unreachable>> Handle(RegisterCollectionRequest request, CancellationToken cancellationToken)
     {
         var userId = userIdAccessor.UserId;
 
@@ -25,7 +25,7 @@ internal sealed class RegisterHandler(
         {
             logger.LogError("Could not get UserId from IUserIdAccessor");
             
-            return new Error<string>("Could not continue the operation.");
+            return new Unknown();
         }
 
         var addedAt = clock.Now;
@@ -35,13 +35,13 @@ internal sealed class RegisterHandler(
 
         return result.Match(ToCollection, ToError);
 
-        OneOf<Collection, Error<string>> ToCollection(Success _) => new Collection(request.Id, request.Name, request.Icon, request.EncryptionSide, version, addedAt);
+        OneOf<Collection, Unknown, Conflict, Unreachable> ToCollection(Success _) => new Collection(request.Id, request.Name, request.Icon, request.EncryptionSide, version, addedAt);
 
-        OneOf<Collection, Error<string>> ToError(UnreachableDatabaseError error)
+        OneOf<Collection, Unknown, Conflict, Unreachable> ToError(Unreachable<string> error)
         {
-            logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(ICollectionRepository), error.Reason);
+            logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(ICollectionRepository), error.Value);
 
-            return new Error<string>(error.Reason);
+            return new Unreachable();
         }
     }
 }

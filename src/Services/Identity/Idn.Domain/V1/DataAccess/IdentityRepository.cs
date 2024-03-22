@@ -1,6 +1,6 @@
-﻿using Badger.Sql.Abstractions;
+﻿using Badger.OneOf.Types;
+using Badger.Sql.Abstractions;
 using Badger.Sql.Abstractions.Extensions;
-using Badger.Sql.Error;
 using Dapper;
 using Idn.Contracts.V1;
 using OneOf;
@@ -10,7 +10,7 @@ namespace Idn.Domain.V1.DataAccess;
 
 internal sealed class IdentityRepository(IDbConnectionFactory connectionFactory, SqlQueries sqlQueries) : IIdentityRepository
 {
-    public Task<OneOf<User, NotFound, UnreachableDatabaseError>> GetUserAsync(string sourceUserId) =>
+    public Task<OneOf<User, NotFound, Unreachable<string>>> GetUserAsync(string sourceUserId) =>
         connectionFactory.TryAsync(async connection =>
         {
             var sqlQuery = sqlQueries.GetUserQuery(sourceUserId);
@@ -30,7 +30,7 @@ internal sealed class IdentityRepository(IDbConnectionFactory connectionFactory,
                     DateTimeOffset.FromUnixTimeMilliseconds(entity.RegisteredAtTimespan));
         }, ToUnreachableError);
 
-    public Task<OneOf<User, UnreachableDatabaseError>> RegisterUserAsync(
+    public Task<OneOf<User, Unreachable<string>>> RegisterUserAsync(
         string sourceUserId,
         string name,
         string encryptedEmail,
@@ -46,7 +46,7 @@ internal sealed class IdentityRepository(IDbConnectionFactory connectionFactory,
             return user;
         }, ToUnreachableError);
     
-    private static UnreachableDatabaseError ToUnreachableError(Exception exception) => new(exception.Message);
+    private static Unreachable<string> ToUnreachableError(Exception exception) => new(exception.Message);
 
     private sealed record UserEntity(long Id, string Name, string EncryptedEmail, string Source, string SourceUserId, long RegisteredAtTimespan);
 }

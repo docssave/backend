@@ -5,6 +5,7 @@ using Idn.Contracts.V1;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using OneOf;
+using OneOf.Types;
 
 namespace Col.Domain.V1.Handlers;
 
