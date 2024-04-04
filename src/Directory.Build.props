@@ -16,7 +16,7 @@
         <ProjectReference Include="..\..\..\Libraries\Database\Badger.Sql.Abstractions\Badger.Sql.Abstractions.csproj" />
     </ItemGroup>
 
-    <ItemGroup Condition="$(MSBuildProjectName.EndsWith('.Plugin'))">
+    <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Services')) And $(MSBuildProjectName.EndsWith('.Plugin'))">
         <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
         <ProjectReference Include="..\..\..\Libraries\Badger.AspNetCore\Badger.AspNetCore.csproj" />
     </ItemGroup>

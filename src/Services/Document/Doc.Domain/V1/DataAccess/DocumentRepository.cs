@@ -28,10 +28,12 @@ internal sealed class DocumentRepository(IDbConnectionFactory connectionFactory,
                 .ToReadOnlyList();
         }, ToUnreachableError);
 
-    public Task<OneOf<Success, NotFound, Unreachable<string>>> RegisterDocumentAsync(CollectionId collectionId, Document document, File[] files) =>
-        connectionFactory.TryAsync(async (connection, transaction) =>
+    public Task<OneOf<Success, Unreachable<string>>> RegisterDocumentAsync(CollectionId collectionId, Document document, File[] files) =>
+        connectionFactory.TryAsync(async connection =>
         {
-            throw new NotImplementedException();
+            await connection.ExecuteAsync(queries.GetRegisterDocumentQuery(document, collectionId));
+
+            return new Success();
         }, ToUnreachableError);
 
     private static Unreachable<string> ToUnreachableError(Exception exception) => new(exception.Message);
