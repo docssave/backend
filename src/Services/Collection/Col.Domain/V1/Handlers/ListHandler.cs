@@ -19,7 +19,6 @@ internal sealed class ListHandler(ICollectionRepository repository, IUserIdAcces
         if (userId == null)
         {
             logger.LogError("Could not get UserId from IUserIdAccessor");
-
             return new Unknown();
         }
 
@@ -35,7 +34,6 @@ internal sealed class ListHandler(ICollectionRepository repository, IUserIdAcces
         OneOf<IReadOnlyList<Collection>, Unknown, Unreachable> ToError(Unreachable<string> error)
         {
             logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(ICollectionRepository), error.Value);
-
             return new Unreachable();
         }
     }

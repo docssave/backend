@@ -23,7 +23,7 @@ public static class DbConnectionFactoryExtensions
             return exceptionFunc(e);
         }
     }
-    
+
     public static async Task<OneOf<T, TError, Unreachable<string>>> TryAsync<T, TError>(
         this IDbConnectionFactory dbConnectionFactory,
         Func<IDbConnection, Task<OneOf<T, TError>>> sqlFunc,
@@ -43,6 +43,31 @@ public static class DbConnectionFactoryExtensions
         }
     }
 
+    public static async Task<OneOf<T, TError, Unreachable<string>>> TryAsync<T, TError>(
+        this IDbConnectionFactory dbConnectionFactory,
+        Func<IDbConnection, IDbTransaction, Task<OneOf<T, TError>>> sqlFunc,
+        Func<Exception, Unreachable<string>> exceptionFunc)
+    {
+        try
+        {
+            using var connection = await dbConnectionFactory.CreateAsync();
+
+            connection.Open();
+
+            var transaction = connection.BeginTransaction();
+
+            var result = await sqlFunc(connection, transaction);
+
+            transaction.Commit();
+
+            return result.Match(OneOf<T, TError, Unreachable<string>>.FromT0, OneOf<T, TError, Unreachable<string>>.FromT1);
+        }
+        catch (DbException e)
+        {
+            return exceptionFunc(e);
+        }
+    }
+
     public static async Task<T> TryAsync<T>(
         this IDbConnectionFactory dbConnectionFactory,
         Func<IDbConnection, IDbTransaction, Task<T>> sqlFunc,
@@ -50,7 +75,7 @@ public static class DbConnectionFactoryExtensions
         await dbConnectionFactory.TryAsync(async connection =>
         {
             connection.Open();
-            
+
             var transaction = connection.BeginTransaction();
 
             try
@@ -72,7 +97,7 @@ public static class DbConnectionFactoryExtensions
                 connection.Close();
             }
         }, exceptionFunc);
-    
+
     public static async Task<OneOf<T, Unreachable<string>>> TryAsync<T>(
         this IDbConnectionFactory dbConnectionFactory,
         Func<IDbConnection, IDbTransaction, Task<T>> sqlFunc,
@@ -91,11 +116,11 @@ public static class DbConnectionFactoryExtensions
 
                 return result;
             }
-            catch (Exception e)
+            catch
             {
                 transaction.Rollback();
 
-                throw e;
+                throw;
             }
             finally
             {

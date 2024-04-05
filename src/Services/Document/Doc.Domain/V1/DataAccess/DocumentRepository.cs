@@ -2,7 +2,6 @@
 using Badger.OneOf.Types;
 using Badger.Sql.Abstractions;
 using Badger.Sql.Abstractions.Extensions;
-using Col.Contracts.V1;
 using Dapper;
 using Doc.Contracts.V1;
 using OneOf;
@@ -13,7 +12,7 @@ namespace Doc.Domain.V1.DataAccess;
 
 internal sealed class DocumentRepository(IDbConnectionFactory connectionFactory, SqlQueries queries) : IDocumentRepository
 {
-    public Task<OneOf<IReadOnlyList<Document>, Unreachable<string>>> ListDocumentsAsync(CollectionId collectionId) =>
+    public Task<OneOf<IReadOnlyList<Document>, Unreachable<string>>> ListDocumentsAsync(Guid collectionId) =>
         connectionFactory.TryAsync(async connection =>
         {
             var entities = await connection.QueryAsync<DocumentEntity>(queries.GetDocumentsQuery(collectionId));
@@ -28,7 +27,7 @@ internal sealed class DocumentRepository(IDbConnectionFactory connectionFactory,
                 .ToReadOnlyList();
         }, ToUnreachableError);
 
-    public Task<OneOf<Success, Unreachable<string>>> RegisterDocumentAsync(CollectionId collectionId, Document document, File[] files) =>
+    public Task<OneOf<Success, Unreachable<string>>> RegisterDocumentAsync(Guid collectionId, Document document, File[] files) =>
         connectionFactory.TryAsync(async connection =>
         {
             await connection.ExecuteAsync(queries.GetRegisterDocumentQuery(document, collectionId));

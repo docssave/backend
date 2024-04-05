@@ -1,10 +1,13 @@
-﻿using Col.Contracts.V1;
+﻿using Badger.Plugin.Filters;
+using Col.Contracts.V1;
 using Doc.Contracts.V1;
+using Doc.Plugin.V1.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using File = Doc.Contracts.V1.File;
 
 namespace Doc.Plugin.V1.Extensions;
 
@@ -17,16 +20,23 @@ public static class WebApplicationExtensions
 
     private static void UseDocumentsEndpoints(this IEndpointRouteBuilder group)
     {
-        group.MapPut("/{collectionId}/documents/{documentId}", RegisterDocumentsAsync);
-        group.MapGet("/{collectionId}/documents", ListDocumentsAsync);
+        group.MapPut("/{collectionId:guid}/documents/{documentId:guid}", RegisterDocumentsAsync).AddEndpointFilter<ValidationFilter<RegisterDocumentDto>>();
+        group.MapGet("/{collectionId:guid}/documents", ListDocumentsAsync);
     }
 
-    private static Task<IResult> RegisterDocumentsAsync([FromRoute] CollectionId collectionId, IFormFileCollection files, [FromServices] IMediator mediator)
+    private static async Task<IResult> RegisterDocumentsAsync(
+        [FromRoute] Guid collectionId,
+        [FromRoute] Guid documentId,
+        RegisterDocumentDto request,
+        IFormFileCollection fileCollection,
+        [FromServices] IMediator mediator)
     {
-        return Task.FromResult(Results.Empty);
+        var document = new Document(documentId, request.Name, request.Icon, request.ExpectedVersion, DateTimeOffset.Now);
+        var files = fileCollection.Select(file => new File())
+        var result = await mediator.Send(new RegisterDocumentRequest(new CollectionId(collectionId), document, ))
     }
 
-    private static async Task<IResult> ListDocumentsAsync([FromRoute] CollectionId collectionId, [FromServices] IMediator mediator)
+    private static async Task<IResult> ListDocumentsAsync([FromRoute] Guid collectionId, [FromServices] IMediator mediator)
     {
         var result = await mediator.Send(new ListDocumentsRequest(collectionId));
 

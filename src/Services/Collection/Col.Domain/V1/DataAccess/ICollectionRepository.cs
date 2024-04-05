@@ -10,14 +10,15 @@ public interface ICollectionRepository
 {
     Task<OneOf<IReadOnlyList<Collection>, Unreachable<string>>> ListAsync(UserId userId);
 
-    Task<OneOf<Success, Unreachable<string>>> RegisterAsync(
+    Task<OneOf<Success, Conflict, Unreachable<string>>> RegisterAsync(
         UserId userId,
         CollectionId id,
         string name,
         string icon,
         EncryptionSide encryptionSide,
         DateTimeOffset addedAt,
-        int version);
+        int? expectedVersion,
+        int nextVersion);
 
     Task<OneOf<Success, NotFound, Unreachable<string>>> CheckExistingAsync(CollectionId collectionId);
 }

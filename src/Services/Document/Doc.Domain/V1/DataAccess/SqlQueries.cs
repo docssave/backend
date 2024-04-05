@@ -8,39 +8,39 @@ namespace Doc.Domain.V1.DataAccess;
 
 internal sealed class SqlQueries(IQueryCompiler compiler)
 {
-    public string GetDocumentsQuery(CollectionId collectionId)
+    public string GetDocumentsQuery(Guid collectionId)
     {
         var query = new Query("Documents")
             .Select("Id", "Name", "Icon", "Version", "RegisteredAtTimespan")
-            .Where("Documents.CollectionId", collectionId.Value)
+            .Where("Documents.CollectionId", collectionId)
             .OrderBy("RegisteredAtTimespan");
 
         return compiler.Compile(query);
     }
 
-    public string GetDocumentVersionQuery(DocumentId documentId)
+    public string GetDocumentVersionQuery(Guid documentId)
     {
         var query = new Query("Documents")
             .Select("Version")
-            .Where("Documents.Id", documentId.Value);
+            .Where("Documents.Id", documentId);
 
         return compiler.Compile(query);
     }
 
-    public string GetRegisterDocumentQuery(Document document, CollectionId collectionId)
+    public string GetRegisterDocumentQuery(Document document, Guid collectionId)
     {
         var query = new Query("Documents")
             .AsUpsert(new KeyValuePair<string, object>[]
             {
                 new("Id", document.DocumentId.Value),
-                new("CollectionId", collectionId.Value),
+                new("CollectionId", collectionId),
                 new("Name", document.Name),
                 new("Icon", document.Icon),
                 new("Version", document.Icon),
                 new("RegisteredAtTimespan", document.RegisteredAt.ToUnixTimeMilliseconds())
             }, new KeyValuePair<string, object>[]
             {
-                new("CollectionId", collectionId.Value),
+                new("CollectionId", collectionId),
                 new("Name", document.Name),
                 new("Icon", document.Icon),
                 new("Version", document.Icon)

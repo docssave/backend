@@ -29,16 +29,24 @@ public sealed class CollectionRepository(IDbConnectionFactory connectionFactory,
                 .ToReadOnlyList();
         }, ToUnreachableError);
 
-    public Task<OneOf<Success, Unreachable<string>>> RegisterAsync(
+    public Task<OneOf<Success, Conflict, Unreachable<string>>> RegisterAsync(
         UserId userId,
         CollectionId id,
         string name,
         string icon,
         EncryptionSide encryptionSide,
         DateTimeOffset addedAt,
-        int version) => connectionFactory.TryAsync(async (connection, transaction) =>
+        int? expectedVersion,
+        int nextVersion) => connectionFactory.TryAsync(async (connection, transaction) =>
     {
-        var createCollectionQuery = queries.RegisterCollectionQuery(id, name, icon, encryptionSide, version, addedAt);
+        var existingVersion = await connection.QuerySingleAsync<int?>(queries.GetCollectionVersionQuery(id));
+
+        if (existingVersion.HasValue && existingVersion != expectedVersion)
+        {
+            return OneOf<Success, Conflict>.FromT1(new Conflict());
+        }
+
+        var createCollectionQuery = queries.RegisterCollectionQuery(id, name, icon, encryptionSide, nextVersion, addedAt);
 
         await connection.ExecuteAsync(createCollectionQuery, transaction: transaction);
 
@@ -46,7 +54,7 @@ public sealed class CollectionRepository(IDbConnectionFactory connectionFactory,
 
         await connection.ExecuteAsync(createUserCollectionQuery, transaction: transaction);
 
-        return new Success();
+        return OneOf<Success, Conflict>.FromT0(new Success());
     }, ToUnreachableError);
 
     public Task<OneOf<Success, NotFound, Unreachable<string>>> CheckExistingAsync(CollectionId collectionId) =>

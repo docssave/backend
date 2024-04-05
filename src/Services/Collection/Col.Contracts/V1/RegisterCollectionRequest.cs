@@ -5,5 +5,5 @@ using Unknown = OneOf.Types.Unknown;
 
 namespace Col.Contracts.V1;
 
-public sealed record RegisterCollectionRequest(CollectionId Id, string Name, string Icon, EncryptionSide EncryptionSide, int? Version)
+public sealed record RegisterCollectionRequest(CollectionId Id, string Name, string Icon, EncryptionSide EncryptionSide, int? ExpectedVersion)
     : IRequest<OneOf<Collection, Unknown, Conflict, Unreachable>>;

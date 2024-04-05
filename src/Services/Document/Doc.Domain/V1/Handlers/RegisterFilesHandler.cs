@@ -17,7 +17,6 @@ internal sealed class RegisterFilesHandler(IFileRepository repository, ILogger<R
         if (request.DocumentId == DocumentId.Empty)
         {
             logger.LogError("DocumentId can not be empty");
-
             return new Error<string>("Could not register files for empty document.");
         }
         
@@ -28,7 +27,6 @@ internal sealed class RegisterFilesHandler(IFileRepository repository, ILogger<R
         Error<string> ToError(Unreachable<string> unreachableError)
         {
             logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(IFileRepository), unreachableError.Value);
-            
             return new(unreachableError.Value);
         }
     }

@@ -60,6 +60,15 @@ public sealed class SqlQueries(IQueryCompiler compiler)
         return compiler.Compile(query);
     }
 
+    public string GetCollectionVersionQuery(CollectionId collectionId)
+    {
+        var query = new Query("Collections")
+            .Select("Version")
+            .Where("Collections", collectionId.Value);
+
+        return compiler.Compile(query);
+    }
+
     public string CheckCollectionExistingQuery(CollectionId collectionId)
     {
         var subQuery = new Query("Collections")

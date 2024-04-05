@@ -16,10 +16,10 @@ public static class WebApplicationExtensions
 
     public static void UseCollection(this WebApplication application) =>
         application.MapGroup(BaseRoute).UseCollectionsEndpoints();
-    
+
     private static void UseCollectionsEndpoints(this IEndpointRouteBuilder group)
     {
-        group.MapPut("/{collectionId}", RegisterCollectionAsync).AddEndpointFilter<ValidationFilter<RegisterCollectionDto>>();
+        group.MapPut("/{collectionId:guid}", RegisterCollectionAsync).AddEndpointFilter<ValidationFilter<RegisterCollectionDto>>();
         group.MapGet("/", ListCollectionsAsync);
     }
 
@@ -29,9 +29,9 @@ public static class WebApplicationExtensions
 
         return response.Match(
             Results.Ok,
-            _ => Results.Extensions.Unknown(),
-            _ => Results.Conflict(),
-            _ => Results.Extensions.RetryLate());
+            Results.Extensions.Unknown,
+            Results.Conflict,
+            Results.Extensions.RetryLate);
     }
 
     private static async Task<IResult> ListCollectionsAsync([FromServices] IMediator mediator)
@@ -40,7 +40,7 @@ public static class WebApplicationExtensions
 
         return response.Match(
             Results.Ok,
-            _ => Results.Extensions.Unknown(),
-            _ => Results.Extensions.RetryLate());
+            Results.Extensions.Unknown,
+            Results.Extensions.RetryLate);
     }
 }
