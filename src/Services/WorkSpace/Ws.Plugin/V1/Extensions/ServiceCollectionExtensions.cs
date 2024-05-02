@@ -1,5 +1,4 @@
-﻿using MediatR;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Ws.Domain;
 using Ws.Domain.V1;
 
@@ -10,7 +9,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddWorkspaceService(this IServiceCollection services)
     {
         return services
-            .AddMediatR(typeof(MediatorEntryPoint).Assembly)
+            .AddMediatR(configuration => configuration.RegisterServicesFromAssembly(typeof(MediatorEntryPoint).Assembly))
             .AddWorkspace();
     }
 }

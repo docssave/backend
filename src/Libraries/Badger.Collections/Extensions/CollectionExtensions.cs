@@ -2,7 +2,7 @@
 
 public static class CollectionExtensions
 {
-    public static IReadOnlyList<T> ToReadonlyList<T>(this IEnumerable<T> source)
+    public static IReadOnlyList<T> ToReadOnlyList<T>(this IEnumerable<T> source)
     {
         if (source is IReadOnlyList<T> list)
         {

@@ -10,21 +10,12 @@ using Ws.Contracts.V1;
 
 namespace Ws.Domain.V1.DataAccess;
 
-internal sealed class WorkspaceRepository : IWorkspaceRepository
+internal sealed class WorkspaceRepository(IDbConnectionFactory connectionFactory, SqlQueries queries) : IWorkspaceRepository
 {
-    private readonly IDbConnectionFactory _connectionFactory;
-    private readonly SqlQueries _queries;
-
-    public WorkspaceRepository(IDbConnectionFactory connectionFactory, SqlQueries queries)
-    {
-        _connectionFactory = connectionFactory;
-        _queries = queries;
-    }
-
     public Task<OneOf<IReadOnlyList<Workspace>, UnreachableError>> ListAsync(UserId userId) =>
-        _connectionFactory.TryAsync(async connection =>
+        connectionFactory.TryAsync(async connection =>
         {
-            var sqlQuery = _queries.GetWorkspaceQuery(userId);
+            var sqlQuery = queries.GetWorkspaceQuery(userId);
 
             var entities = await connection.QueryAsync<WorkspaceEntity>(sqlQuery);
 
@@ -33,17 +24,17 @@ internal sealed class WorkspaceRepository : IWorkspaceRepository
                     new WorkspaceId(entity.Id),
                     entity.Name,
                     DateTimeOffset.FromUnixTimeMilliseconds(entity.AddedAtTimespan)))
-                .ToReadonlyList();
+                .ToReadOnlyList();
         }, ToUnreachableError);
 
     public Task<OneOf<Success, UnreachableError>> RegisterAsync(WorkspaceId id, string name,  UserId userId, DateTimeOffset registeredAt) =>
-        _connectionFactory.TryAsync(async (connection, transaction) =>
+        connectionFactory.TryAsync(async (connection, transaction) =>
         {
-            var createWorkspaceQuery = _queries.RegisterWorkspaceQuery(id, name, registeredAt);
+            var createWorkspaceQuery = queries.RegisterWorkspaceQuery(id, name, registeredAt);
 
             await connection.ExecuteAsync(createWorkspaceQuery, transaction: transaction);
 
-            var createUserWorkspaceQuery = _queries.RegisterUserWorkspaceQuery(userId, id);
+            var createUserWorkspaceQuery = queries.RegisterUserWorkspaceQuery(userId, id);
 
             await connection.ExecuteAsync(createUserWorkspaceQuery, transaction: transaction);
 

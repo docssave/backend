@@ -1,26 +1,18 @@
 ﻿using Badger.Sql.Abstractions;
-using Idn.Contracts;
 using Idn.Contracts.V1;
 using SqlKata;
 
 namespace Idn.Domain.V1.DataAccess;
 
-internal sealed class SqlQueries
+internal sealed class SqlQueries(IQueryCompiler compiler)
 {
-    private readonly IQueryCompiler _compiler;
-
-    public SqlQueries(IQueryCompiler compiler)
-    {
-        _compiler = compiler;
-    }
-    
     public string GetUserQuery(string sourceUserId)
     {
         var query = new Query("Users")
             .Select("Id", "Name", "EncryptedEmail", "Source", "SourceUserId", "RegisteredAtTimespan")
             .Where("SourceUserId", sourceUserId).Limit(1);
 
-        return _compiler.Compile(query);
+        return compiler.Compile(query);
     }
 
     public string CreateUserQuery(string sourceUserId, string name, string encryptedEmail, AuthorizationSource source, DateTimeOffset registeredAt)
@@ -35,6 +27,6 @@ internal sealed class SqlQueries
                 RegisteredAtTimespan = registeredAt.ToUnixTimeMilliseconds()
             }, returnId: true);
 
-        return _compiler.Compile(query);
+        return compiler.Compile(query);
     }
 }

@@ -3,6 +3,4 @@
 namespace Ws.Contracts.V1;
 
 [StronglyTypedId]
-public partial struct WorkspaceId
-{
-}
+public partial struct WorkspaceId;

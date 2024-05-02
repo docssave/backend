@@ -1,18 +1,13 @@
 using Badger.Sql.Abstractions;
+using Badger.SqlKata.Extensions;
 using Col.Contracts.V1;
 using Idn.Contracts.V1;
 using SqlKata;
 
 namespace Col.Domain.V1.DataAccess;
 
-public sealed class SqlQueries
+public sealed class SqlQueries(IQueryCompiler compiler)
 {
-    private readonly IQueryCompiler _compiler;
-
-    public SqlQueries(IQueryCompiler compiler) =>
-        _compiler = compiler;
-
-    //TODO: SQL Server doesn't support ON DUPLICATE KYE
     public string RegisterCollectionQuery(
         CollectionId id,
         string name,
@@ -22,17 +17,24 @@ public sealed class SqlQueries
         DateTimeOffset addedAt)
     {
         var query = new Query("Collections")
-            .AsInsert(new
+            .AsUpsert(new Dictionary<string, object>
             {
-                Id = id.Value,
-                Name = name,
-                Icon = icon,
-                EncryptSide = encryptionSide.ToString(),
-                Version = version,
-                AddedAtTimespan = addedAt.ToUnixTimeMilliseconds()
+                { "Id", id.Value },
+                { "Name", name},
+                { "Icon", icon },
+                { "EncryptSide", encryptionSide.ToString()},
+                { "Version", version },
+                { "AddedAtTimespan", addedAt.ToUnixTimeMilliseconds() }
+            }, new Dictionary<string, object>
+            {
+                { "Name", name},
+                { "Icon", icon },
+                { "EncryptSide", encryptionSide.ToString()},
+                { "Version", version },
+                { "AddedAtTimespan", addedAt.ToUnixTimeMilliseconds() }
             });
 
-        return _compiler.Compile(query);
+        return compiler.Compile(query);
     }
 
     public string RegisterUserCollectionQuery(UserId userId, CollectionId collectionId)
@@ -44,7 +46,7 @@ public sealed class SqlQueries
                 CollectionId = collectionId
             });
 
-        return _compiler.Compile(query);
+        return compiler.Compile(query);
     }
 
     public string GetCollectionsQuery(UserId userId)
@@ -55,6 +57,6 @@ public sealed class SqlQueries
             .Where("UserCollections.UserId", userId)
             .OrderBy("AddedAtTimespan");
 
-        return _compiler.Compile(query);
+        return compiler.Compile(query);
     }
 }
