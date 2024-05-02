@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\Badger.OneOf\Badger.OneOf.csproj" />
+  </ItemGroup>
+</Project>
