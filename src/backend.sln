@@ -72,11 +72,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fl.Plugin", "Services\File\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tag", "Tag", "{052EF949-D379-44D8-9451-9CD54488CFAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tg.Plugin", "Services\Tag\Tg.Plugin\Tg.Plugin.csproj", "{EBD8AFE7-7ADE-48FF-938C-A0BC1E7F86C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tg.Plugin", "Services\Tag\Tg.Plugin\Tg.Plugin.csproj", "{EBD8AFE7-7ADE-48FF-938C-A0BC1E7F86C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tg.Domain", "Services\Tag\Tg.Domain\Tg.Domain.csproj", "{3833CAFD-E094-4C4D-BA8C-94BD009E54B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tg.Domain", "Services\Tag\Tg.Domain\Tg.Domain.csproj", "{3833CAFD-E094-4C4D-BA8C-94BD009E54B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tg.Contracts", "Services\Tag\Tg.Contracts\Tg.Contracts.csproj", "{5CFA356B-83F9-4FF8-9274-4E4C59D55F07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tg.Contracts", "Services\Tag\Tg.Contracts\Tg.Contracts.csproj", "{5CFA356B-83F9-4FF8-9274-4E4C59D55F07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
