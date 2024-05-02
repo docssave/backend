@@ -5,4 +5,4 @@ using OneOf.Types;
 
 namespace Tg.Contracts.V1;
 
-public sealed record GetTagsRequest() : IRequest<OneOf<IReadOnlyCollection<Tag>, Unknown, Unreachable>>;
+public sealed record GetTagsRequest : IRequest<OneOf<IReadOnlyCollection<Tag>, Unknown, Unreachable>>;

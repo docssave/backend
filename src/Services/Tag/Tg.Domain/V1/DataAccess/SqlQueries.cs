@@ -17,16 +17,16 @@ internal sealed class SqlQueries(IQueryCompiler compiler)
         return compiler.Compile(query);
     }
 
-    public string GetRegisterTagQuery(Tag tag, UserId userId)
+    public string GetRegisterTagQuery(string value, UserId userId)
     {
         var query = new Query("Tags")
             .AsUpsert(new Dictionary<string, object>
             {
-                {"Value", tag.Value},
+                {"Value", value},
                 {"UserId", userId.Value}
             }, new Dictionary<string, object>
             {
-                {"Value", tag.Value},
+                {"Value", value},
             });
 
         return compiler.Compile(query);

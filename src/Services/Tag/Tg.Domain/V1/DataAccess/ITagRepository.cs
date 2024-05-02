@@ -8,7 +8,7 @@ namespace Tg.Domain.V1.DataAccess;
 
 internal interface ITagRepository
 {
-    Task<OneOf<Success, UnreachableError>> RegisterAsync(UserId userId, Tag tag);
+    Task<OneOf<Success, UnreachableError>> RegisterAsync(UserId userId, string value);
 
     Task<OneOf<IReadOnlyCollection<Tag>, UnreachableError>> GetAsync(UserId userId);
 }

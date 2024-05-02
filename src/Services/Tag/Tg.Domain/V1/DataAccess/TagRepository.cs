@@ -12,10 +12,10 @@ namespace Tg.Domain.V1.DataAccess;
 
 internal sealed class TagRepository(IDbConnectionFactory connectionFactory, SqlQueries queries) : ITagRepository
 {
-    public Task<OneOf<Success, UnreachableError>> RegisterAsync(UserId userId, Tag tag) =>
+    public Task<OneOf<Success, UnreachableError>> RegisterAsync(UserId userId, string value) =>
         connectionFactory.TryAsync(async (connection, transaction) =>
         {
-            var createCollectionQuery = queries.GetRegisterTagQuery(tag, userId);
+            var createCollectionQuery = queries.GetRegisterTagQuery(value, userId);
 
             await connection.ExecuteAsync(createCollectionQuery, transaction: transaction);
 
