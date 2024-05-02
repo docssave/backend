@@ -6,4 +6,11 @@ using OneOf.Types;
 
 namespace Doc.Contracts.V1;
 
-public sealed record RegisterDocumentRequest(CollectionId CollectionId, Document Document, File[] files) : IRequest<OneOf<Success, NotFound<CollectionId>, Unreachable>>;
+public sealed record RegisterDocumentRequest(
+    CollectionId CollectionId,
+    DocumentId DocumentId,
+    string Name,
+    string Icon,
+    long? ExpectedVersion,
+    File[] files)
+    : IRequest<OneOf<Success, Unknown, NotFound, Unreachable>>;

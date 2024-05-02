@@ -1,4 +1,5 @@
 ﻿using Badger.OneOf.Types;
+using Col.Contracts.V1;
 using Doc.Contracts.V1;
 using OneOf;
 using OneOf.Types;
@@ -10,5 +11,11 @@ internal interface IDocumentRepository
 {
     Task<OneOf<IReadOnlyList<Document>, Unreachable<string>>> ListDocumentsAsync(Guid collectionId);
 
-    Task<OneOf<Success, Unreachable<string>>> RegisterDocumentAsync(Guid collectionId, Document document, File[] files);
+    Task<OneOf<Success, Unreachable<string>>> RegisterDocumentAsync(
+        CollectionId collectionId,
+        DocumentId documentId,
+        string name,
+        string icon,
+        long? expectedVersion,
+        File[] files);
 }

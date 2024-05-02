@@ -5,6 +5,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\Libraries\Badger.AspNetCore\Badger.AspNetCore.csproj" />
       <ProjectReference Include="..\..\..\Libraries\Badger.Plugin\Badger.Plugin.csproj" />
       <ProjectReference Include="..\..\Collection\Col.Contracts\Col.Contracts.csproj" />
       <ProjectReference Include="..\Doc.Contracts\Doc.Contracts.csproj" />

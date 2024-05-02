@@ -1,4 +1,5 @@
-﻿using Badger.Plugin.Filters;
+﻿using Badger.AspNetCore.Extensions;
+using Badger.Plugin.Filters;
 using Col.Contracts.V1;
 using Doc.Contracts.V1;
 using Doc.Plugin.V1.Dtos;
@@ -31,9 +32,22 @@ public static class WebApplicationExtensions
         IFormFileCollection fileCollection,
         [FromServices] IMediator mediator)
     {
-        var document = new Document(documentId, request.Name, request.Icon, request.ExpectedVersion, DateTimeOffset.Now);
-        var files = fileCollection.Select(file => new File())
-        var result = await mediator.Send(new RegisterDocumentRequest(new CollectionId(collectionId), document, ))
+        var files = fileCollection.Select(file => new File(FileId.New(), [], file.ContentType)).ToArray(); // TODO: read content from each file
+        var registerDocumentRequest = new RegisterDocumentRequest(
+            new CollectionId(collectionId),
+            new DocumentId(documentId),
+            request.Name,
+            request.Icon,
+            request.ExpectedVersion,
+            files);
+
+        var result = await mediator.Send(registerDocumentRequest);
+
+        return result.Match(
+            Results.Ok,
+            Results.Extensions.Unknown,
+            Results.NotFound,
+            Results.Extensions.RetryLate);
     }
 
     private static async Task<IResult> ListDocumentsAsync([FromRoute] Guid collectionId, [FromServices] IMediator mediator)
