@@ -6,7 +6,12 @@
         <ProjectReference Include="..\Services\Collection\Col.Plugin\Col.Plugin.csproj" />
         <ProjectReference Include="..\Services\Identity\Idn.Contracts\Idn.Contracts.csproj" />
         <ProjectReference Include="..\Services\Identity\Idn.Plugin\Idn.Plugin.csproj" />
+        <ProjectReference Include="..\Services\Tag\Tg.Plugin\Tg.Plugin.csproj" />
         <ProjectReference Include="..\Services\WorkSpace\Ws.Plugin\Ws.Plugin.csproj" />
+        <ProjectReference Include="..\Services\Tag\Tg.Contracts\Tg.Contracts.csproj" />
+        <ProjectReference Include="..\Services\Tag\Tg.Domain\Tg.Domain.csproj" />
+        <ProjectReference Include="..\Services\Tag\Tag.Contracts\Tag.Contracts.csproj" />
+        <ProjectReference Include="..\Services\Tag\Tag.Domain\Tag.Domain.csproj" />
     </ItemGroup>
 
 </Project>

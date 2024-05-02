@@ -2,6 +2,7 @@ using Badger.Clock;
 using Badger.MySql;
 using Col.Plugin.V1.Extensions;
 using Idn.Plugin.V1.Extensions;
+using Tg.Plugin.V1.Extensions;
 using Ws.Plugin.V1.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,5 +19,6 @@ var app = builder.Build();
 app.UseAuthentication();
 app.UseIdentity();
 app.UseCollection();
+app.UseTag();
 
 await app.RunAsync();

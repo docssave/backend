@@ -12,7 +12,9 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Services\Collection\Col.Domain\Col.Domain.csproj" />
+      <ProjectReference Include="..\..\Services\File\Fl.Domain\Fl.Domain.csproj" />
       <ProjectReference Include="..\..\Services\Identity\Idn.Domain\Idn.Domain.csproj" />
+      <ProjectReference Include="..\..\Services\Tag\Tg.Domain\Tg.Domain.csproj" />
       <ProjectReference Include="..\..\Services\WorkSpace\Ws.Domain\Ws.Domain.csproj" />
     </ItemGroup>
 
