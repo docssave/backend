@@ -9,7 +9,7 @@ namespace Doc.Domain.V1.DataAccess;
 
 internal interface IDocumentRepository
 {
-    Task<OneOf<IReadOnlyList<Document>, Unreachable<string>>> ListDocumentsAsync(Guid collectionId);
+    Task<OneOf<IReadOnlyList<Document>, Unreachable<string>>> ListDocumentsAsync(CollectionId collectionId);
 
     Task<OneOf<Success, Unreachable<string>>> RegisterDocumentAsync(
         CollectionId collectionId,

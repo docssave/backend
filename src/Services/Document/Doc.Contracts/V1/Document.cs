@@ -1,8 +1,8 @@
 ﻿namespace Doc.Contracts.V1;
 
-public sealed class Document(Guid documentId, string name, string icon, long version, DateTimeOffset registeredAt)
+public sealed class Document(DocumentId documentId, string name, string icon, long version, DateTimeOffset registeredAt)
 {
-    public Guid DocumentId { get; } = documentId;
+    public DocumentId DocumentId { get; } = documentId;
 
     public string Name { get; } = name;
 

@@ -21,21 +21,21 @@ public static class WebApplicationExtensions
 
     private static void UseDocumentsEndpoints(this IEndpointRouteBuilder group)
     {
-        group.MapPut("/{collectionId:guid}/documents/{documentId:guid}", RegisterDocumentsAsync).AddEndpointFilter<ValidationFilter<RegisterDocumentDto>>();
-        group.MapGet("/{collectionId:guid}/documents", ListDocumentsAsync);
+        group.MapPut("/{collectionId}/documents/{documentId}", RegisterDocumentsAsync).AddEndpointFilter<ValidationFilter<RegisterDocumentDto>>();
+        group.MapGet("/{collectionId}/documents", ListDocumentsAsync);
     }
 
     private static async Task<IResult> RegisterDocumentsAsync(
-        [FromRoute] Guid collectionId,
-        [FromRoute] Guid documentId,
+        [FromRoute] CollectionId collectionId,
+        [FromRoute] DocumentId documentId,
         RegisterDocumentDto request,
         IFormFileCollection fileCollection,
         [FromServices] IMediator mediator)
     {
         var files = fileCollection.Select(file => new File(FileId.New(), [], file.ContentType)).ToArray(); // TODO: read content from each file
         var registerDocumentRequest = new RegisterDocumentRequest(
-            new CollectionId(collectionId),
-            new DocumentId(documentId),
+            collectionId,
+            documentId,
             request.Name,
             request.Icon,
             request.ExpectedVersion,
@@ -50,7 +50,7 @@ public static class WebApplicationExtensions
             Results.Extensions.RetryLate);
     }
 
-    private static async Task<IResult> ListDocumentsAsync([FromRoute] Guid collectionId, [FromServices] IMediator mediator)
+    private static async Task<IResult> ListDocumentsAsync([FromRoute] CollectionId collectionId, [FromServices] IMediator mediator)
     {
         var result = await mediator.Send(new ListDocumentsRequest(collectionId));
 

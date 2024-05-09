@@ -21,23 +21,24 @@ internal sealed class RegisterDocumentHandler(
 {
     public async Task<OneOf<Success, Unknown, NotFound, Unreachable>> Handle(RegisterDocumentRequest request, CancellationToken cancellationToken)
     {
-        var userId = userIdAccessor.UserId;
+        throw new NotImplementedException();
+        // var userId = userIdAccessor.UserId;
+        //
+        // if (userId == null)
+        // {
+        //     logger.LogError("Could not get UserId fromIuserIdAccessor");
+        //     return new Unknown();
+        // }
+        //
+        // var checkCollection = await mediator.Send(new CheckCollectionExistingRequest(request.CollectionId), cancellationToken);
+        //
+        // if (checkCollection.IsT1)
+        // {
+        //     return new NotFound();
+        // }
 
-        if (userId == null)
-        {
-            logger.LogError("Could not get UserId fromIuserIdAccessor");
-            return new Unknown();
-        }
+        //var document = new Document();
 
-        var checkCollection = await mediator.Send(new CheckCollectionExistingRequest(request.CollectionId), cancellationToken);
-
-        if (checkCollection.IsT1)
-        {
-            return new NotFound();
-        }
-
-        var document = new Document();
-
-        var registrationDocument = await documentRepository.RegisterDocumentAsync()
+        //var registrationDocument = await documentRepository.RegisterDocumentAsync()
     }
 }
