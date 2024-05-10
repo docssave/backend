@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Libraries\Badger.Collections\Badger.Collections.csproj" />
+      <ProjectReference Include="..\..\..\Libraries\Badger.SqlKata\Badger.SqlKata.csproj" />
+      <ProjectReference Include="..\..\Identity\Idn.Contracts\Idn.Contracts.csproj" />
+      <ProjectReference Include="..\Tg.Contracts\Tg.Contracts.csproj" />
+    </ItemGroup>
+
+</Project>

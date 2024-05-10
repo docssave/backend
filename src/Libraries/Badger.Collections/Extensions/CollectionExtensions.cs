@@ -11,4 +11,10 @@ public static class CollectionExtensions
 
         return source.ToList();
     }
+    
+    public static IReadOnlyCollection<T> ToReadOnlyCollection<T>(this IEnumerable<T> source) =>
+        source.ToReadOnlyList().AsReadOnlyCollection();
+
+    private static IReadOnlyCollection<T> AsReadOnlyCollection<T>(this IReadOnlyCollection<T> source) =>
+        source;
 }
