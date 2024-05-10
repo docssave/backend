@@ -8,26 +8,26 @@ namespace Doc.Domain.V1.DataAccess;
 
 internal sealed class SqlQueries(IQueryCompiler compiler)
 {
-    public string GetDocumentsQuery(Guid collectionId)
+    public string GetDocumentsQuery(CollectionId collectionId)
     {
         var query = new Query("Documents")
             .Select("Id", "Name", "Icon", "Version", "RegisteredAtTimespan")
-            .Where("Documents.CollectionId", collectionId)
+            .Where("Documents.CollectionId", collectionId.Value)
             .OrderBy("RegisteredAtTimespan");
 
         return compiler.Compile(query);
     }
 
-    public string GetDocumentVersionQuery(Guid documentId)
+    public string GetDocumentVersionQuery(DocumentId documentId)
     {
         var query = new Query("Documents")
             .Select("Version")
-            .Where("Documents.Id", documentId);
+            .Where("Documents.Id", documentId.Value);
 
         return compiler.Compile(query);
     }
 
-    public string GetRegisterDocumentQuery(Document document, Guid collectionId)
+    public string GetRegisterDocumentQuery(Document document, CollectionId collectionId)
     {
         var query = new Query("Documents")
             .AsUpsert(new KeyValuePair<string, object>[]
