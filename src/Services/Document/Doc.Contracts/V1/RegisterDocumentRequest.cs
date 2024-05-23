@@ -13,4 +13,4 @@ public sealed record RegisterDocumentRequest(
     string Icon,
     long? ExpectedVersion,
     File[] files)
-    : IRequest<OneOf<Success, Unknown, NotFound, Unreachable>>;
+    : IRequest<OneOf<Success, Unknown, NotFound, Conflict, Unreachable>>;

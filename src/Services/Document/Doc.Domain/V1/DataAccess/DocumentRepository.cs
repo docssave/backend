@@ -28,7 +28,7 @@ internal sealed class DocumentRepository(IDbConnectionFactory connectionFactory,
                 .ToReadOnlyList();
         }, ToUnreachableError);
 
-    public Task<OneOf<Success, Unreachable<string>>> RegisterDocumentAsync(CollectionId collectionId, DocumentId documentId, string name, string icon,
+    public Task<OneOf<Success, Conflict, Unreachable<string>>> RegisterDocumentAsync(CollectionId collectionId, DocumentId documentId, string name, string icon,
         long? expectedVersion, File[] files)
     {
         throw new NotImplementedException();

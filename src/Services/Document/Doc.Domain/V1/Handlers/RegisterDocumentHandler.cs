@@ -17,28 +17,31 @@ internal sealed class RegisterDocumentHandler(
     IUserIdAccessor userIdAccessor,
     IClock clock,
     ILogger<RegisterDocumentHandler> logger)
-    : IRequestHandler<RegisterDocumentRequest, OneOf<Success, Unknown, NotFound, Unreachable>>
+    : IRequestHandler<RegisterDocumentRequest, OneOf<Success, Unknown, NotFound, Conflict, Unreachable>>
 {
     public async Task<OneOf<Success, Unknown, NotFound, Unreachable>> Handle(RegisterDocumentRequest request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
-        // var userId = userIdAccessor.UserId;
-        //
-        // if (userId == null)
-        // {
-        //     logger.LogError("Could not get UserId fromIuserIdAccessor");
-        //     return new Unknown();
-        // }
-        //
-        // var checkCollection = await mediator.Send(new CheckCollectionExistingRequest(request.CollectionId), cancellationToken);
-        //
-        // if (checkCollection.IsT1)
-        // {
-        //     return new NotFound();
-        // }
+         var userId = userIdAccessor.UserId;
+        
+         if (userId == null)
+         {
+             logger.LogError("Could not get UserId fromIuserIdAccessor");
+             return new Unknown();
+         }
+        
+         var checkCollection = await mediator.Send(new CheckCollectionExistingRequest(request.CollectionId), cancellationToken);
+        
+         if (checkCollection.IsT1)
+         {
+             return new NotFound();
+         }
 
-        //var document = new Document();
-
-        //var registrationDocument = await documentRepository.RegisterDocumentAsync()
+         var registrationDocument = await documentRepository.RegisterDocumentAsync(
+             request.CollectionId,
+             request.DocumentId,
+             request.Name,
+             request.Icon,
+             request.ExpectedVersion,
+             request.files);
     }
 }

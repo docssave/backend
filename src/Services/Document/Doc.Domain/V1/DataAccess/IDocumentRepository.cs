@@ -11,7 +11,7 @@ internal interface IDocumentRepository
 {
     Task<OneOf<IReadOnlyList<Document>, Unreachable<string>>> ListDocumentsAsync(CollectionId collectionId);
 
-    Task<OneOf<Success, Unreachable<string>>> RegisterDocumentAsync(
+    Task<OneOf<Success, Conflict, Unreachable<string>>> RegisterDocumentAsync(
         CollectionId collectionId,
         DocumentId documentId,
         string name,
