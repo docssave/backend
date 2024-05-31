@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\Badger.AspNetCore\Badger.AspNetCore.csproj" />
     <ProjectReference Include="..\..\..\Libraries\Badger.Plugin\Badger.Plugin.csproj" />
     <ProjectReference Include="..\Col.Domain\Col.Domain.csproj" />
   </ItemGroup>

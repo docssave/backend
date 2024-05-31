@@ -19,16 +19,16 @@ internal sealed class UserCreatedEventConsumer(
 
         if (listResult.IsT1)
         {
-            logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(ICollectionRepository), listResult.AsT1.Reason);
-            
+            logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(ICollectionRepository), listResult.AsT1.Value);
+
             return;
         }
-        
+
         if (listResult.AsT0.Any())
         {
             return;
         }
-        
+
         const string defaultName = "My collection";
         const string defaultIcon = "#";
 
@@ -39,11 +39,12 @@ internal sealed class UserCreatedEventConsumer(
             defaultIcon,
             EncryptionSide.Client,
             clock.Now,
-            version: 1);
+            expectedVersion: null,
+            nextVersion: 1);
 
         if (registerResult.IsT1)
         {
-            logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(ICollectionRepository), listResult.AsT1.Reason);
+            logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(ICollectionRepository), listResult.AsT1.Value);
         }
     }
 }

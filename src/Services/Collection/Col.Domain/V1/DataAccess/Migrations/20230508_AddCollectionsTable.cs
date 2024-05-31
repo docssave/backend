@@ -12,7 +12,7 @@ public class AddCollectionTable : Migration
             .WithColumn("Name").AsAnsiString(100).NotNullable()
             .WithColumn("Icon").AsAnsiString(100).NotNullable()
             .WithColumn("EncryptSide").AsAnsiString(10).NotNullable()
-            .WithColumn("Version").AsInt32().NotNullable()
+            .WithColumn("Version").AsInt64().NotNullable()
             .WithColumn("AddedAtTimespan").AsInt64().NotNullable();
     }
 

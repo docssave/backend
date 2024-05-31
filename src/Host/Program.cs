@@ -1,6 +1,7 @@
 using Badger.Clock;
 using Badger.MySql;
 using Col.Plugin.V1.Extensions;
+using Doc.Plugin.V1.Extensions;
 using Idn.Plugin.V1.Extensions;
 using Tg.Plugin.V1.Extensions;
 using Ws.Plugin.V1.Extensions;
@@ -13,6 +14,7 @@ builder.Services.AddClock();
 builder.Services.AddIdentityService(sectionName => builder.Configuration.GetSection(sectionName));
 builder.Services.AddWorkspaceService();
 builder.Services.AddCollectionService();
+builder.Services.AddDocumentService();
 
 var app = builder.Build();
 
@@ -20,5 +22,6 @@ app.UseAuthentication();
 app.UseIdentity();
 app.UseCollection();
 app.UseTag();
+app.UseDocument();
 
 await app.RunAsync();

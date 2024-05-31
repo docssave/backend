@@ -1,4 +1,4 @@
-using Badger.Sql.Abstractions.Errors;
+using Badger.OneOf.Types;
 using Col.Contracts.V1;
 using Idn.Contracts.V1;
 using OneOf;
@@ -8,14 +8,19 @@ namespace Col.Domain.V1.DataAccess;
 
 public interface ICollectionRepository
 {
-    Task<OneOf<IReadOnlyList<Collection>, UnreachableError>> ListAsync(UserId userId);
+    Task<OneOf<IReadOnlyList<Collection>, Unreachable<string>>> ListAsync(UserId userId);
 
-    Task<OneOf<Success, UnreachableError>> RegisterAsync(
+    Task<OneOf<Success, Conflict, Unreachable<string>>> RegisterAsync(
         UserId userId,
         CollectionId id,
         string name,
         string icon,
         EncryptionSide encryptionSide,
         DateTimeOffset addedAt,
-        int version);
+        int? expectedVersion,
+        int nextVersion);
+
+    Task<OneOf<Success, NotFound, Unreachable<string>>> CheckExistingAsync(CollectionId collectionId);
+
+    Task<OneOf<Success, Forbidden, Unreachable<string>>> CheckAccessAsync(UserId userId, CollectionId collectionId);
 }

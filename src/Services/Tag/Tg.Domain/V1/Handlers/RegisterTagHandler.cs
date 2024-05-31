@@ -1,5 +1,4 @@
 using Badger.OneOf.Types;
-using Badger.Sql.Abstractions.Errors;
 using Idn.Contracts.V1;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -30,9 +29,9 @@ internal sealed class RegisterTagHandler(ITagRepository repository, IUserIdAcces
 
         OneOf<Success, Unknown, Unreachable> ToSuccess(Success success) => OneOf<Success, Unknown, Unreachable>.FromT0(success);
 
-        OneOf<Success, Unknown, Unreachable> ToError(UnreachableError error)
+        OneOf<Success, Unknown, Unreachable> ToError(Unreachable<string> error)
         {
-            logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(ITagRepository), error.Reason);
+            logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(ITagRepository), error.Value);
 
             return new Unreachable();
         }
