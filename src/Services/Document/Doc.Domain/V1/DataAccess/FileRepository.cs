@@ -40,11 +40,11 @@ internal sealed class FileRepository(IDbConnectionFactory connectionFactory, Sql
             .ToReadOnlyList();
     }, ToUnreachableError);
 
-    public Task<OneOf<Success, Unreachable<string>>> DeleteAsync(FileId fileId) => connectionFactory.TryAsync(async (connection, transaction) =>
+    public Task<OneOf<Success, Unreachable<string>>> DeleteAsync(FileId[] fileIds) => connectionFactory.TryAsync(async (connection, transaction) =>
     {
-        await connection.ExecuteAsync(queries.DeleteFiles([fileId]), transaction: transaction);
+        await connection.ExecuteAsync(queries.DeleteFiles(fileIds), transaction: transaction);
 
-        await connection.ExecuteAsync(queries.DeleteFilesMetadata([fileId]), transaction: transaction);
+        await connection.ExecuteAsync(queries.DeleteFilesMetadata(fileIds), transaction: transaction);
 
         return new Success();
     }, ToUnreachableError);

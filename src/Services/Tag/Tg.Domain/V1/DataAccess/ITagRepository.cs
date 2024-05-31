@@ -1,4 +1,4 @@
-﻿using Badger.Sql.Abstractions.Errors;
+﻿using Badger.OneOf.Types;
 using Idn.Contracts.V1;
 using OneOf;
 using OneOf.Types;
@@ -8,7 +8,7 @@ namespace Tg.Domain.V1.DataAccess;
 
 internal interface ITagRepository
 {
-    Task<OneOf<Success, UnreachableError>> RegisterAsync(UserId userId, string value);
+    Task<OneOf<Success, Unreachable<string>>> RegisterAsync(UserId userId, string value);
 
-    Task<OneOf<IReadOnlyCollection<Tag>, UnreachableError>> GetAsync(UserId userId);
+    Task<OneOf<IReadOnlyCollection<Tag>, Unreachable<string>>> GetAsync(UserId userId);
 }

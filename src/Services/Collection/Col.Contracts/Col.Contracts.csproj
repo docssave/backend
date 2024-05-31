@@ -6,6 +6,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Libraries\Badger.OneOf\Badger.OneOf.csproj" />
+      <ProjectReference Include="..\..\Identity\Idn.Contracts\Idn.Contracts.csproj" />
     </ItemGroup>
     
 </Project>

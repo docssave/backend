@@ -21,18 +21,20 @@ public static class WebApplicationExtensions
 
     private static void UseDocumentsEndpoints(this IEndpointRouteBuilder group)
     {
-        group.MapPut("/{collectionId}/documents/{documentId}", RegisterDocumentsAsync).AddEndpointFilter<ValidationFilter<RegisterDocumentDto>>();
+        group.MapPut("/{collectionId}/documents/{documentId}", RegisterDocumentAsync).AddEndpointFilter<ValidationFilter<RegisterDocumentDto>>();
         group.MapGet("/{collectionId}/documents", ListDocumentsAsync);
+        group.MapDelete("/{collectionId}/documents/{documentId}/files", DeleteFileAsync);
     }
 
-    private static async Task<IResult> RegisterDocumentsAsync(
+    private static async Task<IResult> RegisterDocumentAsync(
         [FromRoute] CollectionId collectionId,
         [FromRoute] DocumentId documentId,
         RegisterDocumentDto request,
         IFormFileCollection fileCollection,
         [FromServices] IMediator mediator)
     {
-        var files = fileCollection.Select(file => new File(FileId.New(), [], file.ContentType)).ToArray(); // TODO: read content from each file
+        var files = await Task.WhenAll(fileCollection.Select(LoadFileAsync));
+
         var registerDocumentRequest = new RegisterDocumentRequest(
             collectionId,
             documentId,
@@ -47,7 +49,15 @@ public static class WebApplicationExtensions
             Results.Ok,
             Results.Extensions.Unknown,
             Results.NotFound,
+            Results.Conflict,
             Results.Extensions.RetryLate);
+
+        static async Task<File> LoadFileAsync(IFormFile file)
+        {
+            await using var memoryStream = new MemoryStream();
+            await file.CopyToAsync(memoryStream);
+            return new File(FileId.New(), memoryStream.ToArray(), file.ContentType);
+        }
     }
 
     private static async Task<IResult> ListDocumentsAsync([FromRoute] CollectionId collectionId, [FromServices] IMediator mediator)
@@ -55,5 +65,20 @@ public static class WebApplicationExtensions
         var result = await mediator.Send(new ListDocumentsRequest(collectionId));
 
         return result.Match(Results.Ok, Results.BadRequest);
+    }
+
+    private static async Task<IResult> DeleteFileAsync(
+        [FromRoute] CollectionId collectionId,
+        [FromRoute] DocumentId documentId,
+        [FromQuery(Name = "fileId")] FileId[] fileIds,
+        [FromServices] IMediator mediator)
+    {
+        var result = await mediator.Send(new DeleteFilesRequest(collectionId, documentId, fileIds));
+
+        return result.Match(
+            Results.Ok,
+            Results.Extensions.Unknown,
+            _ => Results.Forbid(),
+            Results.Extensions.RetryLate);
     }
 }

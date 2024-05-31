@@ -39,7 +39,7 @@ public sealed class CollectionRepository(IDbConnectionFactory connectionFactory,
         int? expectedVersion,
         int nextVersion) => connectionFactory.TryAsync(async (connection, transaction) =>
     {
-        var existingVersion = await connection.QuerySingleAsync<int?>(queries.GetCollectionVersionQuery(id));
+        var existingVersion = await connection.QuerySingleAsync<int?>(queries.GetCollectionVersionQuery(id), transaction: transaction);
 
         if (existingVersion.HasValue && existingVersion != expectedVersion)
         {
@@ -65,6 +65,16 @@ public sealed class CollectionRepository(IDbConnectionFactory connectionFactory,
             return result
                 ? OneOf<Success, NotFound>.FromT0(new Success())
                 : OneOf<Success, NotFound>.FromT1(new NotFound());
+        }, ToUnreachableError);
+
+    public Task<OneOf<Success, Forbidden, Unreachable<string>>> CheckAccessAsync(UserId userId, CollectionId collectionId) =>
+        connectionFactory.TryAsync(async connection =>
+        {
+            var result = await connection.QuerySingleAsync<bool>(queries.GetCollectionAccessQuery(userId, collectionId));
+
+            return result
+                ? OneOf<Success, Forbidden>.FromT0(new Success())
+                : OneOf<Success, Forbidden>.FromT1(new Forbidden());
         }, ToUnreachableError);
 
     private static Unreachable<string> ToUnreachableError(Exception exception) => new(exception.Message);

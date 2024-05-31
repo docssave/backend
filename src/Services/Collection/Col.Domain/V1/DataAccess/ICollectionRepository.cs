@@ -21,4 +21,6 @@ public interface ICollectionRepository
         int nextVersion);
 
     Task<OneOf<Success, NotFound, Unreachable<string>>> CheckExistingAsync(CollectionId collectionId);
+
+    Task<OneOf<Success, Forbidden, Unreachable<string>>> CheckAccessAsync(UserId userId, CollectionId collectionId);
 }

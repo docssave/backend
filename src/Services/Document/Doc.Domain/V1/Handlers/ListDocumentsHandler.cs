@@ -16,7 +16,7 @@ internal sealed class ListDocumentsHandler(IDocumentRepository repository, ILogg
         var result = await repository.ListDocumentsAsync(request.CollectionId);
 
         return result.MapT1(ToError);
-        
+
         Error<string> ToError(Unreachable<string> error)
         {
             logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(IDocumentRepository), error.Value);

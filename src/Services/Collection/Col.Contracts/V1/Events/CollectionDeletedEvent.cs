@@ -1,6 +1,5 @@
-﻿namespace Col.Contracts.V1.Events;
+﻿using MediatR;
 
-public class CollectionDeletedEvent
-{
-    
-}
+namespace Col.Contracts.V1.Events;
+
+public sealed record CollectionDeletedEvent(CollectionId CollectionId) : INotification;

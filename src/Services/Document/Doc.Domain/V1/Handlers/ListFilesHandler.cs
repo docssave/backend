@@ -9,7 +9,7 @@ using File = Doc.Contracts.V1.File;
 
 namespace Doc.Domain.V1.Handlers;
 
-internal sealed class ListFilesHandler(IFileRepository repository, ILogger<ListFilesHandler> logger) 
+internal sealed class ListFilesHandler(IFileRepository repository, ILogger<ListFilesHandler> logger)
     : IRequestHandler<ListFilesRequest, OneOf<IReadOnlyList<File>, Error<string>>>
 {
     public async Task<OneOf<IReadOnlyList<File>, Error<string>>> Handle(ListFilesRequest request, CancellationToken cancellationToken)
@@ -24,7 +24,7 @@ internal sealed class ListFilesHandler(IFileRepository repository, ILogger<ListF
         var result = await repository.ListAsync(request.DocumentId);
 
         return result.MapT1(ToError);
-        
+
         Error<string> ToError(Unreachable<string> error)
         {
             logger.LogError("Could not reach `{Repository}` with the reason: {Reason}", nameof(IFileRepository), error.Value);

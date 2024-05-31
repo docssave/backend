@@ -13,9 +13,8 @@ internal interface IDocumentRepository
 
     Task<OneOf<Success, Conflict, Unreachable<string>>> RegisterDocumentAsync(
         CollectionId collectionId,
-        DocumentId documentId,
-        string name,
-        string icon,
-        long? expectedVersion,
+        Document document,
         File[] files);
+
+    Task<OneOf<Success, Unreachable<string>>> DeleteDocumentsAsync(CollectionId collectionId);
 }

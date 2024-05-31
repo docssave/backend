@@ -12,7 +12,7 @@ internal interface IFileRepository
 
     Task<OneOf<IReadOnlyList<File>, Unreachable<string>>> ListAsync(DocumentId documentId);
 
-    Task<OneOf<Success, Unreachable<string>>> DeleteAsync(FileId fileId);
+    Task<OneOf<Success, Unreachable<string>>> DeleteAsync(FileId[] fileIds);
 
     Task<OneOf<Success, Unreachable<string>>> DeleteDocumentFilesAsync(DocumentId documentId);
 }

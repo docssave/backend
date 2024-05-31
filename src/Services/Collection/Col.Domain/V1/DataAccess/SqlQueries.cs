@@ -82,4 +82,19 @@ public sealed class SqlQueries(IQueryCompiler compiler)
 
         return compiler.Compile(query);
     }
+
+    public string GetCollectionAccessQuery(UserId userId, CollectionId collectionId)
+    {
+        var subQuery = new Query("UserCollections")
+            .Select("1")
+            .Where("UserCollections.CollectionId", collectionId.Value)
+            .Where("UserCollections.UserId", userId.Value);
+
+        var compiledSubQuery = compiler.Compile(subQuery);
+
+        var query = new Query("UserCollections")
+            .SelectRaw($"EXISTS ({compiledSubQuery})");
+
+        return compiler.Compile(query);
+    }
 }
