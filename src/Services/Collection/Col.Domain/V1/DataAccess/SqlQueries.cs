@@ -97,4 +97,33 @@ public sealed class SqlQueries(IQueryCompiler compiler)
 
         return compiler.Compile(query);
     }
+
+    public string GetDeleteCollectionsQuery(UserId userId, CollectionId[] collectionIds)
+    {
+        var deletedCollectionsTableName = $"DeletedCollections_{Guid.NewGuid():N}";
+
+        var createDeletedCollectionsTable = $"CREATE TEMPORARY TABLE IF NOT EXISTS {deletedCollectionsTableName} ";
+
+        var userCollectionsQuery = new Query("UserCollections")
+            .Where("UserId", userId)
+            .WhereIn("CollectionId", collectionIds)
+            .Select("CollectionId");
+
+        var deleteCollectionsQuery = new Query("Collections")
+            .WhereIn("CollectionId", userCollectionsQuery)
+            .AsDelete();
+
+        var deleteUserCollectionsQuery = new Query("UserCollections")
+            .Where("UserId", userId)
+            .WhereIn("CollectionId", userCollectionsQuery)
+            .AsDelete();
+
+        var selectCollectionIdsQuery = new Query(deletedCollectionsTableName)
+            .Select("CollectionId");
+
+        return $"{createDeletedCollectionsTable} {compiler.Compile(userCollectionsQuery)};" +
+               compiler.Compile(deleteCollectionsQuery) + ";" +
+               compiler.Compile(deleteUserCollectionsQuery) + ";" +
+               compiler.Compile(selectCollectionIdsQuery);
+    }
 }

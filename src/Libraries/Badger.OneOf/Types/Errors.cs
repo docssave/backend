@@ -25,3 +25,8 @@ public readonly struct Unknown<T>(T value)
 }
 
 public struct Forbidden;
+
+public readonly struct Forbidden<T>(T value)
+{
+    public T Value { get; } = value;
+}

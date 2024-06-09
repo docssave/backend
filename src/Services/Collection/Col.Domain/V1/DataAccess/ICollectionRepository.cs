@@ -23,4 +23,6 @@ public interface ICollectionRepository
     Task<OneOf<Success, NotFound, Unreachable<string>>> CheckExistingAsync(CollectionId collectionId);
 
     Task<OneOf<Success, Forbidden, Unreachable<string>>> CheckAccessAsync(UserId userId, CollectionId collectionId);
+
+    Task<OneOf<Success<CollectionId[]>, Unreachable<string>>> DeleteCollectionsAsync(UserId userId, CollectionId[] collectionIds);
 }

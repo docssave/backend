@@ -8,9 +8,9 @@ namespace Doc.Domain.V1.Consumers;
 internal sealed class CollectionDeletedEventConsumer(
     IDocumentRepository documentRepository,
     ILogger<CollectionDeletedEventConsumer> logger)
-    : INotificationHandler<CollectionDeletedEvent>
+    : INotificationHandler<CollectionsDeletedEvent>
 {
-    public Task Handle(CollectionDeletedEvent notification, CancellationToken cancellationToken)
+    public Task Handle(CollectionsDeletedEvent notification, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

@@ -19,8 +19,9 @@ public static class WebApplicationExtensions
 
     private static void UseCollectionsEndpoints(this IEndpointRouteBuilder group)
     {
-        group.MapPut("/{collectionId:guid}", RegisterCollectionAsync).AddEndpointFilter<ValidationFilter<RegisterCollectionDto>>();
+        group.MapPut("/{collectionId}", RegisterCollectionAsync).AddEndpointFilter<ValidationFilter<RegisterCollectionDto>>();
         group.MapGet("/", ListCollectionsAsync);
+        group.MapDelete("/", DeleteCollectionsAsync);
     }
 
     private static async Task<IResult> RegisterCollectionAsync([FromRoute] CollectionId collectionId, RegisterCollectionDto request, [FromServices] IMediator mediator)
@@ -42,5 +43,12 @@ public static class WebApplicationExtensions
             Results.Ok,
             Results.Extensions.Unknown,
             Results.Extensions.RetryLate);
+    }
+
+    private static async Task<IResult> DeleteCollectionsAsync([FromRoute(Name = "collectionId")] CollectionId[] collectionIds, [FromServices] IMediator mediator)
+    {
+        var result = await mediator.Send(new DeleteCollectionsRequest(collectionIds));
+
+        return result.Match(Results.Ok, Results.Extensions.Unknown, Results.Extensions.RetryLate);
     }
 }

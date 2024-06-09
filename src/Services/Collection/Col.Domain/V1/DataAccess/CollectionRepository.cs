@@ -77,6 +77,16 @@ public sealed class CollectionRepository(IDbConnectionFactory connectionFactory,
                 : OneOf<Success, Forbidden>.FromT1(new Forbidden());
         }, ToUnreachableError);
 
+    public Task<OneOf<Success<CollectionId[]>, Unreachable<string>>> DeleteCollectionsAsync(UserId userId, CollectionId[] collectionIds) =>
+        connectionFactory.TryAsync(async connection =>
+        {
+            var query = queries.GetDeleteCollectionsQuery(userId, collectionIds);
+
+            var ids = await connection.QueryAsync<Guid>(query);
+
+            return new Success<CollectionId[]>(ids.Select(id => new CollectionId(id)).ToArray());
+        }, ToUnreachableError);
+
     private static Unreachable<string> ToUnreachableError(Exception exception) => new(exception.Message);
 
     private sealed record CollectionEntity(Guid Id, string Name, string Icon, string EncryptSide, int Version, long AddedAtTimespan);
