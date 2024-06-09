@@ -55,7 +55,7 @@ internal sealed class FileRepository(IDbConnectionFactory connectionFactory, Sql
             var fileIdValues = await connection.QueryAsync<Guid>(queries.GetFileIds(documentId), transaction: transaction);
 
             var fileIds = ToFileIds(fileIdValues);
-            
+
             await connection.ExecuteAsync(queries.DeleteFiles(fileIds), transaction: transaction);
 
             await connection.ExecuteAsync(queries.DeleteFilesMetadata(fileIds), transaction: transaction);

@@ -121,4 +121,31 @@ internal sealed class SqlQueries(IQueryCompiler compiler)
 
         return compiler.Compile(query);
     }
+
+    public string GetDeleteDocumentsQuery(CollectionId collectionId)
+    {
+        var documentIdsSubQuery = new Query("Documents")
+            .Where("CollectionId", collectionId)
+            .Select("Id");
+
+        var fileIdsSubQuery = new Query("FileMetadata")
+            .WhereIn("DocumentId", documentIdsSubQuery)
+            .Select("FileId");
+
+        var deleteFileMetadataQuery = new Query("FileMetadata")
+            .WhereIn("DocumentId", documentIdsSubQuery)
+            .AsDelete();
+
+        var deleteFilesQuery = new Query("Files")
+            .WhereIn("Id", fileIdsSubQuery)
+            .AsDelete();
+
+        var deleteDocumentsQuery = new Query("Documents")
+            .Where("CollectionId", collectionId)
+            .AsDelete();
+
+        return compiler.Compile(deleteFileMetadataQuery) + "; " +
+               compiler.Compile(deleteFilesQuery) + "; " +
+               compiler.Compile(deleteDocumentsQuery) + ";";
+    }
 }

@@ -23,7 +23,7 @@ public static class WebApplicationExtensions
     {
         group.MapPut("/{collectionId}/documents/{documentId}", RegisterDocumentAsync).AddEndpointFilter<ValidationFilter<RegisterDocumentDto>>();
         group.MapGet("/{collectionId}/documents", ListDocumentsAsync);
-        group.MapDelete("/{collectionId}/documents/{documentId}/files", DeleteFileAsync);
+        group.MapDelete("/{collectionId}/documents/{documentId}/files", DeleteFilesAsync);
     }
 
     private static async Task<IResult> RegisterDocumentAsync(
@@ -67,7 +67,7 @@ public static class WebApplicationExtensions
         return result.Match(Results.Ok, Results.BadRequest);
     }
 
-    private static async Task<IResult> DeleteFileAsync(
+    private static async Task<IResult> DeleteFilesAsync(
         [FromRoute] CollectionId collectionId,
         [FromRoute] DocumentId documentId,
         [FromQuery(Name = "fileId")] FileId[] fileIds,

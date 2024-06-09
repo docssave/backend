@@ -39,7 +39,7 @@ internal sealed class DocumentRepository(IDbConnectionFactory connectionFactory,
             }
 
             await connection.ExecuteAsync(queries.GetRegisterDocumentQuery(document, collectionId));
-            
+
             foreach (var file in files)
             {
                 var registerFileQuery = queries.RegisterFileQuery(file.Id, file.Content);
@@ -54,10 +54,12 @@ internal sealed class DocumentRepository(IDbConnectionFactory connectionFactory,
             return OneOf<Success, Conflict>.FromT0(new Success());
         }, ToUnreachableError);
 
-    public Task<OneOf<Success, Unreachable<string>>> DeleteDocumentsAsync(CollectionId collectionId)
+    public Task<OneOf<Success, Unreachable<string>>> DeleteDocumentsAsync(CollectionId collectionId) => connectionFactory.TryAsync(async connection =>
     {
-        throw new NotImplementedException();
-    }
+        await connection.ExecuteAsync(queries.GetDeleteDocumentsQuery(collectionId));
+
+        return new Success();
+    }, ToUnreachableError);
 
     private static Unreachable<string> ToUnreachableError(Exception exception) => new(exception.Message);
 
