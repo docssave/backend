@@ -24,6 +24,7 @@ public static class WebApplicationExtensions
         group.MapPut("/{collectionId}/documents/{documentId}", RegisterDocumentAsync).AddEndpointFilter<ValidationFilter<RegisterDocumentDto>>();
         group.MapGet("/{collectionId}/documents", ListDocumentsAsync);
         group.MapDelete("/{collectionId}/documents/{documentId}/files", DeleteFilesAsync);
+        group.MapDelete("/{collectionId}/documents", DeleteDocumentsAsync);
     }
 
     private static async Task<IResult> RegisterDocumentAsync(
@@ -74,6 +75,20 @@ public static class WebApplicationExtensions
         [FromServices] IMediator mediator)
     {
         var result = await mediator.Send(new DeleteFilesRequest(collectionId, documentId, fileIds));
+
+        return result.Match(
+            Results.Ok,
+            Results.Extensions.Unknown,
+            _ => Results.Forbid(),
+            Results.Extensions.RetryLate);
+    }
+
+    private static async Task<IResult> DeleteDocumentsAsync(
+        [FromRoute] CollectionId collectionId,
+        [FromQuery(Name = "documentId")] DocumentId[] documentIds,
+        [FromServices] IMediator mediator)
+    {
+        var result = await mediator.Send(new DeleteDocumentsRequest(collectionId, documentIds));
 
         return result.Match(
             Results.Ok,

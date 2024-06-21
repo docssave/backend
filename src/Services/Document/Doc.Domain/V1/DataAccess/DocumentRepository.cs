@@ -54,7 +54,7 @@ internal sealed class DocumentRepository(IDbConnectionFactory connectionFactory,
             return OneOf<Success, Conflict>.FromT0(new Success());
         }, ToUnreachableError);
 
-    public Task<OneOf<Success, Unreachable<string>>> DeleteDocumentsAsync(CollectionId collectionId) => connectionFactory.TryAsync(async connection =>
+    public Task<OneOf<Success, Unreachable<string>>> DeleteDocumentsAsync(CollectionId collectionId, DocumentId[]? documentIds = null) => connectionFactory.TryAsync(async connection =>
     {
         await connection.ExecuteAsync(queries.GetDeleteDocumentsQuery(collectionId));
 

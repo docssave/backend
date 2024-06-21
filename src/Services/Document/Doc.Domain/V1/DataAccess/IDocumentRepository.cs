@@ -16,5 +16,5 @@ internal interface IDocumentRepository
         Document document,
         File[] files);
 
-    Task<OneOf<Success, Unreachable<string>>> DeleteDocumentsAsync(CollectionId collectionId);
+    Task<OneOf<Success, Unreachable<string>>> DeleteDocumentsAsync(CollectionId collectionId, DocumentId[]? documentIds = null);
 }
