@@ -8,13 +8,13 @@ public static class OneOf3Extensions
     {
         if (oneOf.Index == 0)
             return f0(oneOf.AsT0);
-        
+
         if (oneOf.Index== 1)
             return await f1(oneOf.AsT1);
-        
+
         if (oneOf.Index== 2)
             return f2(oneOf.AsT2);
-        
+
         throw new InvalidOperationException();
     }
 }
