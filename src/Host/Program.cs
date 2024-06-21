@@ -14,6 +14,7 @@ builder.Services.AddClock();
 builder.Services.AddIdentityService(sectionName => builder.Configuration.GetSection(sectionName));
 builder.Services.AddWorkspaceService();
 builder.Services.AddCollectionService();
+builder.Services.AddTagService();
 builder.Services.AddDocumentService();
 
 var app = builder.Build();

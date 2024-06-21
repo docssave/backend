@@ -48,17 +48,17 @@ internal sealed class SqlQueries(IQueryCompiler compiler)
 
         return compiler.Compile(query);
     }
-    
+
     public string RegisterFileQuery(FileId fileId, byte[] content)
     {
         var query = new Query("Files")
             .AsUpsert(new Dictionary<string, object>
             {
-                {"Id", fileId.Value},
-                {"Content", content}
+                { "Id", fileId.Value },
+                { "Content", content }
             }, new Dictionary<string, object>
             {
-                {"Content", content}
+                { "Content", content }
             });
 
         return compiler.Compile(query);
@@ -122,18 +122,30 @@ internal sealed class SqlQueries(IQueryCompiler compiler)
         return compiler.Compile(query);
     }
 
-    public string GetDeleteDocumentsQuery(CollectionId collectionId)
+    public string GetDeleteDocumentsQuery(CollectionId collectionId, DocumentId[]? documentIds = null)
     {
-        var documentIdsSubQuery = new Query("Documents")
-            .Where("CollectionId", collectionId)
-            .Select("Id");
+        Query? documentIdsSubQuery;
+
+        if (documentIds is { Length: > 1 })
+        {
+            documentIdsSubQuery = new Query("Documents")
+                .Where("CollectionId", collectionId)
+                .WhereIn("Id", documentIds.Select(documentId => documentId.Value))
+                .Select("Id");
+        }
+        else
+        {
+            documentIdsSubQuery = new Query("Documents")
+                .Where("CollectionId", collectionId)
+                .Select("Id");
+        }
 
         var fileIdsSubQuery = new Query("FileMetadata")
-            .WhereIn("DocumentId", documentIdsSubQuery)
+            .WhereIn("DocumentId", documentIdsSubQuery!)
             .Select("FileId");
 
         var deleteFileMetadataQuery = new Query("FileMetadata")
-            .WhereIn("DocumentId", documentIdsSubQuery)
+            .WhereIn("DocumentId", documentIdsSubQuery!)
             .AsDelete();
 
         var deleteFilesQuery = new Query("Files")

@@ -19,7 +19,7 @@ internal sealed class RegisterFilesHandler(IFileRepository repository, ILogger<R
             logger.LogError("DocumentId can not be empty");
             return new Error<string>("Could not register files for empty document.");
         }
-        
+
         var result = await repository.RegisterAsync(request.DocumentId, request.Files, clock.Now);
 
         return result.MapT1(ToError);
